@@ -852,14 +852,9 @@ function sanitizeHTML(html) {
     const imagePromises = [];
     const frag          = document.createDocumentFragment();
     const sortMode      = getSortMode();
-    const isFav         = (t) => window.favorites.has(safeStr(t).toLowerCase());
-    const _debouncedRenderPage = debounce(
-      () => { if (typeof window.renderPage === "function") window.renderPage(); },
-      50
-    );
+    const isFav = (t) => window.favorites.has(safeStr(t).toLowerCase());
 
     const activePage = +window.currentPage || +sessionStorage.getItem("currentPage") || 1;
-    const activePageBatch = [];
 
     // Sort + bucket by page
     let sorted = Array.isArray(data) ? data.slice() : [];
@@ -907,9 +902,11 @@ function sanitizeHTML(html) {
       const pageNum     = Number(asset.page)   || 1;
       const status      = safeStr(asset.status).toLowerCase();
       const statusField = safeStr(asset.type || asset.status || "").toLowerCase();
+      const typeField   = safeStr(asset.type).toLowerCase();
       const isActivePage = pageNum === activePage;
 
       if (status === "hide" || status === "hidden") continue;
+      if (typeField === "ignore") continue;
 
       const card = document.createElement("div");
       card.className = "asset-card";
@@ -1018,17 +1015,16 @@ function sanitizeHTML(html) {
 
       const imgPromise = new Promise((resolve) => {
         if (isActivePage) {
-          activePageBatch.push(card);
           img.onload  = () => resolve();
           img.onerror = () => { img.src = config.fallbackImage; img.onload = () => resolve(); img.onerror = () => resolve(); };
         } else {
-          const offReady = () => { card.classList.add("ready"); _debouncedRenderPage(); resolve(); };
+          const offReady = () => resolve();
           img.onload  = offReady;
           img.onerror = () => { img.src = config.fallbackImage; img.onload = offReady; img.onerror = offReady; };
         }
         img.src = imageSrc;
       });
-      imagePromises.push({ promise: imgPromise, page: pageNum });
+      imagePromises.push({ promise: imgPromise, page: pageNum, card });
       wrapper.appendChild(img);
 
       // ── Status overlays ──
@@ -1110,23 +1106,40 @@ function sanitizeHTML(html) {
 
     container.appendChild(frag);
 
-    // Batch reveal active-page cards once all their images have loaded.
-    const activePromises = imagePromises
-      .filter(p => p.page === activePage)
-      .map(p => p.promise);
+    // Collect per-page promise groups so each page is revealed only after ALL
+    // of its own images have settled — this prevents cards from other pages
+    // bleeding into page 1 while their images are still loading.
+    const pagePromiseMap = new Map();
+    for (const { promise, page, card } of imagePromises) {
+      if (!pagePromiseMap.has(page)) pagePromiseMap.set(page, { promises: [], cards: [] });
+      pagePromiseMap.get(page).promises.push(promise);
+      pagePromiseMap.get(page).cards.push(card);
+    }
 
-    if (activePromises.length > 0) {
-      Promise.all(activePromises).then(() => {
-        const last = activePageBatch.length - 1;
-        activePageBatch.forEach((card, i) => {
+    let activePageHandled = false;
+
+    for (const [pageNum, { promises, cards }] of pagePromiseMap) {
+      const isActive = pageNum === activePage;
+      Promise.all(promises).then(() => {
+        const last = cards.length - 1;
+        cards.forEach((card, i) => {
           setTimeout(() => {
             card.classList.add("ready");
-            if (i === last && typeof window.renderPage === "function") window.renderPage();
+            // Call renderPage once after the final card on this page is revealed.
+            if (i === last && typeof window.renderPage === "function") {
+              window.renderPage();
+            }
           }, i * 40);
         });
-        runLoaderSequence();
+        if (isActive && !activePageHandled) {
+          activePageHandled = true;
+          runLoaderSequence();
+        }
       });
-    } else {
+    }
+
+    // If the active page had no cards at all, still dismiss the loader.
+    if (!pagePromiseMap.has(activePage)) {
       runLoaderSequence();
     }
 
