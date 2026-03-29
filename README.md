@@ -2,7 +2,7 @@
 <!--        BANNER IMAGE       -->
 <!-- ========================= -->
 
-![Banner](../images/banner/v0.8.2.png)
+![Banner](images/banners/wannasmile-banner.png)
 
 <!-- ========================= -->
 <!--     HEADER PARAGRAPH      -->
