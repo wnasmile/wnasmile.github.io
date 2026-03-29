@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git URL Converter</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f0f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    width: 90%;
+    max-width: 700px;
+    text-align: center;
+  }
+  h1 {
+    margin-bottom: 20px;
+  }
+  textarea {
+    width: 100%;
+    height: 200px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    font-family: monospace;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+  }
+  button {
+    background: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 15px;
+  }
+  button:hover {
+    background: #0056b3;
+  }
+  #output {
+    height: 200px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 12px;
+    font-family: monospace;
+    overflow-y: auto;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Git URL Converter</h1>
+  <textarea id="input" placeholder="Paste raw GitHub or jsDelivr URLs here, one per line"></textarea>
+  <br>
+  <button onclick="convertURLs()">Convert URLs</button>
+  <button onclick="copyOutput()">Copy Output</button>
+  <div id="output" placeholder="Converted URLs will appear here"></div>
+</div>
+
+<script>
+function convertURLs() {
+  const input = document.getElementById('input').value.trim();
+  const lines = input.split(/\r?\n/);
+  const output = lines.map(line => {
+    line = line.trim();
+    if (!line) return '';
+    // jsDelivr pattern
+    const jsdelivr = line.match(/https:\/\/cdn\.jsdelivr\.net\/gh\/([^\/]+)\/([^@]+)@[^\/]+\/(.+)/);
+    if (jsdelivr) {
+      const [_, user, repo, path] = jsdelivr;
+      return `https://${user}.github.io/${repo}/${decodeURIComponent(path)}`;
+    }
+    // raw GitHub pattern
+    const rawgithub = line.match(/https:\/\/raw\.githubusercontent\.com\/([^\/]+)\/([^\/]+)\/[^\/]+\/(.+)/);
+    if (rawgithub) {
+      const [_, user, repo, path] = rawgithub;
+      return `https://${user}.github.io/${repo}/${decodeURIComponent(path)}`;
+    }
+    return line; // leave unchanged if it doesn't match
+  }).filter(Boolean).join('\n');
+  document.getElementById('output').textContent = output;
+}
+
+function copyOutput() {
+  const outputDiv = document.getElementById('output');
+  navigator.clipboard.writeText(outputDiv.textContent).then(() => {
+    alert('Copied to clipboard!');
+  });
+}
+</script>
+</body>
+</html>
