@@ -115,8 +115,8 @@ window.addEventListener("storage", (e) => {
 
 // Per-theme GIF overrides — "" = fall back to root defaults.
 const ROOT_GIFS = {
-  loading:   "https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/GIF/loading.gif",
-  loaded:    "https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/GIF/loaded.gif",
+  loading:   "loading.gif",
+  loaded:    "loaded.gif",
   searching: "https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/GIF/searching.gif",
   crash:     "https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/GIF/crash.gif",
   ded:       "https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/GIF/ded.gif",
