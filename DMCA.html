@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WannaSmile | DMCA & Contact</title>
+
+<link id="favicon" rel="icon" href="https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/favicons/logo.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" /></noscript>
+
+<link rel="stylesheet" href="themes.css" />
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  height: 100%;
+  background-image: var(--main-bg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+}
+
+body {
+  min-height: 100%;
+  background: transparent;
+  color: var(--text-color);
+  font-family: "Poppins", monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 64px 20px 80px;
+}
+
+a, a:visited {
+  color: var(--link-color);
+  text-decoration: none;
+}
+a:focus { outline: none; }
+
+/* ── Main card ── */
+.dmca-card {
+  width: 100%;
+  max-width: 600px;
+  background: var(--card-bg, rgba(0,0,0,0.3));
+  border-radius: 20px;
+  padding: 44px 40px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.4);
+}
+
+/* ── Heading ── */
+.dmca-headline {
+  font-family: monospace;
+  font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+  font-weight: bold;
+  color: var(--link-color);
+  text-align: center;
+  letter-spacing: 1px;
+  line-height: 1.3;
+  margin-bottom: 28px;
+}
+
+.dmca-headline span {
+  color: var(--accent-color);
+}
+
+/* ── Divider ── */
+.dmca-rule {
+  width: 60px;
+  height: 2px;
+  background: var(--accent-color);
+  opacity: 0.4;
+  border: none;
+  border-radius: 2px;
+  margin-bottom: 28px;
+}
+
+/* ── Body paragraph ── */
+.dmca-body {
+  font-family: monospace;
+  font-size: 0.82rem;
+  color: var(--text-color);
+  opacity: 0.75;
+  text-align: center;
+  line-height: 1.75;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  user-select: text;
+  margin-bottom: 40px;
+}
+
+.dmca-body strong {
+  color: var(--link-color);
+  opacity: 1;
+}
+
+/* ── Socials row ── */
+.socials-label {
+  font-family: monospace;
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+.socials-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: center;
+}
+
+/* ── Individual social button ── */
+.social-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.social-circle {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--header-bg);
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+}
+
+.social-circle svg {
+  width: 26px;
+  height: 26px;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.social-btn:hover .social-circle {
+  border-color: var(--accent-color);
+  transform: scale(1.1);
+  box-shadow: 0 0 14px rgba(0,0,0,0.5);
+}
+
+.social-name {
+  font-family: monospace;
+  font-size: 0.62rem;
+  color: var(--link-color);
+  opacity: 0.6;
+  transition: opacity 0.2s, color 0.2s;
+  text-align: center;
+}
+
+.social-btn:hover .social-name {
+  opacity: 1;
+  color: var(--accent-color);
+}
+
+</style>
+</head>
+<body>
+
+<div class="dmca-card">
+
+  <h1 class="dmca-headline">Do Not Make My Content <span>Accessible!</span></h1>
+
+  <hr class="dmca-rule" />
+
+  <p class="dmca-body">
+    If you are the owner of a game or asset hosted on this site and wish it to be
+    removed, please get in contact through any of the channels below.<br /><br />
+    All takedown requests are taken seriously. Upon receiving a valid DMCA notice or
+    a removal request, the content will be <strong>promptly taken down</strong> and
+    marked as unavailable on the site.<br /><br />
+    Please include the name of the asset, proof of ownership, and your preferred
+    contact method when reaching out.
+  </p>
+
+  <div class="socials-label">Get in touch</div>
+
+  <div class="socials-row">
+
+    <!-- GitHub -->
+    <a class="social-btn" href="https://github.com/mcmattyobriore" target="_blank" rel="noopener" title="GitHub">
+      <div class="social-circle">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"
+                fill="currentColor" style="color:var(--link-color)"/>
+        </svg>
+      </div>
+      <span class="social-name">GitHub</span>
+    </a>
+
+    <!-- YouTube -->
+    <a class="social-btn" href="https://youtube.com/@mcmattyobriore" target="_blank" rel="noopener" title="YouTube">
+      <div class="social-circle">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                fill="currentColor" style="color:var(--link-color)"/>
+        </svg>
+      </div>
+      <span class="social-name">YouTube</span>
+    </a>
+
+    <!-- Gmail -->
+    <a class="social-btn" href="mailto:mcmattyobriore@gmail.com" title="Gmail">
+      <div class="social-circle">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 2l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"
+                fill="currentColor" style="color:var(--link-color)"/>
+        </svg>
+      </div>
+      <span class="social-name">Gmail</span>
+    </a>
+
+    <!-- TikTok -->
+    <a class="social-btn" href="https://tiktok.com/@mcmattyobriore" target="_blank" rel="noopener" title="TikTok">
+      <div class="social-circle">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.78a4.85 4.85 0 01-1.01-.09z"
+                fill="currentColor" style="color:var(--link-color)"/>
+        </svg>
+      </div>
+      <span class="social-name">TikTok</span>
+    </a>
+
+    <!-- Instagram -->
+    <a class="social-btn" href="https://instagram.com/mcmattyobriore" target="_blank" rel="noopener" title="Instagram">
+      <div class="social-circle">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"
+                fill="currentColor" style="color:var(--link-color)"/>
+        </svg>
+      </div>
+      <span class="social-name">Instagram</span>
+    </a>
+
+  </div>
+
+</div>
+
+<script>
+(function applyGlobalTheme() {
+  const saved = localStorage.getItem("selectedTheme") || "redux";
+  document.documentElement.setAttribute("theme", saved);
+  if (saved === "custom") {
+    try {
+      const vars = JSON.parse(localStorage.getItem("customTheme") || "{}");
+      Object.entries(vars).forEach(([k, v]) =>
+        document.documentElement.style.setProperty(k, v)
+      );
+    } catch (_) {}
+  }
+})();
+
+window.addEventListener("storage", (e) => {
+  if (e.key === "selectedTheme") {
+    const t = e.newValue || "redux";
+    document.documentElement.setAttribute("theme", t);
+    if (t !== "custom") document.documentElement.style.cssText = "";
+  }
+});
+</script>
+
+</body>
+</html>

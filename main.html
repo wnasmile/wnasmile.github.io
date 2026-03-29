@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WannaSmile | Discover</title>
+<link id="favicon" rel="icon" href="https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/favicons/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" /></noscript>
+<link rel="stylesheet" href="themes.css"/>
+<link rel="stylesheet" href="all.css"/>
+<meta property="og:title" content="WannaSmile" />
+<meta property="og:description" content="WannaSmile — Discover your next favourite." />
+<meta property="og:image" content="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/meta/images/11.png" />
+<meta property="og:url" content="https://vvannasmile.github.io/" />
+<meta property="og:type" content="website" />
+
+<style>
+/* ══════════════════════════════════════════
+   DISCOVER PAGE — all position:fixed
+   No scroll, no grid, nothing affects anything else.
+
+   HARD CONSTANTS (match JS CFG below):
+     AD_W   = 160   ad column width
+     SZ     = 96    side square size
+     GAP    = 8     zone gap
+     PAD    = 6     edge padding
+     PW     = 385   primary card width
+     SW     = 180   secondary card width
+     SIDE_L = PAD + AD_W + GAP           = 174
+     CTR_L  = SIDE_L + SZ + GAP         = 278
+══════════════════════════════════════════ */
+
+html, body { overflow: hidden !important; height: 100%; }
+
+/* ── ADS ── */
+.ad-col {
+  position: fixed; top: 94px; bottom: 42px; width: 160px;
+  border-radius: 10px; overflow: hidden; z-index: 20;
+}
+#adLeft  { left: 6px; }
+#adRight { right: 6px; }
+
+.ad-slot {
+  display: block; width: 100%; height: 100%;
+  background: rgba(255,255,255,0.04); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.09); border-radius: 10px;
+  text-decoration: none; position: relative; overflow: hidden;
+}
+.ad-slot img   { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ad-empty {
+  width: 100%; height: 100%; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 6px;
+  color: rgba(255,255,255,0.1); font-family: monospace;
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+}
+.ad-empty::before { content: '[ AD ]'; font-size: 11px; opacity: 0.35; }
+.ad-empty::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.025) 50%, transparent 60%);
+  background-size: 200% 200%; animation: adShimmer 5s ease-in-out infinite;
+}
+@keyframes adShimmer { 0%,100%{background-position:200% 200%} 50%{background-position:0% 0%} }
+
+/* ad-close-btn and ad-reopen-tab removed — ads always visible, no controls */
+
+/* ── SIDE COLUMNS — revolver clip window ── */
+.side-col {
+  position: fixed;
+  width: 96px;
+  height: 512px;
+  overflow: hidden;
+  z-index: 15;
+  top: 50%;
+  transform: translateY(calc(-50% + 26px));
+}
+#leftItems  { left: 174px; }
+#rightItems { right: 174px; }
+
+.side-inner {
+  position: relative;
+  width: 96px;
+  height: 512px;
+  overflow: hidden;
+}
+
+.side-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 96px;
+  position: absolute;
+  left: 0;
+}
+
+.side-item {
+  width: 96px; height: 96px; flex-shrink: 0;
+  border-radius: 10px; overflow: hidden; position: relative;
+  cursor: pointer; background: rgba(0,0,0,0.45);
+  border: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.side-item:hover { border-color: rgba(255,255,255,0.22); }
+.side-item img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+.side-item-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%);
+  display: flex; flex-direction: column; justify-content: flex-end; padding: 6px;
+}
+.side-item-title {
+  font-size: 8px; font-weight: 600; font-family: 'Poppins', sans-serif; color: #fff;
+  line-height: 1.25; overflow: hidden; display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical; text-shadow: 0 1px 3px rgba(0,0,0,1);
+}
+.side-item.sk {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.09) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%; animation: skPulse 1.6s ease-in-out infinite;
+  cursor: default; pointer-events: none; border: none;
+}
+
+/* ── CENTER CAROUSEL ── */
+#centerArea {
+  position: fixed; top: 94px; bottom: 42px; left: 278px; right: 278px;
+  display: flex; flex-direction: column; align-items: center;
+  z-index: 10; overflow: visible;
+  /* gap handled by explicit margins so banner space doesn't push cards */
+}
+
+/* ── TOP BANNER AD ── */
+#topBanner {
+  flex-shrink: 0;
+  width: 500px;
+  height: 100px;
+  border-radius: 14px;
+  overflow: hidden;
+  display: block;
+  text-decoration: none;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: border-color 0.2s;
+  position: relative;
+  /* Space from quoteBox above */
+  margin-top: 12px;
+}
+#topBanner:hover { border-color: rgba(255,255,255,0.3); }
+#topBanner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.banner-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 4px;
+  color: rgba(255,255,255,0.35); font-family: monospace;
+  font-size: 11px; letter-spacing: 0.12em;
+}
+.banner-placeholder::before {
+  content: '✦ SUNDAE ZIPPER ✦';
+  font-size: 13px; font-family: 'Poppins', sans-serif; font-weight: 600; opacity: 0.7;
+}
+.banner-placeholder::after {
+  content: 'vslicr5.github.io/sundaezipper';
+  font-size: 9px; opacity: 0.4; letter-spacing: 0.08em;
+}
+.banner-shimmer {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 35%, rgba(255,255,255,0.05) 50%, transparent 65%);
+  background-size: 200% 200%; animation: adShimmer 4s ease-in-out infinite;
+  pointer-events: none; border-radius: inherit;
+}
+
+/* Strip row — fixed gap from banner, does not grow/shrink */
+#strip0 {
+  flex-shrink: 0;
+  margin-top: 14px;    /* fixed gap from banner — does NOT affect timer below */
+  display: flex; flex-direction: row; align-items: center;
+}
+
+.strip-arrow {
+  flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(0,0,0,0.45); backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5);
+  font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, color 0.15s; margin: 0 4px; user-select: none;
+  align-self: center;
+}
+.strip-arrow:hover { background: rgba(255,255,255,0.14); color: #fff; }
+
+/* Viewport — overflow:hidden to clip cards + CSS mask fades left/right edges */
+.strip-viewport {
+  flex: 1; min-width: 0;
+  height: 360px;
+  overflow: hidden;
+  position: relative;
+  /* Mask: transparent at left/right edges, opaque in center
+     Cards fade out as they slide off screen — no hard block-in effect */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 18%,
+    black 82%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 18%,
+    black 82%,
+    transparent 100%
+  );
+}
+
+/* Rail — cards centered vertically */
+.strip-rail {
+  display: flex; flex-direction: row; align-items: center;
+  height: 100%; gap: 8px; padding: 0;
+}
+
+/* ── CARDS — fixed squares, no glass, no shadows ── */
+.rec-card {
+  flex-shrink: 0;
+  border-radius: 12px; overflow: hidden; cursor: pointer; position: relative;
+  border: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.rec-card:hover { border-color: rgba(255,255,255,0.22); }
+.rec-card img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+
+.rec-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 55%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 12px 12px 10px; gap: 3px;
+}
+.rec-card-title {
+  font-size: 13px; font-weight: 600; font-family: 'Poppins', sans-serif; color: #fff;
+  line-height: 1.25; overflow: hidden; display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical; text-shadow: 0 1px 6px rgba(0,0,0,0.9);
+}
+.rec-card-author {
+  font-size: 9px; color: rgba(255,255,255,0.42); font-family: monospace;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.rec-card-badge {
+  position: absolute; top: 8px; right: 8px;
+  font-size: 7px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
+  border-radius: 3px; padding: 2px 6px; color: #fff; font-family: monospace;
+  border: 1px solid rgba(255,255,255,0.14);
+}
+.rec-card-badge.badge-new      { background: rgba(40,160,80,0.6);   border-color: rgba(60,220,100,0.4); }
+.rec-card-badge.badge-featured { background: rgba(210,165,25,0.55); border-color: rgba(255,210,60,0.4); color: #ffe87a; }
+.rec-card-badge.badge-fixed    { background: rgba(55,115,250,0.5);  border-color: rgba(100,160,255,0.4); }
+
+.rec-card.sk {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.09) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%; animation: skPulse 1.6s ease-in-out infinite;
+  cursor: default; pointer-events: none; border: none;
+}
+
+/* dots */
+.strip-dots {
+  display: flex; flex-direction: column; gap: 4px; align-items: center; justify-content: center;
+  width: 10px; flex-shrink: 0; align-self: center;
+}
+.strip-dot {
+  width: 3px; height: 3px; border-radius: 50%;
+  background: rgba(255,255,255,0.18); transition: background 0.2s, transform 0.2s;
+}
+.strip-dot.active { background: rgba(255,255,255,0.75); transform: scale(1.5); }
+
+/* refresh timer — sits below cards, centered */
+.center-timer {
+  flex-shrink: 0;
+  text-align: center;
+  width: 100%;
+  font-size: 9px; opacity: 0.2; font-family: monospace; line-height: 1;
+  margin-top: 8px;
+}
+#refreshCountdown { font-variant-numeric: tabular-nums; }
+
+/* Loader */
+#carouselLoader {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none; opacity: 0; transition: opacity 0.3s ease;
+}
+#carouselLoader.visible { opacity: 1; }
+#carouselLoader img { width: 128px; height: 128px; image-rendering: pixelated; display: block; }
+
+@keyframes skPulse { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+</style>
+</head>
+
+<body class="ws-loading">
+<div id="incognitoIndicator">blob:null mode</div>
+
+<div id="welcomeOverlay">
+  <div id="welcomeModal">
+    <h1 style="color:red;font-weight:450px;"><img src="logotitle.png"/></h1>
+    <p class="welcome-sub"><img style="width:100px;height:auto;" src="versiontitle.png"/></p>
+    <div class="welcome-section">
+      <h3>Keyboard Shortcuts</h3>
+      <div class="shortcut-row"><kbd>←→</kbd><span>Scroll carousel</span></div>
+      <div class="shortcut-row"><kbd>R</kbd><span>Re-render page</span></div>
+      <div class="shortcut-row"><kbd>T</kbd><span>Toggle incognito <span class="system-tag">about:blank</span><span class="system-tag">blob:null</span></span></div>
+      <div class="shortcut-row"><kbd>Esc</kbd><span>Panic key</span></div>
+    </div>
+    <button id="welcomeDismiss">Let's go!</button>
+    <button id="welcomeNeverShow">don't show this again</button>
+  </div>
+</div>
+
+<div id="topBar">
+  <header>
+    <nav class="nav-links">
+      <a href="." target="_blank">Home</a>
+      <a href="favorites.html" target="_blank">Favorites</a>
+      <a href="discovery.html" target="_blank">Discovery</a>
+      <a href="settings.html" target="_blank">Settings</a>
+      <a href="https://padlet.com/rhap5ody/wannasmile-suggestion-report-page-t8t6pg32hl71ri9m" target="_blank">Suggestions</a>
+      <a href="info.html" target="_blank">Info</a>
+      <div class="pages-anchor">
+        <button class="arrowleft" onclick="prevPage()">
+          <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/left.png">
+        </button>
+        <span class="page-indicator">...</span>
+        <button class="arrowright" onclick="nextPage()">
+          <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/right.png">
+        </button>
+        <a href="https://dontevenjokelad.github.io./" target="_blank">SoundScape</a>
+        <a href="#" id="downloadBtn">DOWNLOAD V0.8!</a>
+      </div>
+    </nav>
+    <div class="header-controls">
+      <div class="search-box">
+        <input id="searchInputHeader" type="text" placeholder="Search..." />
+        <button id="searchBtnHeader">
+          <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/search.png">
+        </button>
+      </div>
+      <a href="profile.html"><img id="pfp" src="../system/images/icons/profile.png"></a>
+      <button id="dashboardBtn">
+        <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/dashboard.png">
+      </button>
+    </div>
+  </header>
+  <div id="quoteWrapper"><p id="quoteBox"></p></div>
+</div>
+
+<aside id="dashboardMenu" class="dashboard-menu">
+  <p id="dashNickname" style="opacity:0.6;font-size:0.85em;">Guest</p>
+  <a href="#">Shortcuts</a>
+  <a href="">credits &amp; contributors</a>
+  <a href="">DMCA</a>
+</aside>
+
+<!-- LEFT AD -->
+<div class="ad-col" id="adLeft">
+  <a class="ad-slot" id="adLeftSlot" target="_blank" rel="noopener"><div class="ad-empty"></div></a>
+</div>
+
+<!-- LEFT SIDE REVOLVER -->
+<div class="side-col" id="leftItems">
+  <div class="side-inner">
+    <div class="side-rail" id="leftRail">
+      <div class="side-item sk"></div>
+      <div class="side-item sk"></div>
+      <div class="side-item sk"></div>
+      <div class="side-item sk"></div>
+      <div class="side-item sk"></div>
+      <div class="side-item sk"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CENTER CAROUSEL -->
+<div id="centerArea">
+
+  <!-- TOP BANNER AD -->
+  <a id="topBanner" target="_blank" rel="noopener">
+    <img src="https://vslicr5.github.io/sundaezipper.github.io/wannasmile-banner.png"/>
+    <div class="banner-placeholder"></div>
+    <div class="banner-shimmer"></div>
+  </a>
+
+  <div id="strip0">
+    <button class="strip-arrow" onclick="shiftStrip(-1)">‹</button>
+    <div class="strip-viewport" id="viewport0">
+      <div class="strip-rail" id="rail0">
+        <div class="rec-card sk" style="width:140px;height:280px"></div>
+        <div class="rec-card sk" style="width:360px;height:360px"></div>
+        <div class="rec-card sk" style="width:140px;height:280px"></div>
+        <div class="rec-card sk" style="width:140px;height:280px"></div>
+        <div class="rec-card sk" style="width:140px;height:280px"></div>
+      </div>
+    </div>
+    <button class="strip-arrow" onclick="shiftStrip(+1)">›</button>
+    <div class="strip-dots" id="dots0"></div>
+  </div>
+
+  <!-- Timer centered below cards -->
+  <div class="center-timer">refresh in <span id="refreshCountdown">3:00</span></div>
+
+</div>
+<!-- Loader lives outside centerArea so it's truly full-screen centered -->
+<div id="carouselLoader"><img id="loaderImg" src="loading.gif" alt=""/></div>
+
+<!-- RIGHT SIDE REVOLVER -->
+<div class="side-col" id="rightItems">
+  <div class="side-inner">
+    <div class="side-rail" id="rightRail">
+      <div class="side-item sk"></div>
+      <div class="side-item sk"></div>
+      <div class="side-item sk"></div>
+      <div class="side-item sk"></div>
+      <div class="side-item sk"></div>
+      <div class="side-item sk"></div>
+    </div>
+  </div>
+</div>
+
+<!-- RIGHT AD -->
+<div class="ad-col" id="adRight">
+  <a class="ad-slot" id="adRightSlot" target="_blank" rel="noopener"><div class="ad-empty"></div></a>
+</div>
+
+<footer>
+  <a href="https://github.com/slackerish/slackerish.github.io" target="_blank" rel="noopener noreferrer">source</a>
+  <a href="DMCA.html" target="_blank" rel="noopener noreferrer">DMCA</a>
+  <a href="https://discord.gg/4AKdJxJUMH" target="_blank">Discord</a>
+  <a href="socials.html" target="_blank" rel="noopener noreferrer">Socials</a>
+  <a href="../pages/footer/version.html" id="footerVersion" target="_blank">Version loading...</a>
+</footer>
+
+<script src="BIGTEST.js"></script>
+<script src="commands.js"></script>
+<script>
+/* ============================================================
+   WannaSmile — Discover page logic (inlined)
+
+   LAYOUT CONSTANTS  (match CSS above):
+     AD_W=160  SZ=96  GAP=8  PAD=6  PW=385  SW=180
+     SIDE_L = PAD+AD_W+GAP = 174
+     CTR_L  = SIDE_L+SZ+GAP = 278
+
+   CAROUSEL:
+     5 persistent card DOM nodes. JS never touches their
+     `transition` style — only `classList` and `style.width`.
+     CSS defines the transition permanently so it always fires.
+     On shift:
+       1. Rail gets a CSS transition + translateX move (visual slide)
+       2. After animation: S.primary advances, all 5 nodes get
+          new innerHTML + width + class — silently, because the
+          rail has `transition:none` and the cards' width change
+          is instant (new value equals what they'll be anyway,
+          since we rebuild the whole window around new primary).
+       3. Rail snaps back to correct center position.
+       4. Rail transition is re-enabled for next shift.
+
+   SIDE REVOLVERS:
+     Each has 6 nodes in a clipping column.
+     Left  → slides DOWN: new card enters from top.
+     Right → slides UP:   new card enters from bottom.
+     After slide: DOM is rotated + rail snaps back. No JS
+     touches the individual side-item transitions.
+   ============================================================ */
+"use strict";
+
+/* ── AD DATA ─────────────────────────────────────────────────
+   Each entry: { image: "full url to banner image", site: "destination url" }
+   One is picked randomly on each page load.
+   Empty array = placeholder shown. ─────────────────────────── */
+
+const leftAds = [
+  // { image: "https://example.com/left-banner.png", site: "https://example.com" },
+];
+
+const rightAds = [
+  // { image: "https://example.com/right-banner.png", site: "https://example.com" },
+];
+
+const topBannerAds = [
+  { image: "https://vslicr5.github.io/sundaezipper.github.io/wannasmile-banner.png",
+    site:  "https://vslicr5.github.io/sundaezipper.github.io/" },
+  // Add more entries to rotate the top banner randomly on each load:
+  // { image: "https://...", site: "https://..." },
+];
+
+/* ── ADS ──────────────────────────────────────────────────── */
+function initAds() {
+  // Side ads — pick random from array, fill slot, no controls
+  [
+    ["adLeftSlot",  leftAds ],
+    ["adRightSlot", rightAds],
+  ].forEach(([slotId, data]) => {
+    const slot = $(slotId);
+    if (!slot) return;
+    const pick = data?.length ? data[Math.floor(Math.random() * data.length)] : null;
+    const site = pick?.site?.trim();
+    if (site) {
+      slot.href = site;
+      slot.removeAttribute("tabindex");
+      slot.style.pointerEvents = "";
+      slot.style.cursor = "";
+    } else {
+      // No site — kill the anchor completely
+      slot.removeAttribute("href");
+      slot.setAttribute("tabindex", "-1");
+      slot.style.pointerEvents = "none";
+      slot.style.cursor = "default";
+    }
+    if (pick?.image) {
+      slot.innerHTML = `<img src="${esc(pick.image)}" alt="Ad" loading="lazy"
+        onerror="this.parentElement.innerHTML='<div class=ad-empty></div>'">`;
+    }
+  });
+
+  // Top banner — pick random from topBannerAds array
+  const banner = $("topBanner");
+  if (banner) {
+    const pick = topBannerAds?.length ? topBannerAds[Math.floor(Math.random() * topBannerAds.length)] : null;
+    const site = pick?.site?.trim();
+    if (site) {
+      banner.href = site;
+      banner.removeAttribute("tabindex");
+      banner.style.pointerEvents = "";
+      banner.style.cursor = "";
+    } else {
+      banner.removeAttribute("href");
+      banner.setAttribute("tabindex", "-1");
+      banner.style.pointerEvents = "none";
+      banner.style.cursor = "default";
+    }
+    if (pick?.image) {
+      banner.innerHTML = `<img src="${esc(pick.image)}" alt="Banner" loading="lazy"
+        onerror="this.parentElement.innerHTML='<div class=banner-placeholder></div><div class=banner-shimmer></div>'">`;
+    }
+  }
+}
+
+/* ── CONFIG ───────────────────────────────────────────────── */
+const CFG = {
+  SHEET:      "https://script.google.com/macros/s/AKfycbyRGROJ70xwLEBLiWAw_7iSX42VkJSxg671wOmjfYo_cvvaDSs9mbXpK6S1EKa9oYQByA/exec",
+  POOL_SIZE:  16,
+  SIDE_SIZE:  24,
+  REFRESH_MS: 180000,
+  SIDE_INT:   4000,
+  PW:         360,     // primary card size (square)
+  PH:         360,     // primary card height
+  SW:         180,     // secondary card size (square)
+  SH:         260,     // secondary card height
+  GAP:        8,
+  SZ:         96,
+};
+
+/* ── STATE ────────────────────────────────────────────────── */
+const S = {
+  assets:    [],
+  loaded:    false,
+  // carousel
+  pool:      [],       // 16 picked assets
+  primary:   0,        // index of primary in pool
+  sliding:   false,    // prevents overlapping shifts
+  cardNodes: [],       // 5 persistent DOM nodes [off-2..off+2]
+  // side revolvers
+  sidePool:  { left:[], right:[] },
+  sideIdx:   { left:0,  right:0  },
+  sideBusy:  { left:false, right:false },
+  sideTimers:[],
+  // misc
+  cdId:      null,
+  refreshAt: 0,
+};
+
+/* ── UTILS ────────────────────────────────────────────────── */
+const $       = id => document.getElementById(id);
+const esc     = s  => String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const ss      = v  => (v == null ? "" : String(v));
+const FALLBACK = "https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/404_blank.png";
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function wScore(a) {
+  const s = ss(a.status).toLowerCase();
+  return s==="featured" ? 4 : s==="new" ? 2.5 : s==="fixed" ? 1.5 : 1;
+}
+
+function wSample(pool, n) {
+  const c = pool.slice(), out = [];
+  while (out.length < n && c.length) {
+    let r = Math.random() * c.reduce((sum,a)=>sum+wScore(a), 0), idx=0;
+    for (let i=0; i<c.length; i++) { r -= wScore(c[i]); if (r<=0){idx=i;break;} }
+    out.push(c.splice(idx,1)[0]);
+  }
+  return out;
+}
+
+/* ── LOADER / FADE ────────────────────────────────────────── */
+const showLoader = () => {
+  const el = $("carouselLoader");
+  if (el) { el.classList.add("visible"); }
+};
+
+function hideLoader() {
+  const loader = $("carouselLoader");
+  const img    = $("loaderImg");
+  if (!loader || !img) return;
+  // Swap to loaded.gif, wait for it to finish (it ends on a blank frame), then hide
+  img.src = "https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/GIF/loaded.gif";
+  // loaded.gif duration — parse or use a safe timeout
+  // We listen for the image to "error" (blank frame source) or use a fixed delay
+  // Use 2.5s as safe default (loaded.gif is typically ~2s)
+  setTimeout(() => {
+    loader.style.opacity = "0";
+    setTimeout(() => {
+      loader.style.display = "none";
+    }, 350);
+  }, 2500);
+}
+
+function withFade(cb) {
+  const strip = $("strip0");
+  if (!strip) { cb(); return; }
+  // Fade the cards out, swap content, fade back in — no dark overlay
+  strip.style.transition = "opacity 0.28s ease";
+  strip.style.opacity    = "0";
+  setTimeout(() => {
+    cb();
+    requestAnimationFrame(() => {
+      strip.style.opacity = "1";
+    });
+  }, 280);
+}
+
+/* ── FETCH ────────────────────────────────────────────────── */
+async function fetchAssets() {
+  if (window.assetsData?.length) return window.assetsData;
+  const res = await fetch(CFG.SHEET, { cache: "no-store" });
+  if (!res.ok) throw new Error("HTTP " + res.status);
+  const raw = await res.json();
+  return raw.filter(row => Object.values(row).some(v => ss(v).trim()));
+}
+
+/* ── PICK ─────────────────────────────────────────────────── */
+function pickAll() {
+  const vis = S.assets.filter(a => {
+    const s = ss(a.status).toLowerCase();
+    return s !== "hide" && s !== "hidden" && s !== "cooked";
+  });
+  if (!vis.length) return;
+
+  // Carousel: weighted toward featured/new
+  S.pool    = wSample(vis, Math.min(CFG.POOL_SIZE, vis.length));
+  S.primary = 0;
+
+  // Side pools: from remainder
+  const used = new Set(S.pool.map(a => a.title));
+  let rem = shuffle(vis.filter(a => !used.has(a.title)));
+  if (rem.length < CFG.SIDE_SIZE * 2) rem = shuffle(vis);
+
+  S.sidePool.left  = rem.slice(0, CFG.SIDE_SIZE);
+  S.sidePool.right = rem.slice(CFG.SIDE_SIZE, CFG.SIDE_SIZE * 2);
+  if (!S.sidePool.right.length) S.sidePool.right = shuffle(rem);
+  S.sideIdx.left  = 0;
+  S.sideIdx.right = 0;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SIDE REVOLVER ENGINE
+   Each rail has 6 nodes. Column clips to 5 visible.
+   STEP = SZ + GAP = 104px.
+
+   LEFT  (scrolls DOWN — new item enters top):
+     • Rail offset = -STEP  (node[0] hidden above clip)
+     • Animate to  0  → node[0] slides in from top
+     • After: remove node[5], prepend new node, reset to -STEP
+
+   RIGHT (scrolls UP — new item enters bottom):
+     • Rail offset = 0  (node[5] hidden below clip)
+     • Animate to -STEP → node[5] slides in from bottom
+     • After: remove node[0], append new node, reset to 0
+══════════════════════════════════════════════════════════ */
+const SIDE_STEP = CFG.SZ + CFG.GAP; // 104
+
+function nextSideAsset(side) {
+  const pool = S.sidePool[side];
+  if (!pool.length) return null;
+  const asset = pool[S.sideIdx[side] % pool.length];
+  S.sideIdx[side]++;
+  return asset;
+}
+
+function buildSideNode(asset) {
+  const el = document.createElement("div");
+  if (!asset) {
+    el.className = "side-item sk";
+    return el;
+  }
+  const title = ss(asset.title).trim() || "Untitled";
+  const image = ss(asset.image).trim() || FALLBACK;
+  const link  = ss(asset.link).trim()  || "#";
+  el.className = "side-item";
+  el.innerHTML =
+    `<img src="${esc(image)}" alt="${esc(title)}" loading="lazy"
+       onerror="this.src='${FALLBACK}'"/>
+     <div class="side-item-overlay">
+       <div class="side-item-title">${esc(title)}</div>
+     </div>`;
+  el.addEventListener("click", () => openLink(link, title, image));
+  return el;
+}
+
+function initSideRevolvers() {
+  // side-inner is exactly CLIP_H=512px tall (CSS hard-coded)
+  // Rail is RAIL_H=616px = 6 nodes
+  // To show nodes 1-5 (zero-indexed): rail.top = 0
+  // To hide node 0 above: rail.top = -SIDE_STEP = -104
+  // LEFT starts at -104 (node[0] hidden above, nodes 1-5 visible... wait)
+  // Actually with top=-104: node[0] is at y=-104 (hidden), nodes 1-5 at y=0..511 ✓
+  // RIGHT starts at 0: nodes 0-4 visible, node[5] at y=520 (hidden below 512) ✓
+
+  ["left","right"].forEach(side => {
+    const railId = side === "left" ? "leftRail" : "rightRail";
+    const rail   = $(railId);
+    if (!rail) return;
+
+    rail.innerHTML = "";
+    const pool = S.sidePool[side];
+    for (let i = 0; i < 6; i++) {
+      rail.appendChild(buildSideNode(pool[i % Math.max(pool.length, 1)] || null));
+    }
+    S.sideIdx[side] = 6;
+
+    rail.style.transition = "none";
+    rail.style.height     = (6 * CFG.SZ + 5 * CFG.GAP) + "px"; // 616
+
+    if (side === "left") {
+      // Node[0] hidden above — rail offset up by one step
+      rail.style.top = (-SIDE_STEP) + "px"; // -104
+      rail._ctrTop = 0; // "normal" position where 5 nodes fill the window
+    } else {
+      // Node[5] hidden below — rail at top:0
+      rail.style.top = "0px";
+      rail._ctrTop = 0;
+    }
+  });
+}
+
+function revolve(side) {
+  if (S.sideBusy[side]) return;
+  S.sideBusy[side] = true;
+
+  const railId = side === "left" ? "leftRail" : "rightRail";
+  const rail   = $(railId);
+  if (!rail) { S.sideBusy[side] = false; return; }
+
+  const currentTop = parseFloat(rail.style.top) || 0;
+
+  // LEFT scrolls DOWN: rail moves from -104 to 0 (node[0] slides in from top)
+  // RIGHT scrolls UP:  rail moves from 0 to -104 (node[5] slides in from bottom)
+  const targetTop = side === "left"
+    ? currentTop + SIDE_STEP   // -104 → 0
+    : currentTop - SIDE_STEP;  // 0 → -104
+
+  rail.style.transition = "top 0.52s cubic-bezier(.4,0,.22,1)";
+  rail.style.top        = targetTop + "px";
+
+  setTimeout(() => {
+    const newAsset = nextSideAsset(side);
+    const newNode  = buildSideNode(newAsset);
+    rail.style.transition = "none";
+
+    if (side === "left") {
+      // Node[0] slid in at top — remove node[5] (bottom), prepend new node at top
+      // then snap back so new node is hidden above
+      rail.removeChild(rail.lastElementChild);
+      rail.insertBefore(newNode, rail.firstChild);
+      rail.style.top = (-SIDE_STEP) + "px"; // reset: new node[0] hidden above
+    } else {
+      // Node[5] slid in at bottom — remove node[0] (top), append new node at bottom
+      // then snap back so new node is hidden below
+      rail.removeChild(rail.firstElementChild);
+      rail.appendChild(newNode);
+      rail.style.top = "0px"; // reset: new node[5] hidden below
+    }
+
+    S.sideBusy[side] = false;
+  }, 560);
+}
+
+function startSideTimers() {
+  S.sideTimers.forEach(t => clearInterval(t));
+  S.sideTimers = [];
+  S.sideTimers.push(setInterval(() => revolve("left"),  CFG.SIDE_INT));
+  // Stagger right by half an interval so they don't fire together
+  const stagger = setTimeout(() => {
+    S.sideTimers.push(setInterval(() => revolve("right"), CFG.SIDE_INT));
+  }, CFG.SIDE_INT / 2);
+  S.sideTimers.push(stagger);
+}
+
+/* ══════════════════════════════════════════════════════════
+   CAROUSEL ENGINE — 5 persistent card DOM nodes
+   ══════════════════════════════════════════════════════════
+
+   S.cardNodes = [node-2, node-1, node0(primary), node+1, node+2]
+
+   CSS transitions on .rec-card are ALWAYS active (set in <style>).
+   JS NEVER sets card.style.transition — only card.classList and
+   card.style.width. This means transitions always fire cleanly
+   when the class/width changes.
+
+   shiftStrip(dir):
+     1. Compute target translateX (one SW+GAP step from center).
+     2. Enable rail transition, apply target transform.
+     3. Immediately advance S.primary (circular).
+     4. After animation: silently rebuild all 5 nodes around new
+        primary by updating innerHTML + width + class. All done
+        with rail.transition=none so the snap is invisible.
+        Cards get new width values that match what they SHOULD be
+        at the new primary — no class-change transition fires here
+        because we update width and class simultaneously.
+     5. Re-enable rail transition for next shift.
+══════════════════════════════════════════════════════════ */
+
+function poolAt(offset) {
+  const n = S.pool.length;
+  if (!n) return null;
+  return S.pool[((S.primary + offset) % n + n) % n];
+}
+
+function cardHTML(asset) {
+  if (!asset) return "";
+  const title  = ss(asset.title).trim()  || "Untitled";
+  const author = ss(asset.author).trim() || "";
+  const image  = ss(asset.image).trim()  || FALLBACK;
+  const status = ss(asset.status).toLowerCase();
+  let badge = "";
+  if (status === "featured") badge = `<span class="rec-card-badge badge-featured">Featured</span>`;
+  else if (status === "new") badge = `<span class="rec-card-badge badge-new">New</span>`;
+  else if (status === "fixed") badge = `<span class="rec-card-badge badge-fixed">Fixed</span>`;
+  return `<img src="${esc(image)}" alt="${esc(title)}" loading="lazy"
+            onerror="this.src='${FALLBACK}'"/>
+          ${badge}
+          <div class="rec-card-overlay">
+            <div class="rec-card-title">${esc(title)}</div>
+            ${author ? `<div class="rec-card-author">${esc(author)}</div>` : ""}
+          </div>`;
+}
+
+// Store asset data directly on the node so click always matches what's visible
+function bindCard(node, asset) {
+  node.style.width  = node._isPrimary ? CFG.PW + "px" : CFG.SW + "px";
+  node.style.height = node._isPrimary ? CFG.PH + "px" : CFG.SH + "px";
+  node.innerHTML = cardHTML(asset);
+  node._asset    = asset;
+}
+
+function computeTx() {
+  const vp = $("viewport0");
+  const vw = vp ? vp.clientWidth : 800;
+  // Rail: [SW][GAP][SW][GAP][PW][GAP][SW][GAP][SW]
+  // Left edge of primary (index 2) = 2*(SW+GAP)
+  const leftEdge = 2 * (CFG.SW + CFG.GAP);
+  // Center primary in viewport
+  return leftEdge - (vw - CFG.PW) / 2;
+}
+
+function buildRail() {
+  const rail = $("rail0");
+  if (!rail) return;
+
+  rail.innerHTML = "";
+  S.cardNodes = [];
+  rail.style.transition = "none";
+
+  if (!S.pool.length) {
+    // 3 skeleton nodes only — no ghosts when empty
+    [-1,0,1].forEach((off) => {
+      const sk = document.createElement("div");
+      sk.className = "rec-card sk";
+      sk.style.width  = (off === 0 ? CFG.PW : CFG.SW) + "px";
+      sk.style.height = (off === 0 ? CFG.PH : CFG.SH) + "px";
+      rail.appendChild(sk);
+      S.cardNodes.push(sk);
+    });
+    rail.style.transform = "translateX(0)";
+    return;
+  }
+
+  [-2,-1,0,1,2].forEach((off) => {
+    const node = document.createElement("div");
+    node.className = "rec-card";
+    node._isPrimary = (off === 0);
+    node._offset   = off;
+    node.style.width      = (node._isPrimary ? CFG.PW : CFG.SW) + "px";
+    node.style.height     = (node._isPrimary ? CFG.PH : CFG.SH) + "px";
+    // Outer ghost nodes (-2 and +2) are invisible — only exist for slide animation
+    node.style.visibility = (Math.abs(off) === 2) ? "hidden" : "visible";
+    const asset = poolAt(off);
+    node.innerHTML = cardHTML(asset);
+    node._asset = asset;
+    node.addEventListener("click", () => {
+      if (node._asset && node.style.visibility !== "hidden") openLink(
+        ss(node._asset.link).trim()  || "#",
+        ss(node._asset.title).trim() || "Untitled",
+        ss(node._asset.image).trim() || FALLBACK
+      );
+    });
+    rail.appendChild(node);
+    S.cardNodes.push(node);
+  });
+
+  rail.style.width = (CFG.PW + 4*CFG.SW + 4*CFG.GAP) + "px";
+  const tx = computeTx();
+  rail.style.transform = `translateX(${-tx}px)`;
+
+  updateDots();
+}
+
+window.shiftStrip = function(dir) {
+  if (S.sliding || !S.pool.length || !S.cardNodes.length) return;
+  S.sliding = true;
+
+  const rail = $("rail0");
+  if (!rail) { S.sliding = false; return; }
+
+  const step      = CFG.SW + CFG.GAP;
+  const currentTx = computeTx();
+  const targetTx  = currentTx + dir * step;
+
+  // The ghost node that will slide into view during animation:
+  // dir=+1 (slide left) → right ghost (index 4, offset +2) becomes the incoming +1
+  // dir=-1 (slide right) → left ghost (index 0, offset -2) becomes the incoming -1
+  const incomingGhostIdx = dir > 0 ? 4 : 0;
+  if (S.cardNodes[incomingGhostIdx]) {
+    S.cardNodes[incomingGhostIdx].style.visibility = "visible";
+  }
+
+  rail.style.transition = "transform 0.44s cubic-bezier(.4,0,.22,1)";
+  rail.style.transform  = `translateX(${-targetTx}px)`;
+
+  const n = S.pool.length;
+  S.primary = ((S.primary + dir) % n + n) % n;
+
+  setTimeout(() => {
+    rail.style.transition = "none";
+
+    [-2,-1,0,1,2].forEach((off, i) => {
+      const node   = S.cardNodes[i];
+      const asset  = poolAt(off);
+      const isPrim = off === 0;
+      node._isPrimary       = isPrim;
+      node._offset          = off;
+      node.style.width      = (isPrim ? CFG.PW : CFG.SW) + "px";
+      node.style.height     = (isPrim ? CFG.PH : CFG.SH) + "px";
+      node.style.visibility = (Math.abs(off) === 2) ? "hidden" : "visible";
+      node.innerHTML        = cardHTML(asset);
+      node._asset           = asset;
+    });
+
+    rail.style.transform = `translateX(${-computeTx()}px)`;
+    updateDots();
+
+    requestAnimationFrame(() => {
+      rail.style.transition = "";
+      S.sliding = false;
+    });
+  }, 460);
+};
+
+function updateDots() {
+  const el = $("dots0");
+  if (!el) return;
+  const n = S.pool.length, cur = S.primary;
+  const max = Math.min(n, 10);
+  el.innerHTML = "";
+  for (let i = 0; i < max; i++) {
+    const d = document.createElement("div");
+    d.className = "strip-dot" + (i === (cur % max) ? " active" : "");
+    el.appendChild(d);
+  }
+}
+
+/* ── KEYBOARD ─────────────────────────────────────────────── */
+document.addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+  if (e.key === "ArrowLeft")  { e.preventDefault(); window.shiftStrip(-1); }
+  if (e.key === "ArrowRight") { e.preventDefault(); window.shiftStrip(+1); }
+});
+
+/* ── RESIZE ───────────────────────────────────────────────── */
+let _resizeTimer = null;
+window.addEventListener("resize", () => {
+  clearTimeout(_resizeTimer);
+  _resizeTimer = setTimeout(() => {
+    if (!S.loaded || !S.cardNodes.length) return;
+    const rail = $("rail0");
+    if (!rail) return;
+    rail.style.transition = "none";
+    rail.style.transform  = `translateX(${-computeTx()}px)`;
+    requestAnimationFrame(() => { rail.style.transition = ""; });
+  }, 150);
+});
+
+/* ── OPEN LINK ────────────────────────────────────────────── */
+function openLink(link, title, fav) {
+  const mode  = localStorage.getItem("incognitoMode") || "off";
+  const shell = (s, t, f) =>
+    `<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>${t}</title>` +
+    `<link rel="icon" href="${f}" crossorigin="anonymous"/>` +
+    `<style>*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden;background:#000}` +
+    `embed{position:fixed;inset:0;width:100%;height:100%;border:none}` +
+    `#r{position:fixed;top:8px;right:8px;z-index:9999;background:rgba(0,0,0,.6);color:#fff;border:none;` +
+    `border-radius:6px;padding:4px 10px;font-family:monospace;font-size:13px;cursor:pointer;opacity:.4;transition:opacity .2s}` +
+    `#r:hover{opacity:1}</style></head><body>` +
+    `<embed id="f" src="${s}"/>` +
+    `<button id="r" onclick="document.getElementById('f').src=document.getElementById('f').src">↺</button>` +
+    `</body></html>`;
+  if (mode === "blob")
+    window.open(URL.createObjectURL(new Blob([shell(link,title,fav)], {type:"text/html;charset=utf-8"})), "_blank");
+  else if (mode === "about") {
+    const tab = window.open("about:blank", "_blank");
+    if (tab) { tab.document.write(shell(link,title,fav)); tab.document.close(); }
+  } else {
+    window.open(link, "_blank");
+  }
+}
+
+/* ── COUNTDOWN ────────────────────────────────────────────── */
+function startCountdown() {
+  clearInterval(S.cdId);
+  S.refreshAt = Date.now() + CFG.REFRESH_MS;
+  const el = $("refreshCountdown");
+  S.cdId = setInterval(() => {
+    const rem = Math.max(0, S.refreshAt - Date.now());
+    const m   = Math.floor(rem / 60000);
+    const sec = Math.floor((rem % 60000) / 1000);
+    if (el) el.textContent = m + ":" + String(sec).padStart(2, "0");
+    if (rem <= 0) { clearInterval(S.cdId); doRefresh(); }
+  }, 1000);
+}
+
+function doRefresh() {
+  if (!S.loaded || !S.assets.length) return;
+  withFade(() => {
+    pickAll();
+    buildRail();
+    initSideRevolvers();
+    startSideTimers();
+    if (typeof showToast === "function") showToast("✦ Picks refreshed!", 1800);
+  });
+  startCountdown();
+}
+
+/* ── INIT ─────────────────────────────────────────────────── */
+async function initMain() {
+  initAds();
+  showLoader();
+
+  try {
+    S.assets = await fetchAssets();
+    S.loaded = true;
+    pickAll();
+    buildRail();
+    initSideRevolvers();
+    startSideTimers();
+    hideLoader();
+  } catch (err) {
+    console.error("[Discover]", err);
+    hideLoader();
+    const rail = $("rail0");
+    if (rail) rail.innerHTML =
+      `<div style="color:rgba(255,80,80,0.6);font-size:11px;font-family:monospace;
+        padding:20px;align-self:center;">Failed to load — check connection.</div>`;
+  }
+
+  document.body.classList.remove("ws-loading");
+  startCountdown();
+  // Persistent refresh loop
+  (function loop() { setTimeout(() => { doRefresh(); loop(); }, CFG.REFRESH_MS); })();
+}
+
+document.addEventListener("DOMContentLoaded", () => setTimeout(initMain, 60));
+</script>
+</body>
+</html>

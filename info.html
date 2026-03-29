@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WannaSmile | Info</title>
+
+<link id="favicon" rel="icon" href="https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/favicons/logo.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" /></noscript>
+
+<style>
+/* ==========================================
+   THEMES — mirrored from index.html
+   ========================================== */
+:root {
+  --main-bg:    url("https://raw.githubusercontent.com/01110010-00110101/themeify/main/redux/Redux-mainbg.png");
+  --quote-bg:   url("https://raw.githubusercontent.com/01110010-00110101/themeify/main/redux/Redux-quotebg.png");
+  --header-bg:  url("https://raw.githubusercontent.com/01110010-00110101/themeify/main/redux/Redux-headerbg.png");
+  --footer-bg:  #555;
+  --card-bg:    rgba(0,0,0,0);
+  --menu-bg:    rgba(0,0,0,0.95);
+  --text-color:         #000;
+  --link-color:         #fff;
+  --quote-text:         #fff;
+  --accent-color:       #ff4444;
+  --input-bg:           #f0f0f0;
+  --input-border:       #ccc;
+  --input-text:         #333;
+  --input-placeholder:  #888;
+  --search-btn-bg:      #333;
+  --status-ok-border:   #00ff00;
+  --status-fix-border:  #ff0000;
+  --shadow-color:       rgba(0,0,0,0.3);
+}
+html[theme="classic"] {
+  --main-bg:#d4d4d4;--quote-bg:#1d201f;--header-bg:#1d201f;--footer-bg:#555;--card-bg:rgba(0,0,0,0);--menu-bg:rgba(0,0,0,0.95);--text-color:#000;--link-color:#fff;--quote-text:#fff;--accent-color:#ff4444;--input-bg:#f0f0f0;--input-border:#ccc;--input-text:#333;--input-placeholder:#888;--search-btn-bg:#333;--status-ok-border:#00ff00;--status-fix-border:#ff0000;--shadow-color:rgba(0,0,0,0.3);
+}
+html[theme="light"] {
+  --main-bg:#f4f4f4;--quote-bg:#f1f1f1;--header-bg:#e0e0e0;--footer-bg:#ccc;--card-bg:#ffffff;--menu-bg:rgba(255,255,255,0.95);--text-color:#111;--link-color:#222;--quote-text:#111;--accent-color:#e53935;--input-bg:#eee;--input-border:#aaa;--input-text:#111;--input-placeholder:#666;--search-btn-bg:#555;--status-ok-border:#00c853;--status-fix-border:#d32f2f;--shadow-color:rgba(0,0,0,0.15);
+}
+html[theme="dark"] {
+  --main-bg:#1e1e1e;--quote-bg:#292929;--header-bg:#0d0d0d;--footer-bg:#222;--card-bg:#2b2b2b;--menu-bg:rgba(0,0,0,0.9);--text-color:#f4f4f4;--link-color:#f4f4f4;--quote-text:#f4f4f4;--accent-color:#00bcd4;--input-bg:#333;--input-border:#555;--input-text:#f4f4f4;--input-placeholder:#999;--search-btn-bg:#1e1e1e;--status-ok-border:#00ff88;--status-fix-border:#ff5555;--shadow-color:rgba(0,0,0,0.5);
+}
+html[theme="slackerish"] {
+  --main-bg:#131112;--quote-bg:#1a1818;--header-bg:#342A21;--footer-bg:#342A21;--card-bg:#1b1717;--menu-bg:rgba(0,0,0,0.95);--text-color:#fff;--link-color:#ffbcbc;--quote-text:#ffbcbc;--accent-color:#ff4444;--input-bg:#2a2220;--input-border:#5a4740;--input-text:#f4f4f4;--input-placeholder:#b8b8b8;--search-btn-bg:#3a2f28;--status-ok-border:#00ff00;--status-fix-border:#ff0000;--shadow-color:rgba(0,0,0,0.6);
+}
+html[theme="redux"] {
+  --main-bg:url("https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/backgrounds/redux-white_bg.png");--quote-bg:url("https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/backgrounds/background_grey_icons.png");--header-bg:url("https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/backgrounds/background_black_icons.png");--footer-bg:#555;--card-bg:rgba(0,0,0,0);--menu-bg:rgba(0,0,0,0.95);--text-color:#000;--link-color:#fff;--quote-text:#fff;--accent-color:#ff4444;--input-bg:#f0f0f0;--input-border:#ccc;--input-text:#333;--input-placeholder:#888;--search-btn-bg:#333;--status-ok-border:#00ff00;--status-fix-border:#ff0000;--shadow-color:rgba(0,0,0,0.3);
+}
+html[theme="graduation"] {
+  --main-bg:url("https://i.redd.it/kjektcn4myv91.png");--header-bg:#ac00db;--quote-bg:#e232aa;--footer-bg:#5717a6;--card-bg:rgba(0,0,0,0);--menu-bg:#b3004d;--text-color:#fff;--link-color:#fff;--quote-text:#fff;--accent-color:#ff61c5;--input-bg:transparent;--input-border:transparent;--input-text:#fff;--input-placeholder:rgba(255,255,255,0.5);--search-btn-bg:rgba(172,0,219,0.6);--status-ok-border:#00ff00;--status-fix-border:#ff0000;--shadow-color:rgba(0,0,0,0.3);
+}
+html[theme="flower-boy"] {
+  --main-bg:url("https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/backgrounds/flower-boy_bg.jpeg");--quote-bg:rgba(0,0,0,0.3);--header-bg:rgba(0,0,0,0.3);--footer-bg:rgba(0,0,0,0.4);--card-bg:rgba(0,0,0,0);--menu-bg:rgba(0,0,0,0.9);--text-color:#fff;--link-color:#fff;--quote-text:#fff;--accent-color:#ff4444;--input-bg:rgba(0,0,0,0.3);--input-border:#ccc;--input-text:#fff;--input-placeholder:#ccc;--search-btn-bg:rgba(0,0,0,0.5);--status-ok-border:#00ff00;--status-fix-border:#ff0000;--shadow-color:rgba(0,0,0,0.3);
+}
+html[theme="star-platnium"] {
+  --main-bg:url("https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/backgrounds/star-platnium_bg.jpeg");--quote-bg:rgba(0,0,0,0.3);--header-bg:rgba(0,0,0,0.3);--footer-bg:rgba(0,0,0,0.4);--card-bg:rgba(0,0,0,0);--menu-bg:rgba(0,0,0,0.9);--text-color:#fff;--link-color:#fff;--quote-text:#fff;--accent-color:#ff4444;--input-bg:rgba(0,0,0,0.3);--input-border:#ccc;--input-text:#fff;--input-placeholder:#ccc;--search-btn-bg:rgba(0,0,0,0.5);--status-ok-border:#00ff00;--status-fix-border:#ff0000;--shadow-color:rgba(0,0,0,0.3);
+}
+html[theme="star-world"] {
+  --main-bg:url("https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/backgrounds/the-starly-world_bg.jpeg");--quote-bg:rgba(0,0,0,0.3);--header-bg:rgba(0,0,0,0.3);--footer-bg:rgba(0,0,0,0.4);--card-bg:rgba(0,0,0,0);--menu-bg:rgba(0,0,0,0.9);--text-color:#fff;--link-color:#fff;--quote-text:#fff;--accent-color:#ff4444;--input-bg:rgba(0,0,0,0.3);--input-border:#ccc;--input-text:#fff;--input-placeholder:#ccc;--search-btn-bg:rgba(0,0,0,0.5);--status-ok-border:#00ff00;--status-fix-border:#ff0000;--shadow-color:rgba(0,0,0,0.3);
+}
+
+/* ==========================================
+   Global Reset
+   ========================================== */
+* {
+  margin: 0; padding: 0; box-sizing: border-box;
+  -webkit-user-select: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+input, textarea { -webkit-user-select: text; user-select: text; }
+a, button, input, textarea { outline: none !important; }
+
+html {
+  height: 100%;
+  background-image: var(--main-bg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+}
+body {
+  min-height: 100%;
+  background: transparent;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  font-family: monospace;
+}
+a, a:visited { color: var(--link-color); text-decoration: none; }
+a:focus { outline: none; }
+
+/* ==========================================
+   Header & Navigation
+   ========================================== */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--header-bg);
+  padding: 10px 20px;
+  width: 100%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+#topBar {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 20;
+  background: var(--header-bg);
+  color: var(--link-color);
+}
+#topBar header { z-index: 21; }
+
+header a, footer a {
+  margin: 0 10px;
+  color: var(--link-color);
+  font-family: monospace;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s, text-decoration 0.3s;
+}
+header a:hover, footer a:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-color);
+}
+header img { width: 28px; height: 28px; object-fit: cover; }
+.nav-links { display: flex; align-items: center; gap: 12px; }
+.header-controls { display: flex; align-items: center; gap: 8px; }
+.pages-anchor {
+  display: inline-flex; align-items: center; gap: 8px; margin-left: 10px;
+}
+.pages-anchor button {
+  background: transparent; border: none; padding: 0; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.pages-anchor button img {
+  width: 28px; height: 28px; object-fit: contain; transition: transform 0.2s ease;
+}
+.pages-anchor button:hover img { transform: scale(1.2); }
+
+/* Profile pic */
+#pfp {
+  width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+  object-fit: cover; transition: transform 0.25s ease;
+}
+#pfp:hover { transform: scale(1.1); }
+#dashboardBtn {
+  width: 36px; background: none; border: none; color: var(--link-color);
+  font-size: 18px; cursor: pointer; transition: transform 0.25s ease;
+}
+#dashboardBtn:hover { transform: scale(1.1); }
+
+/* Dashboard menu */
+.dashboard-menu {
+  position: fixed; top: 60px; right: 20px; background: var(--menu-bg);
+  border-radius: 10px; display: none; flex-direction: column;
+  min-width: 200px; padding: 10px 0; z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+.dashboard-menu a, .dashboard-menu p {
+  padding: 10px 16px; color: var(--link-color); font-family: monospace;
+  display: block; transition: color 0.3s, background 0.3s;
+}
+.dashboard-menu p { font-weight: bold; cursor: default; }
+.dashboard-menu a:hover, .dashboard-menu p:hover {
+  color: var(--accent-color); background: rgba(255,255,255,0.1);
+  text-decoration: underline; text-decoration-color: var(--accent-color);
+}
+
+/* ==========================================
+   Quote Ticker
+   ========================================== */
+#quoteWrapper {
+  position: relative; width: 100vw; height: 30px; overflow: hidden;
+  background: var(--quote-bg); color: var(--quote-text);
+  display: flex; align-items: center;
+}
+#quoteBox {
+  position: absolute; white-space: nowrap; font-family: monospace;
+  font-size: 1em; font-weight: bold;
+  background: var(--quote-bg); color: var(--quote-text);
+  transform: translateX(100%); user-select: none; cursor: default;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+
+/* ==========================================
+   INFO PAGE MAIN CONTENT
+   ========================================== */
+.info-page {
+  flex: 1;
+  padding: 30px 20px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ----  About Section  ---- */
+.info-about {
+  background: var(--menu-bg);
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 24px var(--shadow-color);
+  color: var(--link-color);
+}
+.info-about h1 {
+  font-size: 1.8rem;
+  color: var(--accent-color);
+  margin-bottom: 10px;
+  font-family: 'Poppins', monospace;
+  letter-spacing: 1px;
+}
+.info-about p {
+  font-size: 0.92rem;
+  line-height: 1.75;
+  opacity: 0.85;
+  margin-bottom: 10px;
+}
+.info-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.info-badge {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 0.78rem;
+  color: var(--link-color);
+  opacity: 0.8;
+}
+
+/* ----  Section Header  ---- */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.section-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--link-color);
+  font-family: 'Poppins', monospace;
+  opacity: 0.9;
+  letter-spacing: 0.5px;
+}
+.section-count {
+  font-size: 0.78rem;
+  opacity: 0.5;
+  color: var(--link-color);
+}
+
+/* ----  Catalog Grid  ---- */
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+@media (max-width: 1100px) { .catalog-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 700px)  { .catalog-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 450px)  { .catalog-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* ----  Catalog Item  ---- */
+.catalog-item {
+  background: transparent;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 8px 8px;
+  gap: 6px;
+  transition: transform 0.2s ease;
+  cursor: default;
+  text-align: center;
+}
+.catalog-item:hover {
+  transform: translateY(-3px) scale(1.02);
+}
+.catalog-item img {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: rgba(0,0,0,0.15);
+  flex-shrink: 0;
+}
+.catalog-item-title {
+  font-size: 0.72rem;
+  font-weight: bold;
+  color: var(--link-color);
+  line-height: 1.3;
+  word-break: break-word;
+  max-height: 2.7em;
+  overflow: hidden;
+}
+.catalog-item-meta {
+  font-size: 0.63rem;
+  color: var(--link-color);
+  opacity: 0.45;
+  line-height: 1.2;
+}
+.catalog-item-page {
+  font-size: 0.6rem;
+  background: rgba(255,255,255,0.07);
+  border-radius: 6px;
+  padding: 1px 7px;
+  color: var(--link-color);
+  opacity: 0.4;
+}
+
+/* ----  Skeleton loaders  ---- */
+.catalog-skeleton {
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  height: 120px;
+  animation: skeletonPulse 1.4s ease-in-out infinite;
+}
+@keyframes skeletonPulse {
+  0%,100% { opacity: 0.4; }
+  50%      { opacity: 0.7; }
+}
+
+/* ---- Loading / Error states ---- */
+.info-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--link-color);
+  opacity: 0.5;
+  font-size: 0.9rem;
+}
+
+/* ----  View All Button  ---- */
+.view-all-wrap {
+  display: none; /* removed from below grid, now beside reshuffle */
+}
+.btn-view-all {
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 32px;
+  font-family: monospace;
+  font-size: 0.88rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.2s;
+  letter-spacing: 0.5px;
+}
+.btn-view-all:hover { filter: brightness(1.2); transform: scale(1.04); }
+
+/* ----  Suggest Banner  ---- */
+.suggest-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--menu-bg);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-left: 4px solid var(--accent-color);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin: 32px 0 16px;
+  color: var(--link-color);
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s, border-color 0.2s;
+  box-shadow: 0 2px 12px var(--shadow-color);
+}
+.suggest-banner:hover {
+  background: rgba(255,255,255,0.07);
+  transform: translateX(4px);
+  border-left-color: var(--accent-color);
+  text-decoration: none;
+}
+.suggest-icon { font-size: 1.6rem; flex-shrink: 0; }
+.suggest-text {
+  flex: 1;
+  font-size: 0.9rem;
+  font-weight: bold;
+  line-height: 1.5;
+}
+.suggest-sub {
+  font-weight: normal;
+  opacity: 0.55;
+  font-size: 0.78rem;
+}
+.suggest-arrow {
+  font-size: 1.3rem;
+  opacity: 0.5;
+  transition: transform 0.2s, opacity 0.2s;
+  flex-shrink: 0;
+}
+.suggest-banner:hover .suggest-arrow { transform: translateX(5px); opacity: 1; }
+
+/* ----  Check It Out  ---- */
+.check-out-wrap {
+  text-align: center;
+  padding: 32px 0 8px;
+}
+.btn-checkout {
+  display: inline-block;
+  background: var(--accent-color);
+  color: #fff;
+  border-radius: 12px;
+  padding: 14px 44px;
+  font-family: 'Poppins', monospace;
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-decoration: none;
+  box-shadow: 0 4px 18px var(--shadow-color);
+  transition: filter 0.2s, transform 0.2s;
+}
+.btn-checkout:hover { filter: brightness(1.2); transform: scale(1.05); text-decoration: none; }
+
+/* ----  Full Catalog (view all) ---- */
+.full-catalog-section { display: none; }
+.full-catalog-section.visible { display: block; }
+
+.page-group { margin-bottom: 32px; }
+.page-group-title {
+  font-size: 0.82rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* ----  Scroll to top  ---- */
+#toTopBtn {
+  display: none;
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 16px;
+  font-size: 14px;
+  font-family: monospace;
+  border: none;
+  border-radius: 8px;
+  background: var(--header-bg);
+  color: var(--link-color);
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  opacity: 0.6;
+  z-index: 500;
+  transition: opacity 0.3s, color 0.3s;
+}
+#toTopBtn:hover { opacity: 0.8; color: var(--accent-color); text-decoration: underline; }
+#toTopBtn.show { display: block !important; opacity: 0.75 !important; pointer-events: auto !important; }
+
+/* ----  Footer  ---- */
+footer {
+  margin-top: auto;
+  background: var(--footer-bg);
+  text-align: center;
+  padding: 30px;
+  width: 100%;
+  font-family: monospace;
+  color: var(--link-color);
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
+}
+
+/* ----  Contributors  ---- */
+.contributors-section {
+  margin-bottom: 28px;
+}
+
+.contrib-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.contrib-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  text-decoration: none;
+  width: 100px;
+  transition: transform 0.2s ease;
+}
+.contrib-card:hover { transform: translateY(-4px); text-decoration: none; }
+
+.contrib-avatar-wrap {
+  position: relative;
+  width: 68px;
+  height: 68px;
+}
+.contrib-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06);
+  display: block;
+  transition: border-color 0.2s;
+}
+.contrib-card:hover .contrib-avatar {
+  border-color: var(--accent-color);
+}
+
+.contrib-name {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--link-color);
+  text-align: center;
+  line-height: 1.3;
+  word-break: break-word;
+}
+.contrib-role {
+  font-size: 0.65rem;
+  color: var(--link-color);
+  opacity: 0.45;
+  text-align: center;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+/* row label for debug */
+.contrib-row-label {
+  font-size: 0.62rem;
+  opacity: 0.25;
+  color: var(--link-color);
+  font-family: monospace;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+/* ----  Stats row  ---- */
+.stats-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.stat-box {
+  flex: 1;
+  min-width: 100px;
+  background: var(--menu-bg);
+  border-radius: 12px;
+  padding: 16px 20px;
+  text-align: center;
+  box-shadow: 0 2px 12px var(--shadow-color);
+}
+.stat-box .stat-num {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  font-family: 'Poppins', monospace;
+}
+.stat-box .stat-label {
+  font-size: 0.7rem;
+  color: var(--link-color);
+  opacity: 0.5;
+  margin-top: 2px;
+}
+</style>
+</head>
+<body>
+
+<!-- Top Bar / Header -->
+<div id="topBar">
+<header>
+<nav class="nav-links">
+  <a href="." target="_blank">Home</a>
+  <a href="favorites.html" target="_blank">Favorites</a>
+  <a href="discovery.html" target="_blank">Discovery</a>
+  <a href="#" target="_blank">Settings</a>
+  <a href="https://padlet.com/rhap5ody/wannasmile-suggestion-report-page-t8t6pg32hl71ri9m" target="_blank">Suggestions</a>
+  <a href="info.html" target="_blank">Info</a>
+  <div class="pages-anchor">
+    <a href="https://dontevenjokelad.github.io./" target="_blank">SoundScape</a>
+    <a href="#" id="downloadBtn">DOWNLOAD V0.8!</a>
+  </div>
+</nav>
+
+<div class="header-controls">
+  <img id="pfp"
+    src="https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/favicons/logo.png"
+    alt="Profile" />
+  <button id="dashboardBtn" aria-label="Dashboard" aria-expanded="false">☰</button>
+</div>
+</header>
+
+<!-- Quote Ticker -->
+<div id="quoteWrapper"><span id="quoteBox">Loading...</span></div>
+</div>
+
+<!-- Dashboard Menu -->
+<div class="dashboard-menu" id="dashboardMenu" aria-hidden="true">
+  <p>⚙ Menu</p>
+  <a href="." target="_blank">🏠 Home</a>
+  <a href="favorites.html" target="_blank">⭐ Favorites</a>
+  <a href="discovery.html" target="_blank">🔍 Discovery</a>
+  <a href="info.html" target="_blank">ℹ️ Info</a>
+</div>
+
+<!-- ==============================
+     MAIN INFO CONTENT
+     ============================== -->
+<main class="info-page">
+
+  <!-- About Card -->
+  <div class="info-about">
+    <h1>About WannaSmile</h1>
+    <p>
+      <strong>WannaSmile</strong> is a personal web project that brings together a curated collection of tools, games, apps, and experiments — all accessible from one clean, themeable hub. It's built for speed, style, and a little fun.
+    </p>
+    <p>
+      All content is loaded dynamically from a Google Sheets database, meaning the library stays fresh without a full page rebuild. You can explore items by page, search, sort, favourite, or discover something random.
+    </p>
+    <p>
+      Use the keyboard shortcuts (<kbd style="background:rgba(255,255,255,0.15);border-radius:4px;padding:1px 6px;">→</kbd> / <kbd style="background:rgba(255,255,255,0.15);border-radius:4px;padding:1px 6px;">←</kbd> for pages, <kbd style="background:rgba(255,255,255,0.15);border-radius:4px;padding:1px 6px;">R</kbd> to reload, <kbd style="background:rgba(255,255,255,0.15);border-radius:4px;padding:1px 6px;">Esc</kbd> to panic-redirect), customise your theme in Settings, and mark your favourites with the ☆ star on any card.
+    </p>
+    <div class="info-badges">
+      <span class="info-badge">🎨 Themeable</span>
+      <span class="info-badge">⭐ Favourites</span>
+      <span class="info-badge">🔍 Searchable</span>
+      <span class="info-badge">📄 Multi-page</span>
+      <span class="info-badge">🎵 SoundScape</span>
+      <span class="info-badge">🕵️ Incognito modes</span>
+      <span class="info-badge">⌨️ Keyboard shortcuts</span>
+      <span class="info-badge">🔄 Live sheet data</span>
+    </div>
+  </div>
+
+  <!-- Contributors -->
+  <div class="contributors-section">
+    <div class="section-header" style="margin-bottom:16px;">
+      <span class="section-title">✦ Contributors</span>
+    </div>
+    <div id="contributorsMount"></div>
+  </div>
+
+  <!-- Stats row (populated by JS) -->
+  <div class="stats-row" id="statsRow">
+    <div class="stat-box"><div class="stat-num" id="statTotal">—</div><div class="stat-label">Total Items</div></div>
+    <div class="stat-box"><div class="stat-num" id="statPages">—</div><div class="stat-label">Pages</div></div>
+    <div class="stat-box"><div class="stat-num" id="statAuthors">—</div><div class="stat-label">Authors</div></div>
+    <div class="stat-box"><div class="stat-num" id="statFavs">—</div><div class="stat-label">Your Favourites</div></div>
+  </div>
+
+  <!-- Random 18 preview -->
+  <div class="section-header">
+    <span class="section-title">✦ Included Assets <span class="section-count" id="previewCount"></span></span>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+      <button class="btn-view-all" id="shuffleBtn" style="padding:6px 18px;font-size:0.78rem;">🔀 Reshuffle</button>
+      <button class="btn-view-all" id="viewAllBtn" style="padding:6px 18px;font-size:0.78rem;background:rgba(255,255,255,0.12);color:var(--link-color);">View All Items ▾</button>
+    </div>
+  </div>
+
+  <div class="catalog-grid" id="previewGrid">
+    <!-- 18 skeletons -->
+    <div class="catalog-skeleton"></div><div class="catalog-skeleton"></div><div class="catalog-skeleton"></div>
+    <div class="catalog-skeleton"></div><div class="catalog-skeleton"></div><div class="catalog-skeleton"></div>
+    <div class="catalog-skeleton"></div><div class="catalog-skeleton"></div><div class="catalog-skeleton"></div>
+    <div class="catalog-skeleton"></div><div class="catalog-skeleton"></div><div class="catalog-skeleton"></div>
+    <div class="catalog-skeleton"></div><div class="catalog-skeleton"></div><div class="catalog-skeleton"></div>
+    <div class="catalog-skeleton"></div><div class="catalog-skeleton"></div><div class="catalog-skeleton"></div>
+  </div>
+
+  <!-- Full catalog (hidden until View All) -->
+  <div class="full-catalog-section" id="fullCatalog">
+    <div class="info-state" id="fullCatalogLoading">Loading full catalog…</div>
+  </div>
+
+  <!-- Suggest banner -->
+  <a href="https://padlet.com/rhap5ody/wannasmile-suggestion-report-page-t8t6pg32hl71ri9m" target="_blank" class="suggest-banner">
+    <span class="suggest-icon">💡</span>
+    <span class="suggest-text">Like what you see? Suggest projects here!<br><span class="suggest-sub">Help expand the 4ever growing library!</span></span>
+    <span class="suggest-arrow">→</span>
+  </a>
+
+  <!-- Check it out -->
+  <div class="check-out-wrap">
+    <a href="index.html" class="btn-checkout">Check it out! ✦</a>
+  </div>
+
+</main>
+
+<footer>
+  <a href="https://discord.gg/4AKdJxJUMH" target="_blank">Discord</a>
+  <a href="../pages/footer/version.html" id="footerVersion" target="_blank">Version loading...</a>
+</footer>
+
+<button id="toTopBtn">⬆ Top</button>
+
+<script>
+/* ======================================================
+   THEME — apply saved theme on load
+   ====================================================== */
+(function () {
+  const saved = localStorage.getItem("selectedTheme") || "redux";
+  document.documentElement.setAttribute("theme", saved);
+  if (saved === "custom") {
+    try {
+      const vars = JSON.parse(localStorage.getItem("customTheme") || "{}");
+      Object.entries(vars).forEach(([k, v]) =>
+        document.documentElement.style.setProperty(k, v)
+      );
+    } catch (_) {}
+  }
+})();
+
+/* ======================================================
+   CLOAK
+   ====================================================== */
+(function () {
+  const t = localStorage.getItem("cloakTitle");
+  const i = localStorage.getItem("cloakIcon");
+  if (t) document.title = t;
+  if (i) document.getElementById("favicon").href = i;
+})();
+
+/* ======================================================
+   DASHBOARD TOGGLE
+   ====================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+  const btn  = document.getElementById("dashboardBtn");
+  const menu = document.getElementById("dashboardMenu");
+  if (!btn || !menu) return;
+  menu.style.display  = "none";
+  menu.style.opacity  = "0";
+  menu.style.transition = "opacity 0.3s ease";
+
+  const toggle = (e) => {
+    e.stopPropagation();
+    const open = menu.style.display === "block";
+    if (open) {
+      menu.style.opacity = "0";
+      btn.setAttribute("aria-expanded", "false");
+      menu.setAttribute("aria-hidden", "true");
+      setTimeout(() => (menu.style.display = "none"), 300);
+    } else {
+      menu.style.display = "block";
+      btn.setAttribute("aria-expanded", "true");
+      menu.setAttribute("aria-hidden", "false");
+      setTimeout(() => (menu.style.opacity = "1"), 10);
+    }
+  };
+  btn.addEventListener("click", toggle);
+  document.addEventListener("click", (e) => {
+    if (menu.style.display === "block" && !menu.contains(e.target) && e.target !== btn)
+      toggle(e);
+  });
+
+  // Profile pic
+  const pfp = document.getElementById("pfp");
+  if (pfp) {
+    const saved = localStorage.getItem("profilePic");
+    if (saved) pfp.src = saved;
+  }
+
+  // Scroll to top
+  const toTop = document.getElementById("toTopBtn");
+  if (toTop) {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 200) toTop.classList.add("show");
+      else toTop.classList.remove("show");
+    });
+    toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  }
+});
+
+/* ======================================================
+   QUOTE TICKER — simple static scroll
+   ====================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+  const wrapper = document.getElementById("quoteWrapper");
+  const box     = document.getElementById("quoteBox");
+  if (!wrapper || !box) return;
+
+  const QUOTES = [
+    "Welcome to WannaSmile ♡",
+    "Explore the full catalog below!",
+    "New items added regularly — check back often.",
+    "Use ← → arrows to flip pages on the home screen.",
+    "Press R to reload assets. Press Esc to panic-redirect.",
+    "Star your favourites with ☆ on any card.",
+    "Change your theme in Settings!",
+    "Try SoundScape for background music while you browse.",
+  ];
+
+  let text = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+  box.textContent = text;
+
+  let pos = wrapper.offsetWidth;
+  let last = null;
+
+  function tick(t) {
+    if (last !== null) {
+      pos -= (t - last) / 1000 * 100;
+      box.style.transform = `translateX(${pos}px)`;
+      if (pos + box.offsetWidth < 0) {
+        text = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+        box.textContent = text;
+        pos = wrapper.offsetWidth;
+      }
+    }
+    last = t;
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+});
+
+/* ======================================================
+   CONTRIBUTORS CONFIG
+   ── Edit this array to manage contributors.
+   ── Each object = one person.
+   ── "row" groups people onto the same visual row.
+   ──   Row 1 is the first row, row 2 the second, etc.
+   ──   Max per row is enforced by PER_ROW_LIMIT below.
+   ── "link" opens in a new tab when the card is clicked.
+   ====================================================== */
+const CONTRIBUTORS_PER_ROW = 6; // max cards per row (debug + layout cap)
+
+const CONTRIBUTORS = [
+  // ── Row 1 ──────────────────────────────────────────
+  {
+    row:    1,
+    name:   "vvannasmile",
+    role:   "Creator & Developer",
+    avatar: "https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/favicons/logo.png",
+    link:   "https://github.com/vvannasmile",
+  },
+  // ── Row 2 ──────────────────────────────────────────
+  // {
+  //   row:    2,
+  //   name:   "contributor",
+  //   role:   "what they did",
+  //   avatar: "https://...",
+  //   link:   "https://github.com/...",
+  // },
+];
+
+/* ======================================================
+   RENDER CONTRIBUTORS
+   ====================================================== */
+function renderContributors() {
+  const mount = document.getElementById("contributorsMount");
+  if (!mount) return;
+
+  // Group by row number, sort rows ascending
+  const rowMap = {};
+  CONTRIBUTORS.forEach(c => {
+    const r = Number(c.row) || 1;
+    if (!rowMap[r]) rowMap[r] = [];
+    if (rowMap[r].length < CONTRIBUTORS_PER_ROW) rowMap[r].push(c);
+  });
+
+  const sortedRows = Object.keys(rowMap).map(Number).sort((a, b) => a - b);
+  const frag = document.createDocumentFragment();
+
+  sortedRows.forEach(rowNum => {
+    // Row debug label
+    const label = document.createElement("div");
+    label.className = "contrib-row-label";
+    label.textContent = `row ${rowNum} · ${rowMap[rowNum].length}/${CONTRIBUTORS_PER_ROW}`;
+    frag.appendChild(label);
+
+    const row = document.createElement("div");
+    row.className = "contrib-row";
+
+    rowMap[rowNum].forEach(c => {
+      const tag = c.link ? "a" : "div";
+      const card = document.createElement(tag);
+      card.className = "contrib-card";
+      if (c.link) {
+        card.href   = c.link;
+        card.target = "_blank";
+        card.rel    = "noopener noreferrer";
+      }
+
+      const avatarWrap = document.createElement("div");
+      avatarWrap.className = "contrib-avatar-wrap";
+
+      const img = document.createElement("img");
+      img.className = "contrib-avatar";
+      img.src   = c.avatar || "";
+      img.alt   = c.name  || "";
+      img.loading = "lazy";
+      img.onerror = () => {
+        // fallback: grey circle with initial
+        img.style.display = "none";
+        const fallback = document.createElement("div");
+        Object.assign(fallback.style, {
+          width:"68px", height:"68px", borderRadius:"50%",
+          background:"rgba(255,255,255,0.1)", display:"flex",
+          alignItems:"center", justifyContent:"center",
+          fontSize:"1.4rem", color:"var(--link-color)", fontWeight:"bold",
+        });
+        fallback.textContent = (c.name || "?")[0].toUpperCase();
+        avatarWrap.appendChild(fallback);
+      };
+
+      avatarWrap.appendChild(img);
+
+      const nameEl = document.createElement("div");
+      nameEl.className = "contrib-name";
+      nameEl.textContent = c.name || "";
+
+      const roleEl = document.createElement("div");
+      roleEl.className = "contrib-role";
+      roleEl.textContent = c.role || "";
+
+      card.append(avatarWrap, nameEl, roleEl);
+      row.appendChild(card);
+    });
+
+    frag.appendChild(row);
+  });
+
+  mount.appendChild(frag);
+}
+
+/* ======================================================
+   SHEET URL — same as index.html
+   ====================================================== */
+const SHEET_URL =
+  "https://script.google.com/macros/s/AKfycbyRGROJ70xwLEBLiWAw_7iSX42VkJSxg671wOmjfYo_cvvaDSs9mbXpK6S1EKa9oYQByA/exec";
+
+const FALLBACK_IMG =
+  "https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/404_blank.png";
+
+/* ======================================================
+   DATA FETCH
+   ====================================================== */
+let allAssets = [];
+
+async function fetchAssets() {
+  const res  = await fetch(SHEET_URL, { cache: "no-store" });
+  const json = await res.json();
+  if (Array.isArray(json)) {
+    // Extract version from last row that has one, then set footer
+    const lastRow = json.filter(d => d.version?.toString().trim()).slice(-1)[0];
+    const version = lastRow?.version?.toString().trim() || "V0.8";
+    const anchor  = document.getElementById("footerVersion");
+    if (anchor) anchor.textContent = `Version ${version}`;
+
+    allAssets = json.filter(row => {
+      const status = String(row.status || "").toLowerCase();
+      return status !== "hide" && status !== "hidden";
+    });
+  }
+  return allAssets;
+}
+
+/* ======================================================
+   BUILD CATALOG ITEM ELEMENT
+   ====================================================== */
+function buildItem(asset) {
+  const title  = String(asset.title  || "").trim() || "Untitled";
+  const author = String(asset.author || "").trim();
+  const image  = String(asset.image  || "").trim() || FALLBACK_IMG;
+  const page   = Number(asset.page)  || 1;
+
+  const el = document.createElement("div");
+  el.className = "catalog-item";
+
+  const img = document.createElement("img");
+  img.src   = image;
+  img.alt   = title;
+  img.loading = "lazy";
+  img.onerror = () => { img.src = FALLBACK_IMG; };
+
+  const titleEl  = document.createElement("div");
+  titleEl.className = "catalog-item-title";
+  titleEl.textContent = title;
+
+  const metaEl = document.createElement("div");
+  metaEl.className = "catalog-item-meta";
+  metaEl.textContent = author || "";
+
+  const pageEl = document.createElement("div");
+  pageEl.className = "catalog-item-page";
+  pageEl.textContent = `pg. ${page}`;
+
+  el.append(img, titleEl, metaEl, pageEl);
+  return el;
+}
+
+/* ======================================================
+   RENDER RANDOM 18 PREVIEW
+   ====================================================== */
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function renderPreview() {
+  const grid = document.getElementById("previewGrid");
+  if (!grid) return;
+
+  const sample = shuffle(allAssets).slice(0, 18);
+  grid.innerHTML = "";
+
+  if (sample.length === 0) {
+    grid.innerHTML = '<div class="info-state" style="grid-column:1/-1;">No items found.</div>';
+    return;
+  }
+
+  const frag = document.createDocumentFragment();
+  sample.forEach(a => frag.appendChild(buildItem(a)));
+  grid.appendChild(frag);
+
+  document.getElementById("previewCount").textContent = `(${allAssets.length} total)`;
+}
+
+/* ======================================================
+   RENDER FULL CATALOG (grouped by page)
+   ====================================================== */
+function renderFullCatalog() {
+  const sec = document.getElementById("fullCatalog");
+  document.getElementById("fullCatalogLoading").style.display = "none";
+
+  // Group by page
+  const byPage = {};
+  allAssets.forEach(a => {
+    const p = Number(a.page) || 1;
+    if (!byPage[p]) byPage[p] = [];
+    byPage[p].push(a);
+  });
+
+  const pages = Object.keys(byPage).map(Number).sort((a, b) => a - b);
+  const frag  = document.createDocumentFragment();
+
+  pages.forEach(p => {
+    const group = document.createElement("div");
+    group.className = "page-group";
+
+    const title = document.createElement("div");
+    title.className = "page-group-title";
+    title.textContent = `Page ${p} — ${byPage[p].length} item${byPage[p].length !== 1 ? "s" : ""}`;
+    group.appendChild(title);
+
+    const grid = document.createElement("div");
+    grid.className = "catalog-grid";
+    byPage[p].forEach(a => grid.appendChild(buildItem(a)));
+    group.appendChild(grid);
+    frag.appendChild(group);
+  });
+
+  sec.appendChild(frag);
+}
+
+/* ======================================================
+   STATS
+   ====================================================== */
+function updateStats() {
+  const total   = allAssets.length;
+  const pages   = new Set(allAssets.map(a => Number(a.page) || 1)).size;
+  const authors = new Set(allAssets.map(a => String(a.author || "").trim().toLowerCase()).filter(Boolean)).size;
+  const favs    = (() => {
+    try { return JSON.parse(localStorage.getItem("favorites") || "[]").length; } catch { return 0; }
+  })();
+
+  document.getElementById("statTotal").textContent   = total;
+  document.getElementById("statPages").textContent   = pages;
+  document.getElementById("statAuthors").textContent = authors;
+  document.getElementById("statFavs").textContent    = favs;
+}
+
+/* ======================================================
+   VIEW ALL TOGGLE
+   ====================================================== */
+let fullBuilt = false;
+document.addEventListener("DOMContentLoaded", () => {
+  const viewAllBtn = document.getElementById("viewAllBtn");
+  const fullSec    = document.getElementById("fullCatalog");
+  const shuffleBtn = document.getElementById("shuffleBtn");
+
+  viewAllBtn?.addEventListener("click", () => {
+    const showing = fullSec.classList.contains("visible");
+    if (!showing) {
+      fullSec.classList.add("visible");
+      viewAllBtn.textContent = "Hide Full List ▴";
+      if (!fullBuilt) { renderFullCatalog(); fullBuilt = true; }
+      setTimeout(() => fullSec.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+    } else {
+      fullSec.classList.remove("visible");
+      viewAllBtn.textContent = "View All Items ▾";
+    }
+  });
+
+  shuffleBtn?.addEventListener("click", renderPreview);
+
+  // Render contributors (static, no fetch needed)
+  renderContributors();
+
+  // Fetch & render
+  fetchAssets()
+    .then(() => {
+      renderPreview();
+      updateStats();
+    })
+    .catch(err => {
+      const anchor = document.getElementById("footerVersion");
+      if (anchor) anchor.textContent = "Version V0.8";
+      const grid = document.getElementById("previewGrid");
+      if (grid) grid.innerHTML = '<div class="info-state" style="grid-column:1/-1;">⚠ Could not load catalog. Check your connection.</div>';
+      console.error("Sheet fetch failed:", err);
+    });
+});
+
+/* ======================================================
+   PANIC KEY
+   ====================================================== */
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+  if (e.key === "Escape") {
+    const url = localStorage.getItem("panicURL");
+    if (url) window.location.href = url;
+  }
+});
+</script>
+</body>
+</html>

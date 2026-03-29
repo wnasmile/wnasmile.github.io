@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WannaSmile | Favorites</title>
+
+<link id="favicon" rel="icon" href="https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/favicons/logo.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" /></noscript>
+
+<style>
+/* ==========================================
+   THEMES — identical to index.html
+   ========================================== */
+:root {
+  --main-bg:    url("https://raw.githubusercontent.com/01110010-00110101/themeify/main/redux/Redux-mainbg.png");
+  --quote-bg:   url("https://raw.githubusercontent.com/01110010-00110101/themeify/main/redux/Redux-quotebg.png");
+  --header-bg:  url("https://raw.githubusercontent.com/01110010-00110101/themeify/main/redux/Redux-headerbg.png");
+  --footer-bg:  #555;
+  --card-bg:    rgba(0,0,0,0);
+  --menu-bg:    rgba(0,0,0,0.95);
+  --text-color:         #000;
+  --link-color:         #fff;
+  --quote-text:         #fff;
+  --accent-color:       #ff4444;
+  --input-bg:           #f0f0f0;
+  --input-border:       #ccc;
+  --input-text:         #333;
+  --input-placeholder:  #888;
+  --search-btn-bg:      #333;
+  --status-ok-border:   #00ff00;
+  --status-fix-border:  #ff0000;
+  --shadow-color:       rgba(0,0,0,0.3);
+}
+body[theme="classic"] {
+  --main-bg:#d4d4d4; --quote-bg:#1d201f; --header-bg:#1d201f; --footer-bg:#555;
+  --card-bg:rgba(0,0,0,0); --menu-bg:rgba(0,0,0,0.95); --text-color:#000;
+  --link-color:#fff; --quote-text:#fff; --accent-color:#ff4444;
+  --input-bg:#f0f0f0; --input-border:#ccc; --input-text:#333;
+  --input-placeholder:#888; --search-btn-bg:#333;
+  --status-ok-border:#00ff00; --status-fix-border:#ff0000; --shadow-color:rgba(0,0,0,0.3);
+}
+body[theme="light"] {
+  --main-bg:#f4f4f4; --quote-bg:#f1f1f1; --header-bg:#e0e0e0; --footer-bg:#ccc;
+  --card-bg:#ffffff; --menu-bg:rgba(255,255,255,0.95); --text-color:#111;
+  --link-color:#222; --quote-text:#111; --accent-color:#e53935;
+  --input-bg:#eee; --input-border:#aaa; --input-text:#111;
+  --input-placeholder:#666; --search-btn-bg:#555;
+  --status-ok-border:#00c853; --status-fix-border:#d32f2f; --shadow-color:rgba(0,0,0,0.15);
+}
+body[theme="dark"] {
+  --main-bg:#1e1e1e; --quote-bg:#292929; --header-bg:#0d0d0d; --footer-bg:#222;
+  --card-bg:#2b2b2b; --menu-bg:rgba(0,0,0,0.9); --text-color:#f4f4f4;
+  --link-color:#f4f4f4; --quote-text:#f4f4f4; --accent-color:#00bcd4;
+  --input-bg:#333; --input-border:#555; --input-text:#f4f4f4;
+  --input-placeholder:#999; --search-btn-bg:#1e1e1e;
+  --status-ok-border:#00ff88; --status-fix-border:#ff5555; --shadow-color:rgba(0,0,0,0.5);
+}
+body[theme="slackerish"] {
+  --main-bg:#131112; --quote-bg:#1a1818; --header-bg:#342A21; --footer-bg:#342A21;
+  --card-bg:#1b1717; --menu-bg:rgba(0,0,0,0.95); --text-color:#fff;
+  --link-color:#ffbcbc; --quote-text:#ffbcbc; --accent-color:#ff4444;
+  --input-bg:#2a2220; --input-border:#5a4740; --input-text:#f4f4f4;
+  --input-placeholder:#b8b8b8; --search-btn-bg:#3a2f28;
+  --status-ok-border:#00ff00; --status-fix-border:#ff0000; --shadow-color:rgba(0,0,0,0.6);
+}
+body[theme="redux"] {
+  --main-bg:url("https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/backgrounds/redux-white_bg.png");
+  --quote-bg:url("https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/backgrounds/background_grey_icons.png");
+  --header-bg:url("https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/backgrounds/background_black_icons.png");
+  --footer-bg:#555; --card-bg:rgba(0,0,0,0); --menu-bg:rgba(0,0,0,0.95);
+  --text-color:#000; --link-color:#fff; --quote-text:#fff; --accent-color:#ff4444;
+  --input-bg:#f0f0f0; --input-border:#ccc; --input-text:#333;
+  --input-placeholder:#888; --search-btn-bg:#333;
+  --status-ok-border:#00ff00; --status-fix-border:#ff0000; --shadow-color:rgba(0,0,0,0.3);
+}
+body[theme="graduation"] {
+  --main-bg:url("https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/backgrounds/graduation.png");
+  --quote-bg:rgba(0,0,0,0.3); --header-bg:rgba(0,0,0,0.3); --footer-bg:rgba(0,0,0,0.4);
+  --card-bg:rgba(0,0,0,0); --menu-bg:rgba(0,0,0,0.9); --text-color:#fff;
+  --link-color:#fff; --quote-text:#fff; --accent-color:#ff4444;
+  --input-bg:rgba(0,0,0,0.3); --input-border:#ccc; --input-text:#fff;
+  --input-placeholder:#ccc; --search-btn-bg:rgba(0,0,0,0.5);
+  --status-ok-border:#00ff00; --status-fix-border:#ff0000; --shadow-color:rgba(0,0,0,0.3);
+}
+body[theme="flower-boy"] {
+  --main-bg:url("https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/backgrounds/flower-boy_bg.jpeg");
+  --quote-bg:rgba(0,0,0,0.3); --header-bg:rgba(0,0,0,0.3); --footer-bg:rgba(0,0,0,0.4);
+  --card-bg:rgba(0,0,0,0); --menu-bg:rgba(0,0,0,0.9); --text-color:#fff;
+  --link-color:#fff; --quote-text:#fff; --accent-color:#ff4444;
+  --input-bg:rgba(0,0,0,0.3); --input-border:#ccc; --input-text:#fff;
+  --input-placeholder:#ccc; --search-btn-bg:rgba(0,0,0,0.5);
+  --status-ok-border:#00ff00; --status-fix-border:#ff0000; --shadow-color:rgba(0,0,0,0.3);
+}
+
+/* ==========================================
+   GLOBAL RESET
+   ========================================== */
+* { margin:0; padding:0; box-sizing:border-box; font-family:"Poppins",sans-serif;
+    -webkit-user-select:none; -moz-user-select:none; user-select:none;
+    -webkit-tap-highlight-color:transparent; }
+input, textarea { -webkit-user-select:text; -moz-user-select:text; user-select:text; }
+a, button, input, textarea { outline:none !important; }
+
+html {
+  height:100%;
+  background-image: var(--main-bg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+}
+body {
+  min-height:100%;
+  background:transparent;
+  color: var(--text-color);
+  display:flex;
+  flex-direction:column;
+}
+a, a:visited { color:var(--link-color); text-decoration:none; }
+a:focus { outline:none; }
+
+/* ==========================================
+   HEADER
+   ========================================== */
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:var(--header-bg);
+  padding:10px 20px;
+  width:100%;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+}
+header a, footer a {
+  margin:0 10px;
+  color:var(--link-color);
+  font-family:monospace;
+  font-weight:bold;
+  text-decoration:none;
+  transition:color 0.3s, text-decoration 0.3s;
+}
+header a:hover, footer a:hover {
+  color:var(--accent-color);
+  text-decoration:underline;
+  text-decoration-color:var(--accent-color);
+}
+header img { width:28px; height:28px; object-fit:cover; }
+.nav-links { display:flex; align-items:center; gap:12px; }
+.header-controls { display:flex; align-items:center; gap:8px; }
+
+#topBar {
+  display:flex; flex-direction:column;
+  position:relative; z-index:20;
+  background:var(--header-bg); color:var(--link-color);
+}
+#topBar header { z-index:21; }
+
+/* ==========================================
+   PAGE CONTROLS
+   ========================================== */
+.pages-anchor {
+  display:inline-flex; align-items:center; gap:8px; margin-left:10px;
+}
+.pages-anchor button {
+  background:transparent; border:none; padding:0; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+}
+.pages-anchor button img {
+  width:28px; height:28px; object-fit:contain; transition:transform 0.2s ease;
+}
+.pages-anchor button:hover img { }
+.pages-anchor .page-indicator {
+  font-family:monospace; font-weight:bold; font-size:0.9rem;
+  color:var(--link-color); user-select:none;
+}
+
+/* ==========================================
+   SEARCH BOX
+   ========================================== */
+.search-box {
+  display:inline-flex; align-items:center; gap:5px;
+  background:var(--input-bg); border-radius:25px; padding:4px 10px;
+  box-shadow:0 2px 5px rgba(0,0,0,0.15); transition:box-shadow 0.2s;
+}
+.search-box:focus-within { box-shadow:0 4px 12px rgba(0,0,0,0.25); }
+.search-box input {
+  padding:6px; border:none; background:transparent;
+  color:var(--input-text); font-family:monospace; font-size:14px; flex:1;
+}
+.search-box input::placeholder { color:var(--input-placeholder); }
+.search-box input:focus { outline:none; box-shadow:none; }
+.search-box button {
+  padding:6px; border:none; border-radius:50%; cursor:pointer;
+  background:var(--search-btn-bg); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  transition:transform 0.2s, filter 0.2s;
+}
+.search-box button:hover { transform:scale(1.1); filter:brightness(1.2); }
+.search-box button img { width:14px; height:14px; }
+
+/* ==========================================
+   PROFILE PIC & DASHBOARD
+   ========================================== */
+#pfp {
+  width:32px; height:32px; border-radius:50%; cursor:pointer;
+  object-fit:cover;
+}
+#dashboardBtn {
+  width:36px; background:none; border:none;
+  color:var(--link-color); font-size:18px; cursor:pointer;
+}
+.dashboard-menu {
+  position:fixed; top:60px; right:20px;
+  background:var(--menu-bg); border-radius:10px;
+  display:none; flex-direction:column; min-width:200px;
+  padding:10px 0; z-index:9999; box-shadow:0 4px 12px rgba(0,0,0,0.5);
+}
+.dashboard-menu a, .dashboard-menu p {
+  padding:10px 16px; color:var(--link-color); font-family:monospace; display:block;
+  transition:color 0.3s, background 0.3s, text-decoration 0.3s;
+}
+.dashboard-menu p { font-weight:bold; cursor:default; }
+.dashboard-menu a:hover, .dashboard-menu p:hover {
+  color:var(--accent-color); background:rgba(255,255,255,0.1);
+  text-decoration:underline; text-decoration-color:var(--accent-color);
+}
+
+/* ==========================================
+   QUOTE TICKER
+   ========================================== */
+#quoteWrapper {
+  position:relative; width:100vw; height:30px; overflow:hidden;
+  background:var(--quote-bg); color:var(--quote-text);
+  display:flex; align-items:center;
+}
+#quoteBox {
+  position:absolute; white-space:nowrap; font-family:monospace;
+  font-size:1em; font-weight:bold; background:var(--quote-bg);
+  color:var(--quote-text); transform:translateX(100%);
+  user-select:none; cursor:default;
+  display:inline-flex; align-items:center; gap:4px;
+}
+.quote-sticker {
+  width:26px; height:26px; object-fit:contain;
+  vertical-align:middle; pointer-events:none;
+}
+
+/* ==========================================
+   ASSET GRID
+   ========================================== */
+#container {
+  display:grid;
+  grid-template-columns:repeat(5, 1fr);
+  justify-items:center;
+  gap:15px;
+  padding:20px;
+  background:transparent;
+  flex-grow:1;
+  min-height:0;
+  align-content:start;
+}
+@media (max-width:800px) {
+  #container { grid-template-columns:repeat(2, 1fr); }
+}
+
+/* ==========================================
+   ASSET CARDS
+   ========================================== */
+#container div {
+  width:100%; max-width:220px; padding:15px 10px;
+  background:var(--card-bg); text-align:center; border-radius:20px;
+  overflow:hidden; display:flex; flex-direction:column;
+  align-items:center; gap:8px; transition:transform 0.2s ease;
+}
+#container div:hover { transform:scale(1.03); }
+#container div img {
+  width:120px; height:120px; display:block; border-radius:14px;
+  object-fit:contain; transition:transform 0.3s ease;
+}
+#container div img:hover { transform:scale(1.05); }
+#container div h3, #container div p {
+  color:var(--link-color); font-family:monospace; font-size:0.9rem;
+  transition:color 0.3s, text-decoration 0.3s;
+}
+#container div h3:hover, #container div p:hover {
+  color:var(--accent-color); text-decoration:underline;
+}
+
+/* ==========================================
+   STATUS OVERLAYS
+   ========================================== */
+.asset-link img.status-overlay {
+  position:absolute; top:0; left:0; width:100%; height:100%;
+  object-fit:cover; pointer-events:none; opacity:1; border-radius:14px;
+  transition:opacity 0.25s ease; z-index:2;
+}
+.asset-link:hover img.status-overlay { opacity:0.55; }
+
+.soon {
+  position:relative; opacity:0.5; pointer-events:none; filter:grayscale(100%);
+}
+.soon::after {
+  content:"COMING SOON"; position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%); background:rgba(0,0,0,0.4);
+  color:#fff; padding:10px 14px; border-radius:8px; font-family:monospace;
+  font-size:14px; font-weight:bold; letter-spacing:1px;
+  text-shadow:0 0 4px #000; z-index:3; pointer-events:none;
+}
+.soon img { filter:grayscale(100%); opacity:0.7; transition:opacity 0.25s ease; }
+.soon:hover img { opacity:0.55; }
+
+.fix { position:relative; pointer-events:none; filter:grayscale(100%); opacity:0.6; }
+.fix img { filter:grayscale(100%); opacity:0.9; background:#808080; mix-blend-mode:multiply; }
+.fix::after {
+  content:""; position:absolute; inset:0; background:rgba(128,128,128,0.2);
+  border-radius:inherit; pointer-events:none; z-index:3;
+}
+
+/* ==========================================
+   CARD ANIMATION
+   ========================================== */
+@keyframes cardPopIn {
+  0%   { opacity:0; transform:translateY(10px) scale(0.92); }
+  60%  { transform:translateY(-3px) scale(1.03); }
+  100% { opacity:1; transform:translateY(0) scale(1); }
+}
+.asset-card { opacity:0; transform:translateY(10px) scale(0.92); transition:none; pointer-events:none; }
+.asset-card.ready {
+  animation:cardPopIn 0.28s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  pointer-events:auto;
+}
+
+/* ==========================================
+   EMPTY STATE
+   ========================================== */
+#emptyFavs {
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100vw; height:100vh;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-family:monospace;
+  pointer-events:none;
+  z-index:10;
+}
+#emptyFavs p {
+  font-size:1rem; line-height:1.6; color:#000;
+  text-decoration:none; pointer-events:none;
+}
+#emptyFavs a {
+  display:inline-block; margin-top:16px; padding:8px 20px;
+  background:var(--search-btn-bg); color:#fff;
+  border-radius:20px; font-family:monospace; font-weight:bold;
+  text-decoration:none; pointer-events:auto;
+  transition:color 0.2s;
+}
+#emptyFavs a:hover { color:#ff4444; text-decoration:none; }
+
+/* ==========================================
+   FAVE STAR
+   ========================================== */
+.favorite-star {
+  font-size:0.85rem; color:#000; background:transparent;
+  border:none; cursor:pointer; padding:0;
+}
+.favorite-star:hover { color:#ff4444; }
+
+/* ==========================================
+   LOADER
+   ========================================== */
+#containerLoader {
+  grid-column:1/-1; display:flex; justify-content:center;
+  align-items:center; padding:80px 0; width:100%;
+}
+#containerLoader img {
+  position:fixed !important; top:50% !important; left:50% !important;
+  transform:translate(-50%,-50%) !important;
+  width:192px !important; height:192px !important;
+  object-fit:contain !important; image-rendering:pixelated !important;
+  pointer-events:none !important;
+}
+
+/* ==========================================
+   NO RESULTS GIF
+   ========================================== */
+#noResultsGif {
+  display:none; position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:128px; height:128px; opacity:0;
+  transition:opacity 0.25s ease;
+  pointer-events:none; z-index:1000;
+  image-rendering:pixelated;
+}
+
+/* ==========================================
+   SCROLL TO TOP
+   ========================================== */
+#toTopBtn {
+  display:none; position:fixed; bottom:24px; right:24px;
+  z-index:9998; padding:10px 14px; font-size:14px; font-family:monospace;
+  border:none; border-radius:8px; background:var(--header-bg);
+  color:var(--link-color); cursor:pointer;
+  box-shadow:0 4px 8px rgba(0,0,0,0.5); opacity:0.6; transition:opacity 0.3s,color 0.3s;
+}
+#toTopBtn:hover { opacity:0.8; color:var(--accent-color); text-decoration:underline; }
+
+/* ==========================================
+   FOOTER
+   ========================================== */
+footer {
+  margin-top:auto; background:var(--footer-bg);
+  text-align:center; padding:30px; width:100%;
+  font-family:monospace; color:var(--link-color);
+  box-shadow:0 -2px 6px rgba(0,0,0,0.2);
+}
+
+/* ==========================================
+   FAVE STAR
+   ========================================== */
+.favorite-star {
+  font-size:0.85rem; color:#000; background:transparent;
+  border:none; cursor:pointer; padding:0; transition:transform 0.2s;
+}
+.favorite-star:hover { transform:scale(1.3); }
+
+
+</style>
+
+<!-- preload spinner -->
+<link rel="preload" as="image" href="loading.gif" />
+</head>
+<body>
+
+<!-- Top Bar -->
+<div id="topBar">
+<header>
+<nav class="nav-links">
+  <a href="index.html" target="_blank">Home</a>
+  <a href="../pages/header/favorites.html" target="_blank">Favorites</a>
+  <a href="../pages/header/discovery.html" target="_blank">Discovery</a>
+  <a href="../pages/header/settings.html" target="_blank">Settings</a>
+  <a href="../pages/header/support.html" target="_blank">Support</a>
+  <a href="../pages/header/info.html" target="_blank">Info</a>
+  <div class="pages-anchor">
+    <button onclick="prevPage()">
+      <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/left.png" alt="Prev">
+    </button>
+    <span class="page-indicator">...</span>
+    <button onclick="nextPage()">
+      <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/right.png" alt="Next">
+    </button>
+  </div>
+</nav>
+
+<div class="header-controls">
+  <div class="search-box">
+    <input id="searchInputHeader" type="text" placeholder="Search favorites..." />
+    <button id="searchBtnHeader">
+      <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/search.png" alt="Search">
+    </button>
+  </div>
+  <a href="../pages/header/profile.html">
+    <img id="pfp" src="../system/images/icons/profile.png" alt="Profile">
+  </a>
+  <button id="dashboardBtn">
+    <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/dashboard.png" alt="Dashboard">
+  </button>
+</div>
+</header>
+
+<div id="quoteWrapper"><p id="quoteBox"></p></div>
+</div>
+
+<aside id="dashboardMenu" class="dashboard-menu">
+  <a href="BEANS.md">Layout Pages</a>
+  <a href="index.html">Library</a>
+</aside>
+
+<main style="position:relative;">
+  <div id="container">
+    <div id="containerLoader">
+      <img src="loading.gif" alt="Loading..." />
+    </div>
+  </div>
+  <img id="noResultsGif" src="searching.gif" alt="" />
+</main>
+
+<button id="toTopBtn">⬆ Top</button>
+
+<footer>
+  <a href="https://sundaezipper.github.io./" target="_blank">Source</a>
+  <a href="https://sundaezipper.github.io./" target="_blank">Contribute</a>
+  <a href="https://discord.gg/4AKdJxJUMH" target="_blank">Discord</a>
+  <a href="../pages/footer/SBF.html" target="_blank">Suggestions | Bugs | Fixes</a>
+  <a href="../pages/footer/social.html" target="_blank">Socials</a>
+  <a href="../pages/footer/version.html" id="footerVersion" target="_blank">Version loading...</a>
+</footer>
+
+<script>
+/* =====================================================
+   FAVORITES PAGE — Core Logic
+   - Loads ALL assets from sheet
+   - Filters to favorited items only
+   - Paginates at 75 per page (only if > 75 favorites)
+   - Global search across all fav pages
+   ===================================================== */
+(() => {
+  "use strict";
+
+  const FAVS_PER_PAGE = 75;
+
+  /* ---------- Utilities ---------- */
+  const safeStr = (v) => (v == null ? "" : String(v));
+  const delay   = (ms) => new Promise((r) => setTimeout(r, ms));
+  const debounce = (fn, ms = 150) => {
+    let t;
+    return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+  };
+
+  /* ---------- Config ---------- */
+  const config = {
+    sheetUrl: "https://script.google.com/macros/s/AKfycbyRGROJ70xwLEBLiWAw_7iSX42VkJSxg671wOmjfYo_cvvaDSs9mbXpK6S1EKa9oYQByA/exec",
+    fallbackImage: "https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/404_blank.png",
+    fallbackLink: "https://01110010-00110101.github.io./source/dino/",
+    gifBase: "https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/GIF/",
+    badgeMap: {
+      featured: "https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/featured-cover.png",
+      new:      "https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/new-cover.png",
+      fixed:    "https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/fixed-cover.png",
+      fix:      "https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/fixing.png",
+    }
+  };
+
+  /* ---------- DOM refs ---------- */
+  const container      = document.getElementById("container");
+  const pageIndicator  = document.querySelector(".page-indicator");
+  const searchInput    = document.getElementById("searchInputHeader");
+  const searchBtn      = document.getElementById("searchBtnHeader");
+  const noResultsGif   = document.getElementById("noResultsGif");
+  const toTopBtn       = document.getElementById("toTopBtn");
+
+  /* ---------- Favorites store ---------- */
+  function loadFavorites() {
+    try {
+      const stored = JSON.parse(localStorage.getItem("favorites") || "[]");
+      return new Set(stored.map((s) => safeStr(s).toLowerCase()));
+    } catch { return new Set(); }
+  }
+  function saveFavorites(set) {
+    localStorage.setItem("favorites", JSON.stringify([...set]));
+  }
+
+  let favorites = loadFavorites();
+  const isFav = (t) => favorites.has(safeStr(t).toLowerCase());
+
+  /* ---------- State ---------- */
+  let allFavCards    = []; // all rendered fav card elements
+  let currentFavPage = 1;
+  let totalFavPages  = 1;
+  let isSearching    = false;
+
+  /* ---------- Theme sync ---------- */
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme) document.body.setAttribute("theme", savedTheme);
+
+  /* ---------- Paging logic ---------- */
+  function updatePageIndicator() {
+    if (!pageIndicator) return;
+    if (isSearching) {
+      pageIndicator.textContent = "Searching…";
+    } else {
+      pageIndicator.textContent = totalFavPages <= 1
+        ? `${allFavCards.length} favorite${allFavCards.length !== 1 ? "s" : ""}`
+        : `Page ${currentFavPage} of ${totalFavPages}`;
+    }
+  }
+
+  function renderFavPage() {
+    if (isSearching) return; // search handles its own visibility
+    const start = (currentFavPage - 1) * FAVS_PER_PAGE;
+    const end   = start + FAVS_PER_PAGE;
+    allFavCards.forEach((card, i) => {
+      card.style.display = (i >= start && i < end) ? "" : "none";
+    });
+    sessionStorage.setItem("favPage", currentFavPage);
+    updatePageIndicator();
+    updateNoResults();
+  }
+
+  window.prevPage = () => {
+    if (currentFavPage <= 1) return;
+    currentFavPage--;
+    renderFavPage();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  window.nextPage = () => {
+    if (currentFavPage >= totalFavPages) return;
+    currentFavPage++;
+    renderFavPage();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  /* ---------- No-results gif ---------- */
+  function updateNoResults() {
+    const visible = allFavCards.filter(c => c.style.display !== "none").length;
+    if (visible === 0) {
+      noResultsGif.style.display = "block";
+      requestAnimationFrame(() => noResultsGif.style.opacity = "1");
+    } else {
+      noResultsGif.style.opacity = "0";
+      setTimeout(() => {
+        if (parseFloat(noResultsGif.style.opacity) === 0)
+          noResultsGif.style.display = "none";
+      }, 250);
+    }
+  }
+
+  /* ---------- Global search ---------- */
+  function filterFavs(q) {
+    const query = safeStr(q).toLowerCase().trim();
+    const words = query.split(/\s+/).filter(Boolean);
+    isSearching = query.length > 0;
+
+    allFavCards.forEach((card) => {
+      const haystack = `${card.dataset.title} ${card.dataset.author}`.toLowerCase();
+      let score = 0;
+      if (haystack.includes(query)) score += 3;
+      for (const w of words) if (haystack.includes(w)) score += 2;
+      const match = score > 0 || !query;
+      card.style.display = match ? "" : "none";
+    });
+
+    // show paging nav only when not searching
+    const pagesAnchor = document.querySelector(".pages-anchor");
+    if (pagesAnchor) pagesAnchor.style.visibility = isSearching ? "hidden" : "";
+    updatePageIndicator();
+    updateNoResults();
+  }
+
+  searchBtn?.addEventListener("click",  () => filterFavs(searchInput.value));
+  searchInput?.addEventListener("input", debounce(() => filterFavs(searchInput.value), 200));
+  searchInput?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") filterFavs(searchInput.value);
+    if (e.key === "Escape") { searchInput.value = ""; filterFavs(""); }
+  });
+
+  /* ---------- Card builder ---------- */
+  function buildEmptyState() {
+    container.innerHTML = "";
+    const empty = document.createElement("div");
+    empty.id = "emptyFavs";
+    empty.innerHTML = `
+      <div>
+        <p>No favorites yet!<br>Head back to the library and star something you like.</p>
+        <a href="index.html">Go to Library</a>
+      </div>
+    `;
+    empty.style.display = "flex";
+    container.appendChild(empty);
+    updatePageIndicator();
+  }
+
+  function buildCards(favAssets) {
+    container.innerHTML = "";
+    allFavCards = [];
+
+    if (!favAssets.length) { buildEmptyState(); return; }
+
+    // Split into pages of FAVS_PER_PAGE
+    totalFavPages  = Math.ceil(favAssets.length / FAVS_PER_PAGE);
+    currentFavPage = Math.min(+sessionStorage.getItem("favPage") || 1, totalFavPages);
+
+    const frag = document.createDocumentFragment();
+
+    favAssets.forEach((asset, i) => {
+      const title       = safeStr(asset.title).trim();
+      const author      = safeStr(asset.author).trim();
+      const imageSrc    = safeStr(asset.image) || config.fallbackImage;
+      const link        = safeStr(asset.link)  || config.fallbackLink;
+      const status      = safeStr(asset.status).toLowerCase();
+      const statusField = safeStr(asset.type || asset.status || "").toLowerCase();
+
+      // Determine which fav-page this card belongs to (for priority loading)
+      const cardFavPage = Math.ceil((i + 1) / FAVS_PER_PAGE);
+      const isCurrentPage = cardFavPage === currentFavPage;
+
+      /* card */
+      const card = document.createElement("div");
+      card.className = "asset-card";
+      Object.assign(card.dataset, {
+        title:   title.toLowerCase(),
+        author:  author.toLowerCase(),
+        favpage: String(cardFavPage),
+        filtered: "true",
+      });
+
+      /* link / click interceptor */
+      const a = document.createElement("a");
+      a.href = link;
+      a.className = "asset-link";
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        const matched = window._allAssetsData?.find(
+          (row) => safeStr(row.link).trim() === link
+        );
+        if (matched) {
+          const embedLink   = safeStr(matched.link).trim();
+          const renderTitle = safeStr(matched.title).trim() || "Embed";
+          const renderFav   = safeStr(matched.image).trim() || "";
+          const html = `<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"/><title>${renderTitle}</title>
+<link rel="icon" href="${renderFav}" crossorigin="anonymous"/>
+<style>*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#000}
+embed{position:fixed;top:0;left:0;width:100vw;height:100vh;border:none;display:block}
+#refreshBtn{position:fixed;top:8px;right:8px;z-index:9999;background:rgba(0,0,0,0.6);
+color:#fff;border:none;border-radius:6px;padding:4px 10px;font-family:monospace;
+font-size:13px;cursor:pointer;opacity:0.4;transition:opacity 0.2s}
+#refreshBtn:hover{opacity:1}</style></head>
+<body><embed id="frame" src="${embedLink}"/>
+<button id="refreshBtn" onclick="document.getElementById('frame').src=document.getElementById('frame').src">↺</button>
+</body></html>`;
+          const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+          const blobUrl = URL.createObjectURL(blob);
+          window.open(blobUrl, "_blank");
+          setTimeout(() => URL.revokeObjectURL(blobUrl), 8000);
+        } else {
+          window.open(link, "_blank");
+        }
+      });
+
+      /* image wrapper */
+      const wrapper = document.createElement("div");
+      wrapper.className = "asset-img-wrapper";
+      Object.assign(wrapper.style, {
+        position: "relative", display: "inline-block",
+        borderRadius: "14px", overflow: "hidden"
+      });
+      const img = document.createElement("img");
+      img.alt = title;
+      img.className = "asset-img";
+      img.fetchPriority = isCurrentPage ? "high" : "auto";
+
+      const staggerDelay = Math.min((i % FAVS_PER_PAGE) * 40, 600);
+      img.onload = () => setTimeout(() => card.classList.add("ready"), staggerDelay);
+      img.onerror = () => {
+        img.src = config.fallbackImage;
+        img.onload  = () => setTimeout(() => card.classList.add("ready"), staggerDelay);
+        img.onerror = () => setTimeout(() => card.classList.add("ready"), staggerDelay);
+      };
+      img.src = imageSrc;
+      wrapper.appendChild(img);
+
+      /* status overlays */
+      const addOverlay = (src, alt, cls, fullCover = false) => {
+        const o = document.createElement("img");
+        o.src = src; o.alt = alt; o.className = `status-overlay ${cls}`;
+        Object.assign(o.style, {
+          position:"absolute", top:"0", left:"0", width:"100%", height:"100%",
+          objectFit:"cover", pointerEvents:"none", zIndex: fullCover ? "10" : "5"
+        });
+        wrapper.appendChild(o);
+      };
+      if (statusField === "featured") addOverlay(config.badgeMap.featured, "featured", "overlay-featured");
+      if (statusField === "new")      addOverlay(config.badgeMap.new,      "new",      "overlay-new");
+      if (statusField === "fixed")    addOverlay(config.badgeMap.fixed,    "fixed",    "overlay-fixed");
+      if (["new","updated"].includes(status))
+        addOverlay(`${config.gifBase}${status}.gif`, `${status}`, `status-gif status-${status}`);
+      if (status === "fix") {
+        addOverlay(config.badgeMap.fix, "fixing", "overlay-fix", true);
+        card.classList.add("fix");
+      }
+      if (status === "soon") card.classList.add("soon");
+
+      a.appendChild(wrapper);
+
+      /* title / author */
+      const titleEl  = document.createElement("h3"); titleEl.textContent  = title  || "Untitled";
+      const authorEl = document.createElement("p");  authorEl.textContent = author || "";
+
+      /* un-fav star */
+      const star = document.createElement("button");
+      star.className = "favorite-star";
+      star.textContent = "★";
+      star.title = "Remove from favorites";
+      star.addEventListener("click", (e) => {
+        e.preventDefault(); e.stopPropagation();
+        const key = title.toLowerCase();
+        favorites.delete(key);
+        saveFavorites(favorites);
+        // animate out then remove
+        card.style.transition = "opacity 0.25s, transform 0.25s";
+        card.style.opacity = "0";
+        card.style.transform = "scale(0.85)";
+        setTimeout(() => {
+          allFavCards = allFavCards.filter(c => c !== card);
+          card.remove();
+          totalFavPages = Math.max(1, Math.ceil(allFavCards.length / FAVS_PER_PAGE));
+          if (currentFavPage > totalFavPages) currentFavPage = totalFavPages;
+          if (!allFavCards.length) buildEmptyState();
+          else renderFavPage();
+        }, 280);
+      });
+
+      card.append(a, titleEl, authorEl, star);
+      frag.appendChild(card);
+      allFavCards.push(card);
+    });
+
+    container.appendChild(frag);
+    renderFavPage(); // show correct page, hide others
+  }
+
+  /* ---------- Main loader ---------- */
+  async function loadFavs() {
+    let raw;
+    try {
+      const res = await fetch(config.sheetUrl, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      raw = await res.json();
+    } catch (err) {
+      console.error("[Favorites] sheet fetch failed:", err);
+      container.innerHTML =
+        '<p style="grid-column:1/-1;padding:2rem;text-align:center;opacity:.6;font-family:monospace;">Could not load assets — check connection.</p>';
+      return;
+    }
+
+    // Keep full data for embed lookup
+    const data = raw.filter((i) => Object.values(i).some((v) => safeStr(v).trim()));
+    window._allAssetsData = data;
+
+    // Filter to favorites only (order preserved from sheet)
+    const favAssets = data.filter((a) => isFav(safeStr(a.title)));
+    buildCards(favAssets);
+  }
+
+  /* ---------- Scroll to top ---------- */
+  if (toTopBtn) {
+    window.addEventListener("scroll", () => {
+      const scrollY = document.body.scrollTop || document.documentElement.scrollTop;
+      toTopBtn.style.display = scrollY > 200 ? "block" : "none";
+    });
+    toTopBtn.addEventListener("click", () => window.scrollTo({ top:0, behavior:"smooth" }));
+  }
+
+  /* ---------- Dashboard toggle ---------- */
+  document.addEventListener("DOMContentLoaded", () => {
+    const dashboardMenu = document.getElementById("dashboardMenu");
+    const dashboardBtn  = document.getElementById("dashboardBtn");
+    if (!dashboardMenu || !dashboardBtn) return;
+
+    dashboardMenu.style.display = "none";
+    dashboardMenu.style.opacity = "0";
+    dashboardMenu.style.transition = "opacity 0.3s ease";
+
+    dashboardBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = dashboardMenu.style.display === "block";
+      if (open) {
+        dashboardMenu.style.opacity = "0";
+        setTimeout(() => dashboardMenu.style.display = "none", 300);
+      } else {
+        dashboardMenu.style.display = "block";
+        setTimeout(() => dashboardMenu.style.opacity = "1", 10);
+      }
+    });
+    document.addEventListener("click", (e) => {
+      if (dashboardMenu.style.display === "block"
+          && !dashboardMenu.contains(e.target)
+          && e.target !== dashboardBtn) {
+        dashboardMenu.style.opacity = "0";
+        setTimeout(() => dashboardMenu.style.display = "none", 300);
+      }
+    });
+  });
+
+  /* ---------- Bootstrap ---------- */
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFavs();
+  });
+
+})();
+</script>
+
+<!-- Quote Ticker -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const wrapper = document.getElementById("quoteWrapper");
+  const box     = document.getElementById("quoteBox");
+
+  const LOCAL_QUOTES = [
+    "WAKE UP ITS v0.7.7 UPDATE DROP!!! :kirby/wake::kirby/wake::kirby/wake:",
+    "'rhap5ody add in the COMING SOON assets 🗣🗣🗣' rhap5ody be like: :anime/deny.gif:",
+    ":miku/joy::miku/joy::miku/joy:",
+    "v0.7.7 dropped :miku/swaying.gif:",
+    "rhap5ody::linux/typing.gif:",
+    "V0.7.7 IS HERE :stickman/spazz::stickman/spazz::stickman/spazz::stickman/spazz::stickman/spazz::stickman/spazz::stickman/spazz::stickman/spazz::stickman/spazz::stickman/spazz:",
+    "WAKE UP MR WEST :grad-run:",
+    "page 4 completed??!! :gwahh.jpeg::gwahh.jpeg::gwahh.jpeg:",
+    "wait if v0.7.7 is here then when is v0.7.8 coming out? :think.jpg: 👀",
+    "VERSION V0.7.7 OUT NOWWWWWW!!! :csm/pochita-dance.gif::csm/pochita-dance.gif::csm/pochita-dance.gif:",
+    ":kanye-gaming.jpeg:",
+    "checkout the amazing new themes! :grad-painted.jpeg:",
+    ":miku/swaying.gif: Friday Night Funkin' :miku/swaying.gif:",
+    "due to some changes themes will be tempararily disabled until further notice. :sackboy/dieying.gif:",
+    ":nintendo/dance: PAGE 5 COMPLETED! :nintendo/dance:"
+  ];
+
+  let quotes = LOCAL_QUOTES;
+  let pos = 0, lastTime = null;
+  const baseSpeed = 120, slowSpeed = 70, slowerSpeed = 30;
+  let currentSpeed = baseSpeed;
+  let isHoveringBox = false, isHoveringText = false, isMouseDown = false;
+
+  function parseQuoteWithImages(text) {
+    return text.replace(
+      /:([a-zA-Z0-9_\-\/]+(?:\.(png|gif|webp|jpg|jpeg))?):/gi,
+      (match, path, ext) => {
+        if (path.includes("..")) return match;
+        if (ext) {
+          return `<img src="https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/stickers/${path}" class="quote-sticker" alt="${path}" loading="lazy">`;
+        }
+        return `<img src="https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/stickers/${path}.png" class="quote-sticker" alt="${path}" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/stickers/${path}.gif';">`;
+      }
+    );
+  }
+
+  function setQuote() {
+    box.innerHTML = parseQuoteWithImages(quotes[Math.floor(Math.random() * quotes.length)]);
+    pos = wrapper.offsetWidth;
+    box.style.transform = `translateX(${pos}px)`;
+  }
+  function updateSpeed() {
+    if (isMouseDown) currentSpeed = 0;
+    else if (isHoveringText) currentSpeed = slowerSpeed;
+    else if (isHoveringBox)  currentSpeed = slowSpeed;
+    else currentSpeed = baseSpeed;
+  }
+  function animate(time) {
+    if (lastTime !== null) {
+      pos -= currentSpeed * ((time - lastTime) / 1000);
+      box.style.transform = `translateX(${pos}px)`;
+      if (pos + box.offsetWidth < 0) setQuote();
+    }
+    lastTime = time;
+    requestAnimationFrame(animate);
+  }
+
+  wrapper.addEventListener("mouseenter", () => { isHoveringBox  = true;  updateSpeed(); });
+  wrapper.addEventListener("mouseleave", () => { isHoveringBox  = false; isHoveringText = false; updateSpeed(); });
+  box.addEventListener("mouseenter",     () => { isHoveringText = true;  updateSpeed(); });
+  box.addEventListener("mouseleave",     () => { isHoveringText = false; updateSpeed(); });
+  wrapper.addEventListener("mousedown",  () => { isMouseDown    = true;  updateSpeed(); });
+  document.addEventListener("mouseup",  () => { if (!isMouseDown) return; isMouseDown = false; updateSpeed(); });
+
+  setQuote();
+  requestAnimationFrame(animate);
+});
+</script>
+
+<!-- Panic key -->
+<script>
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    const panicURL = localStorage.getItem("panicURL");
+    if (panicURL) window.location.href = panicURL;
+  }
+});
+// Apply cloak
+(function() {
+  const t = localStorage.getItem("cloakTitle");
+  const i = localStorage.getItem("cloakIcon");
+  if (t) document.title = t;
+  if (i) {
+    const link = document.getElementById("favicon");
+    if (link) link.href = i.startsWith("http") ? i : `system/${i}`;
+  }
+})();
+</script>
+
+</body>
+</html>
