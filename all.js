@@ -844,6 +844,16 @@ function sanitizeHTML(html) {
   }
 
   /* ---------- Asset Card Builder ---------- */
+  // Inject a one-time CSS guard so any card tagged data-ignore="true" is
+  // invisible and takes zero space — belt-and-suspenders against the JS skip.
+  (function injectIgnoreGuardCSS() {
+    if (document.getElementById("__ws_ignore_guard__")) return;
+    const s = document.createElement("style");
+    s.id = "__ws_ignore_guard__";
+    s.textContent = `.asset-card[data-ignore="true"]{display:none!important;opacity:0!important;width:0!important;height:0!important;margin:0!important;padding:0!important;pointer-events:none!important;overflow:hidden!important;}`;
+    document.head.appendChild(s);
+  })();
+
   function createAssetCards(data) {
     const { container } = dom || {};
     if (!container) return [];
@@ -900,9 +910,9 @@ function sanitizeHTML(html) {
       const imageSrc    = safeStr(asset.image) || config.fallbackImage;
       const link        = safeStr(asset.link)  || config.fallbackLink;
       const pageNum     = Number(asset.page)   || 1;
-      const status      = safeStr(asset.status).toLowerCase();
-      const statusField = safeStr(asset.type || asset.status || "").toLowerCase();
-      const typeField   = safeStr(asset.type).toLowerCase();
+      const status      = safeStr(asset.status).toLowerCase().trim();
+      const statusField = safeStr(asset.type || asset.status || "").toLowerCase().trim();
+      const typeField   = safeStr(asset.type).toLowerCase().trim();
       const isActivePage = pageNum === activePage;
 
       if (status === "hide" || status === "hidden") continue;
@@ -910,6 +920,8 @@ function sanitizeHTML(html) {
 
       const card = document.createElement("div");
       card.className = "asset-card";
+      // Secondary guard: if type=ignore somehow reached here, tag it so CSS can hide it.
+      if (typeField === "ignore") card.dataset.ignore = "true";
       Object.assign(card.dataset, {
         title:    title.toLowerCase(),
         author:   author.toLowerCase(),
