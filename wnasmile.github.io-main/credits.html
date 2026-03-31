@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WannaSmile | Credits</title>
+
+<link id="favicon" rel="icon" href="https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/favicons/logo.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" /></noscript>
+
+<link rel="stylesheet" href="themes.css" />
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  height: 100%;
+  background-image: var(--main-bg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+}
+
+body {
+  min-height: 100%;
+  background: transparent;
+  color: var(--text-color);
+  font-family: "Poppins", monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 20px 80px;
+}
+
+a, a:visited {
+  color: var(--link-color);
+  text-decoration: none;
+}
+a:focus { outline: none; }
+
+/* ── Page title ── */
+.page-title {
+  font-family: monospace;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--link-color);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.page-sub {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--text-color);
+  opacity: 0.5;
+  margin-bottom: 56px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* ── Section ── */
+.section {
+  width: 100%;
+  max-width: 860px;
+  margin-bottom: 52px;
+}
+
+.section-label {
+  font-family: monospace;
+  font-size: 0.72rem;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  margin-bottom: 6px;
+  padding-left: 4px;
+}
+
+.section-rule {
+  width: 100%;
+  height: 1px;
+  background: var(--accent-color);
+  opacity: 0.25;
+  margin-bottom: 28px;
+  border: none;
+}
+
+/* ── Grid of contributor cards ── */
+.contrib-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: flex-start;
+}
+
+/* ── Single contributor ── */
+.contrib {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.contrib-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid transparent;
+  background: var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.contrib-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  pointer-events: none;
+}
+
+/* fallback monogram if no image */
+.contrib-avatar .monogram {
+  font-family: monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--link-color);
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.contrib:hover .contrib-avatar {
+  border-color: var(--accent-color);
+  transform: scale(1.08);
+  box-shadow: 0 0 14px rgba(0,0,0,0.4);
+}
+
+.contrib-name {
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--link-color);
+  text-align: center;
+  transition: color 0.2s;
+  max-width: 80px;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.contrib:hover .contrib-name {
+  color: var(--accent-color);
+}
+
+.contrib-role {
+  font-family: monospace;
+  font-size: 0.6rem;
+  color: var(--text-color);
+  opacity: 0.45;
+  text-align: center;
+  max-width: 80px;
+  line-height: 1.2;
+}
+
+/* ── Expanded card (clicked state) ── */
+.contrib-card-open {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.contrib-card-open.show {
+  display: flex;
+}
+
+.contrib-card-inner {
+  background: var(--menu-bg, var(--header-bg));
+  border-radius: 18px;
+  padding: 32px 28px;
+  max-width: 340px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  position: relative;
+  animation: cardIn 0.22s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+
+@keyframes cardIn {
+  from { opacity:0; transform:scale(0.88) translateY(10px); }
+  to   { opacity:1; transform:scale(1)    translateY(0);    }
+}
+
+.contrib-card-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--link-color);
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.contrib-card-close:hover { opacity: 1; }
+
+.card-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent-color);
+}
+
+.card-avatar-mono {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: monospace;
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: var(--link-color);
+  border: 2px solid var(--accent-color);
+}
+
+.card-name {
+  font-family: monospace;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--link-color);
+  text-align: center;
+}
+
+.card-role {
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: var(--accent-color);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.card-desc {
+  font-family: monospace;
+  font-size: 0.78rem;
+  color: var(--text-color);
+  opacity: 0.7;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.card-link {
+  display: inline-block;
+  margin-top: 4px;
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  padding: 5px 14px;
+  border-radius: 20px;
+  transition: background 0.2s, color 0.2s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.card-link:hover {
+  background: var(--accent-color);
+  color: #fff;
+}
+
+</style>
+</head>
+<body>
+
+<div class="page-title">Credits</div>
+<div class="page-sub">the people behind the smile</div>
+
+<!-- ══════════════ CREATOR ══════════════ -->
+<section class="section">
+  <div class="section-label">Creator</div>
+  <hr class="section-rule" />
+  <div class="contrib-grid">
+
+    <a class="contrib" href="#" data-id="creator-main">
+      <div class="contrib-avatar">
+        <img src="https://avatars.githubusercontent.com/mcmattyobriore" alt="creator avatar"
+             onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'monogram\'>M</span>'" />
+      </div>
+      <span class="contrib-name">mcmattyobriore</span>
+      <span class="contrib-role">Creator &amp; Dev</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ══════════════ LIBRARIES ══════════════ -->
+<section class="section">
+  <div class="section-label">Libraries &amp; Tools</div>
+  <hr class="section-rule" />
+  <div class="contrib-grid">
+
+    <a class="contrib" href="#" data-id="lib-godot">
+      <div class="contrib-avatar">
+        <img src="https://avatars.githubusercontent.com/godotengine" alt="Godot"
+             onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'monogram\'>G</span>'" />
+      </div>
+      <span class="contrib-name">Godot Engine</span>
+      <span class="contrib-role">Game Engine</span>
+    </a>
+
+    <a class="contrib" href="#" data-id="lib-gfonts">
+      <div class="contrib-avatar">
+        <img src="https://www.google.com/favicon.ico" alt="Google Fonts"
+             onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'monogram\'>G</span>'" />
+      </div>
+      <span class="contrib-name">Google Fonts</span>
+      <span class="contrib-role">Typography</span>
+    </a>
+
+    <a class="contrib" href="#" data-id="lib-jsdelivr">
+      <div class="contrib-avatar">
+        <img src="https://www.jsdelivr.com/favicon.ico" alt="jsDelivr"
+             onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'monogram\'>J</span>'" />
+      </div>
+      <span class="contrib-name">jsDelivr</span>
+      <span class="contrib-role">CDN Hosting</span>
+    </a>
+
+    <a class="contrib" href="#" data-id="lib-github">
+      <div class="contrib-avatar">
+        <img src="https://avatars.githubusercontent.com/github" alt="GitHub"
+             onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'monogram\'>GH</span>'" />
+      </div>
+      <span class="contrib-name">GitHub</span>
+      <span class="contrib-role">Hosting &amp; Source</span>
+    </a>
+
+    <a class="contrib" href="#" data-id="lib-gsheets">
+      <div class="contrib-avatar">
+        <img src="https://ssl.gstatic.com/docs/spreadsheets/favicon3.ico" alt="Google Sheets"
+             onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'monogram\'>S</span>'" />
+      </div>
+      <span class="contrib-name">Google Sheets</span>
+      <span class="contrib-role">Asset Database</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ══════════════ GAME DEVS ══════════════ -->
+<section class="section">
+  <div class="section-label">Game Developers</div>
+  <hr class="section-rule" />
+  <div class="contrib-grid">
+
+    <a class="contrib" href="#" data-id="dev-ninja">
+      <div class="contrib-avatar">
+        <img src="https://avatars.githubusercontent.com/ninjamuffin99" alt="ninjamuffin99"
+             onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'monogram\'>N</span>'" />
+      </div>
+      <span class="contrib-name">ninjamuffin99</span>
+      <span class="contrib-role">Friday Night Funkin'</span>
+    </a>
+
+    <a class="contrib" href="#" data-id="dev-genizy">
+      <div class="contrib-avatar">
+        <img src="https://avatars.githubusercontent.com/genizy" alt="genizy"
+             onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'monogram\'>G</span>'" />
+      </div>
+      <span class="contrib-name">genizy</span>
+      <span class="contrib-role">Google Class</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ══════════════ SPECIAL THANKS ══════════════ -->
+<section class="section">
+  <div class="section-label">Special Thanks</div>
+  <hr class="section-rule" />
+  <div class="contrib-grid">
+
+    <a class="contrib" href="#" data-id="thanks-you">
+      <div class="contrib-avatar">
+        <div class="monogram" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:1.4rem;font-weight:bold;color:var(--link-color);">♥</div>
+      </div>
+      <span class="contrib-name">You</span>
+      <span class="contrib-role">Playing &amp; Sharing</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ══════════════ EXPANDED CARD OVERLAY ══════════════ -->
+<div class="contrib-card-open" id="contribOverlay">
+  <div class="contrib-card-inner" id="contribCardInner">
+    <button class="contrib-card-close" id="contribClose">✕</button>
+    <div id="cardAvatarSlot"></div>
+    <div class="card-name"  id="cardName"></div>
+    <div class="card-role"  id="cardRole"></div>
+    <div class="card-desc"  id="cardDesc"></div>
+    <a   class="card-link"  id="cardLink" href="#" target="_blank" rel="noopener" style="display:none">Visit →</a>
+  </div>
+</div>
+
+<script>
+(function applyGlobalTheme() {
+  const saved = localStorage.getItem("selectedTheme") || "redux";
+  document.documentElement.setAttribute("theme", saved);
+  if (saved === "custom") {
+    try {
+      const vars = JSON.parse(localStorage.getItem("customTheme") || "{}");
+      Object.entries(vars).forEach(([k, v]) =>
+        document.documentElement.style.setProperty(k, v)
+      );
+    } catch (_) {}
+  }
+})();
+
+window.addEventListener("storage", (e) => {
+  if (e.key === "selectedTheme") {
+    const t = e.newValue || "redux";
+    document.documentElement.setAttribute("theme", t);
+    if (t !== "custom") document.documentElement.style.cssText = "";
+  }
+});
+
+// ── Contributor data keyed by data-id ──────────────────────────────────────
+const CONTRIB_DATA = {
+  "creator-main": {
+    name:   "mcmattyobriore",
+    role:   "Creator & Developer",
+    desc:   "Built WannaSmile from scratch — the UI, asset system, themes, and everything in between.",
+    avatar: "https://avatars.githubusercontent.com/mcmattyobriore",
+    link:   "https://github.com/mcmattyobriore"
+  },
+  "lib-godot": {
+    name:   "Godot Engine",
+    role:   "Game Engine",
+    desc:   "Open-source game engine used by many of the games hosted here.",
+    avatar: "https://avatars.githubusercontent.com/godotengine",
+    link:   "https://godotengine.org"
+  },
+  "lib-gfonts": {
+    name:   "Google Fonts",
+    role:   "Typography",
+    desc:   "Provides the Poppins font used throughout the site.",
+    avatar: "https://www.google.com/favicon.ico",
+    link:   "https://fonts.google.com"
+  },
+  "lib-jsdelivr": {
+    name:   "jsDelivr",
+    role:   "CDN Hosting",
+    desc:   "Serves game assets and resources at fast delivery speeds worldwide.",
+    avatar: "https://www.jsdelivr.com/favicon.ico",
+    link:   "https://www.jsdelivr.com"
+  },
+  "lib-github": {
+    name:   "GitHub",
+    role:   "Hosting & Source Control",
+    desc:   "Hosts the site via GitHub Pages and stores all source code.",
+    avatar: "https://avatars.githubusercontent.com/github",
+    link:   "https://github.com"
+  },
+  "lib-gsheets": {
+    name:   "Google Sheets",
+    role:   "Asset Database",
+    desc:   "Powers the live asset catalogue via Google Apps Script.",
+    avatar: "https://ssl.gstatic.com/docs/spreadsheets/favicon3.ico",
+    link:   "https://sheets.google.com"
+  },
+  "dev-ninja": {
+    name:   "ninjamuffin99",
+    role:   "Game Developer",
+    desc:   "Creator of Friday Night Funkin' — one of the most popular games on the site.",
+    avatar: "https://avatars.githubusercontent.com/ninjamuffin99",
+    link:   "https://github.com/ninjamuffin99"
+  },
+  "dev-genizy": {
+    name:   "genizy",
+    role:   "Game Developer",
+    desc:   "Created Google Class and other hosted titles.",
+    avatar: "https://avatars.githubusercontent.com/genizy",
+    link:   "https://github.com/genizy"
+  },
+  "thanks-you": {
+    name:   "You",
+    role:   "The Player",
+    desc:   "Thanks for visiting, playing, and sharing. WannaSmile exists because of you.",
+    avatar: null,
+    link:   null
+  }
+};
+
+// ── Open card ──────────────────────────────────────────────────────────────
+const overlay    = document.getElementById("contribOverlay");
+const cardName   = document.getElementById("cardName");
+const cardRole   = document.getElementById("cardRole");
+const cardDesc   = document.getElementById("cardDesc");
+const cardLink   = document.getElementById("cardLink");
+const avatarSlot = document.getElementById("cardAvatarSlot");
+
+function openCard(id) {
+  const d = CONTRIB_DATA[id];
+  if (!d) return;
+
+  cardName.textContent = d.name;
+  cardRole.textContent = d.role;
+  cardDesc.textContent = d.desc;
+
+  avatarSlot.innerHTML = "";
+  if (d.avatar) {
+    const img = document.createElement("img");
+    img.src       = d.avatar;
+    img.className = "card-avatar";
+    img.alt       = d.name;
+    img.onerror   = () => {
+      avatarSlot.innerHTML = `<div class="card-avatar-mono">${d.name.charAt(0).toUpperCase()}</div>`;
+    };
+    avatarSlot.appendChild(img);
+  } else {
+    avatarSlot.innerHTML = `<div class="card-avatar-mono">♥</div>`;
+  }
+
+  if (d.link) {
+    cardLink.href          = d.link;
+    cardLink.style.display = "inline-block";
+  } else {
+    cardLink.style.display = "none";
+  }
+
+  overlay.classList.add("show");
+}
+
+function closeCard() {
+  overlay.classList.remove("show");
+}
+
+// Attach click to every .contrib anchor
+document.querySelectorAll(".contrib").forEach(el => {
+  el.addEventListener("click", (e) => {
+    e.preventDefault();
+    openCard(el.dataset.id);
+  });
+});
+
+document.getElementById("contribClose").addEventListener("click", closeCard);
+
+overlay.addEventListener("click", (e) => {
+  if (e.target === overlay) closeCard();
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeCard();
+});
+</script>
+
+</body>
+</html>
