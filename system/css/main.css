@@ -1,0 +1,1075 @@
+/* ==========================================
+   Global Reset
+   ========================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Re-enable text selection inside inputs */
+input, textarea {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  user-select: text;
+}
+
+/* Remove outlines globally */
+a, button, input, textarea {
+  outline: none !important;
+}
+
+/* ==========================================
+   HTML & Body — Background
+   ========================================== */
+html {
+  height: 100%;
+  background: var(--main-bg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+}
+
+body {
+  min-height: 100%;
+  background: transparent;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================
+   Links
+   ========================================== */
+a, a:visited {
+  color: var(--link-color);
+  text-decoration: none;
+}
+a:focus { outline: none; }
+
+/* ==========================================
+   Header & Navigation
+   ========================================== */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--header-bg);
+  padding: 10px 20px;
+  width: 100%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+header a, footer a {
+  margin: 0 10px;
+  color: var(--link-color);
+  font-family: monospace;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s, text-decoration 0.3s;
+}
+header a:hover, footer a:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-color);
+}
+
+header img {
+  width: 28px;
+  height: 28px;
+  object-fit: cover;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ==========================================
+   Top Bar
+   ========================================== */
+#topBar {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 20;
+  background: var(--header-bg);
+  color: var(--link-color);
+}
+
+#topBar header {
+  z-index: 21;
+}
+
+/* ==========================================
+   Page Controls (Prev / Next)
+   ========================================== */
+.pages-anchor {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 10px;
+}
+
+.pages-anchor button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pages-anchor button img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.pages-anchor button:hover img {
+  transform: scale(1.2);
+}
+
+.pages-anchor .page-indicator {
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: var(--link-color);
+  user-select: none;
+}
+
+/* ==========================================
+   Profile Picture & Dashboard Button
+   ========================================== */
+#pfp {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+  transition: transform 0.25s ease;
+}
+#pfp:hover { transform: scale(1.1); }
+
+#dashboardBtn {
+  width: 36px;
+  background: none;
+  border: none;
+  color: var(--link-color);
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+#dashboardBtn:hover { transform: scale(1.1); }
+
+/* ==========================================
+   Dashboard Menu
+   ========================================== */
+.dashboard-menu {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  background: var(--menu-bg);
+  border-radius: 10px;
+  display: none;
+  flex-direction: column;
+  min-width: 200px;
+  padding: 10px 0;
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.dashboard-menu a,
+.dashboard-menu p {
+  padding: 10px 16px;
+  color: var(--link-color);
+  font-family: monospace;
+  display: block;
+  transition: color 0.3s, background 0.3s, text-decoration 0.3s;
+}
+
+.dashboard-menu p {
+  font-weight: bold;
+  cursor: default;
+}
+
+.dashboard-menu a:hover,
+.dashboard-menu p:hover {
+  color: var(--accent-color);
+  background: rgba(255,255,255,0.1);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-color);
+}
+
+/* ==========================================
+   Search Bar
+   ========================================== */
+.search-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--input-bg);
+  border-radius: 25px;
+  padding: 4px 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  transition: box-shadow 0.2s;
+}
+.search-box:focus-within { box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
+
+.search-box input {
+  padding: 6px;
+  border: none;
+  background: transparent;
+  color: var(--input-text);
+  font-family: monospace;
+  font-size: 14px;
+  flex: 1;
+}
+.search-box input::placeholder { color: var(--input-placeholder); }
+.search-box input:focus { outline: none; box-shadow: none; }
+
+.search-box button {
+  padding: 6px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: var(--search-btn-bg);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, filter 0.2s;
+}
+.search-box button:hover { transform: scale(1.1); filter: brightness(1.2); }
+.search-box button img { width: 14px; height: 14px; }
+
+.search-error {
+  display: none;
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff4d4d;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  z-index: 1000;
+}
+
+#searchFeedback {
+  display: none;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  text-align: center;
+}
+#searchFeedback img {
+  border-radius: 8px;
+}
+
+/* ==========================================
+   Quote Ticker
+   ========================================== */
+#quoteWrapper {
+  position: relative;
+  width: 100vw;
+  height: 30px;
+  overflow: hidden;
+  background: var(--quote-bg);
+  color: var(--quote-text);
+  display: flex;
+  align-items: center;
+}
+
+#quoteBox {
+  position: absolute;
+  white-space: nowrap;
+  font-family: monospace;
+  font-size: 1em;
+  font-weight: bold;
+  background: none;
+  color: var(--quote-text);
+  transform: translateX(100%);
+  user-select: none;
+  cursor: default;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.quote-sticker {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  vertical-align: middle;
+  pointer-events: none;
+}
+
+/* ==========================================
+   Asset Grid — 5 Columns
+   ========================================== */
+#container,
+#container-discov {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: transparent;
+  flex-grow: 1;
+  min-height: 0;
+  align-content: start;
+}
+
+@media (max-width: 800px) {
+  #container,
+  #container-discov {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ==========================================
+   Asset Cards
+   ========================================== */
+#container div,
+#container-discov div {
+  width: 100%;
+  max-width: 220px;
+  padding: 15px 10px;
+  background: var(--card-bg);
+  text-align: center;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s ease;
+}
+
+#container div:hover,
+#container-discov div:hover {
+  transform: scale(1.03);
+}
+
+#container div img,
+#container-discov div img {
+  width: 120px;
+  height: 120px;
+  display: block;
+  border-radius: 14px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+#container div img:hover,
+#container-discov div img:hover {
+  transform: scale(1.05);
+}
+
+/* ==========================================
+   Card Text
+   ========================================== */
+#container div h3,
+#container div p,
+#container-discov div h3,
+#container-discov div p {
+  color: var(--link-color);
+  font-family: monospace;
+  font-size: 0.9rem;
+  transition: color 0.3s, text-decoration 0.3s;
+}
+#container div h3:hover,
+#container div p:hover,
+#container-discov div h3:hover,
+#container-discov div p:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+/* ==========================================
+   Status Overlays: Featured / New / Fixed
+   ========================================== */
+.asset-link img.status-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  opacity: 1;
+  border-radius: 14px;
+  transition: opacity 0.25s ease;
+  z-index: 2;
+}
+
+.asset-link:hover img.status-overlay {
+  opacity: 0;
+  transform: scale(1.05);
+}
+
+/* ==========================================
+   SOON Status
+   ========================================== */
+.soon {
+  position: relative;
+  opacity: 0.5;
+  pointer-events: none;
+  filter: grayscale(100%);
+}
+
+.soon::after {
+  content: "COMING SOON";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-shadow: 0 0 4px #000;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.soon img {
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: opacity 0.25s ease;
+}
+
+.soon:hover img { opacity: 0.8; }
+
+/* ==========================================
+   FIX Status
+   ========================================== */
+.fix {
+  position: relative;
+  pointer-events: none;
+  filter: grayscale(100%);
+  opacity: 0.6;
+}
+
+.fix img {
+  filter: grayscale(100%);
+  opacity: 0.9;
+  background: #808080;
+  mix-blend-mode: multiply;
+}
+
+.fix::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(128,128,128,0.2);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.fix:hover {
+  border: 2px solid #ff0000;
+  box-shadow: 0 0 10px rgba(255,0,0,0.7);
+}
+
+/* ==========================================
+   COOKED Status — taken down temporarily
+   ========================================== */
+.cooked {
+  position: relative;
+  pointer-events: none;
+  filter: grayscale(100%);
+  cursor: not-allowed;
+}
+
+.cooked img.asset-img {
+  opacity: 1;
+  image-rendering: pixelated;
+}
+
+
+.theme-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.theme-btn {
+  padding: 10px 16px;
+  border: 2px solid var(--accent-color);
+  background: var(--header-bg);
+  color: var(--text-color);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.theme-btn:hover {
+  transform: scale(1.05);
+  background: var(--accent-color);
+  color: #fff;
+}
+.theme-btn.active {
+  background: var(--accent-color);
+  color: #fff;
+  box-shadow: 0 0 10px var(--accent-color);
+}
+
+/* ==========================================
+   Preloader Progress Bar
+   ========================================== */
+.load-progress-text {
+  font-family: monospace;
+  color: #fff;
+  text-align: center;
+  margin-top: 10px;
+}
+.load-progress-bar {
+  width: 80%;
+  height: 8px;
+  margin: 10px auto;
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.load-progress-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #00ffff, #ff00ff);
+  transition: width 0.3s ease;
+}
+
+/* ==========================================
+   Back to Top Button
+   ========================================== */
+#toTopBtn {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-family: monospace;
+  border: none;
+  border-radius: 8px;
+  background: var(--header-bg);
+  color: var(--link-color);
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  opacity: 0.6;
+  transition: opacity 0.3s, color 0.3s;
+}
+#toTopBtn.show {
+  display: block !important;
+  opacity: 0.75 !important;
+  pointer-events: auto !important;
+}
+#toTopBtn:hover {
+  opacity: 0.8;
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+/* ==========================================
+   Footer
+   ========================================== */
+footer {
+  margin-top: auto;
+  background: var(--footer-bg);
+  text-align: center;
+  padding: 30px;
+  width: 100%;
+  font-family: monospace;
+  color: var(--link-color);
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
+}
+
+/* ==========================================
+   Misc Utility
+   ========================================== */
+embed {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+/* card reveal — must be inline so it exists before body paints */
+* { margin:0; padding:0; box-sizing:border-box; font-family:"Poppins",sans-serif; }
+
+@keyframes cardPopIn {
+  0%   { opacity: 0; transform: translateY(10px) scale(0.92); }
+  60%  { transform: translateY(-3px) scale(1.03); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Cards are display:none until JS sets them ready — zero layout footprint.
+   .ready switches display back on and plays the pop animation.
+   pointer-events stay off until animation completes (set inline by JS). */
+.asset-card {
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+}
+.asset-card.ready {
+  display: flex; /* matches the flex column layout the card already uses */
+  animation: cardPopIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  pointer-events: auto;
+}
+
+/* soon, fix, and cooked cards must never be interactive —
+   override .asset-card.ready's pointer-events: auto */
+.asset-card.ready.soon,
+.asset-card.ready.fix,
+.asset-card.ready.cooked {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* ==========================================
+   Version-pending guard
+   Cards are display:none so the grid is already empty/zero-height.
+   This just blocks pointer interaction on the container itself while
+   the version fetch is in flight.
+   ========================================== */
+#container.version-pending,
+#container-discov.version-pending {
+  pointer-events: none;
+}
+
+/* ==========================================
+   Loading state — body.ws-loading
+   While the loader GIF is active the card container is fully hidden
+   and takes zero space. Removed by runLoaderSequence once the loaded
+   GIF finishes. Cards may become .ready during this window — they will
+   appear correctly the instant ws-loading is removed.
+   ========================================== */
+body.ws-loading #container,
+body.ws-loading #container-discov {
+  visibility: hidden;
+  height: 0;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+  gap: 0;
+}
+
+/* loading/loaded gif — fixed overlay, non-interactive, viewport-centered */
+#containerLoader {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+/*
+  Size is driven by --gif-w / --gif-h injected by applyGifToImg() in theme.js.
+  Fallback values match the old hardcoded defaults so nothing breaks if JS hasn't
+  run yet or a state has no explicit size.
+
+  Per-state overrides via [data-gif-state] let you tweak transitions / rendering
+  independently for each GIF without touching JS.
+*/
+#containerLoader img {
+  width:  var(--gif-w, 192px);
+  height: var(--gif-h, 192px);
+  image-rendering: pixelated;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  display: block;
+  transition: width 0.25s ease, height 0.25s ease;
+}
+
+/* loading — default entrance, slight pulse */
+#containerLoader img[data-gif-state="loading"] {
+  animation: gifPulse 2s ease-in-out infinite;
+}
+
+/* loaded — snappy pop-in */
+#containerLoader img[data-gif-state="loaded"] {
+  animation: gifPopIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* crash — shake once */
+#containerLoader img[data-gif-state="crash"] {
+  animation: gifShake 0.5s ease forwards;
+  image-rendering: pixelated;
+  filter: saturate(1.4) brightness(0.9);
+}
+
+/* ded — slow fade in, desaturate */
+#containerLoader img[data-gif-state="ded"] {
+  animation: gifFadeIn 0.6s ease forwards;
+  filter: grayscale(0.5) brightness(0.85);
+}
+
+/* searching gif (noResultsGif) — same var-driven sizing */
+#noResultsGif,
+#searchFeedback img {
+  width:  var(--gif-w, 120px);
+  height: var(--gif-h, 120px);
+  object-fit: contain;
+  transition: width 0.25s ease, height 0.25s ease;
+}
+
+/* ---- loader GIF keyframes ---- */
+@keyframes gifPulse {
+  0%, 100% { transform: scale(1);    opacity: 1;    }
+  50%       { transform: scale(1.04); opacity: 0.92; }
+}
+@keyframes gifPopIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+@keyframes gifShake {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-8px); }
+  40%     { transform: translateX( 8px); }
+  60%     { transform: translateX(-5px); }
+  80%     { transform: translateX( 5px); }
+}
+@keyframes gifFadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1);   }
+}
+
+/* ==========================================
+   WELCOME MODAL
+   ========================================== */
+#welcomeModal {
+  transform: scale(0.9) !important;
+  transform-origin: center !important;
+}
+#welcomeModal ol {
+margin-left:15px;
+}
+#welcomeOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 888888;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+#welcomeOverlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+#welcomeModal {
+  /*background: rgba(10,10,10,0.92);*/
+  /*border: 1px solid rgba(255,255,255,0.1);*/
+  /*border-radius: 18px;*/
+  padding: 36px 40px 30px;
+  max-width: 520px;
+  width: 90%;
+  color: #fff;
+  font-family: monospace;
+  /*box-shadow: 0 8px 40px rgba(0,0,0,0.7);*/
+  text-align: center;
+  position: relative;
+}
+#welcomeModal .titleLogo {
+  margin-top:-30px;
+  margin-left: auto;
+  margin-right: auto;
+  display:block;
+  width:220px;
+  height:auto;
+}
+#welcomeModal .welcome-sub {
+  font-size: 0.8rem;
+  margin-top:5px;
+  margin-bottom:30px;
+  margin-left: auto;
+  margin-right: auto;
+  display:block;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 10px;
+  width:180px;
+  height:auto;
+}
+#welcomeModal .welcome-section {
+  background: rgba(0,0,0,0.6);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+#welcomeModal .welcome-section h3 {
+  font-size: 0.72rem;
+  color: var(--accent-color, #ff4444);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+#welcomeModal .shortcut-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.85);
+}
+#welcomeModal .shortcut-row:last-child { margin-bottom: 0; }
+#welcomeModal kbd {
+  display: inline-block;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 5px;
+  padding: 2px 8px;
+  font-family: monospace;
+  font-size: 0.8rem;
+  min-width: 28px;
+  text-align: center;
+  flex-shrink: 0;
+}
+#welcomeModal .system-tag {
+  display: inline-block;
+  background: rgba(255,68,68,0.15);
+  border: 1px solid rgba(255,68,68,0.3);
+  border-radius: 5px;
+  padding: 1px 6px;
+  font-size: 0.72rem;
+  color: #ff8888;
+  margin-left: 4px;
+}
+#welcomeDismiss {
+  margin-top: 15px;
+  padding: 10px 30px;
+  background: var(--accent-color, #ff4444);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.2s;
+}
+#welcomeDismiss:hover { filter: brightness(1.2); transform: scale(1.03); }
+#welcomeNeverShow {
+  display: block;
+  margin: 8px auto 0;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.3);
+  font-family: monospace;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+  margin-top:15px;
+}
+#welcomeNeverShow:hover { color: rgba(255,255,255,0.6); transform: scale(1.03); }
+
+/* ==========================================
+   INCOGNITO MODE INDICATOR
+   ========================================== */
+#incognitoIndicator {
+  position: fixed;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.7);
+  color: #aaa;
+  font-family: monospace;
+  font-size: 0.7rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  z-index: 99990;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+#incognitoIndicator.show {
+  opacity: 1;
+}
+
+/* ==========================================
+   DISCO
+   ========================================== */
+@keyframes discoSpin {
+  0%   { filter: hue-rotate(0deg)   brightness(1.15) saturate(1.5); }
+  25%  { filter: hue-rotate(90deg)  brightness(1.35) saturate(1.7); }
+  50%  { filter: hue-rotate(180deg) brightness(1.15) saturate(1.5); }
+  75%  { filter: hue-rotate(270deg) brightness(1.35) saturate(1.7); }
+  100% { filter: hue-rotate(360deg) brightness(1.15) saturate(1.5); }
+}
+.img-disco { animation: discoSpin 3s linear infinite !important; }
+
+/* ==========================================
+   SHINY -- glint ::after pseudo on the img element itself
+   so it always exactly matches the image position,
+   including object-fit:contain letterbox offset.
+   ========================================== */
+
+/* img.img-shiny is applied to the wrapper div (not the <img> — replaced
+   elements don't support ::after).
+   Override #container div's width/padding/max-width so the wrapper is
+   exactly 120×120 — same as the img — making inset:0 on ::after precise. */
+.asset-img-wrapper {
+  width: 120px !important;
+  height: 120px !important;
+  max-width: 120px !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  flex-shrink: 0;
+}
+.img-shiny { position: relative; overflow: hidden; }
+.img-shiny::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  pointer-events: none;
+  z-index: 7;
+  background: linear-gradient(
+    105deg,
+    transparent            0%,
+    rgba(255,255,255,0.0)  38%,
+    rgba(255,255,255,0.55) 46%,
+    rgba(255,255,255,0.80) 50%,
+    rgba(255,255,255,0.55) 54%,
+    rgba(255,255,255,0.0)  62%,
+    transparent            100%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: glintSweepImg 3.5s ease-in-out infinite;
+  transition: opacity 0.2s ease;
+}
+.img-shiny:hover::after {
+  opacity: 0 !important;
+  animation-play-state: paused;
+}
+@keyframes glintSweepImg {
+  0%   { background-position: -100% 0; opacity: 0; }
+  5%   { opacity: 1; }
+  35%  { background-position:  200% 0; opacity: 0; }
+  100% { background-position:  200% 0; opacity: 0; }
+}
+
+/* ==========================================
+   ANIMATED SWAP
+   ========================================== */
+.animated-swap {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+  z-index: 4;
+  animation: animSwapFadeIn 0.3s ease forwards;
+}
+@keyframes animSwapFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.footer {
+  position: relative; /* IMPORTANT */
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.footer-links a {
+  margin: 0 10px;
+}
+
+/* Left image (GitHub cat) */
+.footer-left {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  height: 30px;
+  
+  /* Smooth transition for hover effects */
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer; /* optional, shows it's interactive */
+}
+
+/* Hover effect: grow and invert colors */
+.footer-left:hover {
+  transform: scale(1.2); /* grows 50% bigger */
+  filter: invert(1);      /* invert colors */
+}
+
+/* Right image (GitHub fork) */
+.footer-right {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  height: 30px;
+}
+/* Container to position relative so tooltip can float over it */
+.hover-container {
+  position: relative;
+  display: inline-block; /* shrink to image size */
+}
+
+/* The tooltip panel */
+.hoverText {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -150%); /* Float above image */
+  background: rgba(0, 0, 0, 0.6); /* Dark black with 0.6 opacity */
+  color: #fff;
+  font-family: monospace;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  pointer-events: none; /* Ignore mouse */
+  opacity: 0; /* Start hidden */
+  z-index: 100;
+  
+  /* Floating bubble animation */
+  animation: floatBubble 2s ease-in-out infinite;
+  transform-origin: bottom center;
+  transition: opacity 0.3s ease;
+}
+
+/* Show tooltip on hover of container */
+.hover-container:hover .hoverText {
+  opacity: 1;
+}
+
+/* Bubble float animation */
+@keyframes floatBubble {
+  0%, 100% { transform: translate(-50%, -150%) translateY(0); }
+  50% { transform: translate(-50%, -150%) translateY(-5px); }
+}
