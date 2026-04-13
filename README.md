@@ -25,9 +25,9 @@ view changes inside the release:https://example.com
 
 # Contributors:
 
-![a456pur_astrological](a456pur_astrological.jpeg)
-![awesome-xv](awesome-xv.png)
-![bguhm](bguhm.jpeg)
+![a456pur_astrological](assets/contributors/a456pur_astrological.jpeg)
+![awesome-xv](assets/contributors/awesome-xv.png)
+![bguhm](assets/contributors/bguhm.jpeg)
 ![bubbls](bubbls.png)
 ![genizy](genizy.png)
 ![genizymath](genizymath.png)
