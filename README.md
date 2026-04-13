@@ -1,7 +1,7 @@
 # WannaSmile V0.8.3
 
 ## Preview
-![Preview 0.8.3](assets/previews/v083.gif)
+![Preview 0.8.3](assets/previews/v083.png)
 
 ## Description
 Wannasmile is an open source asset library

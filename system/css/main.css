@@ -41,13 +41,14 @@ body {
   color: var(--text-color);
   display: flex;
   flex-direction: column;
+  overflow-x: hidden !important;
 }
 
 /* ==========================================
    Links
    ========================================== */
 a, a:visited {
-  color: var(--link-color);
+  color: var(--url-color);
   text-decoration: none;
 }
 a:focus { outline: none; }
@@ -67,7 +68,7 @@ header {
 
 header a, footer a {
   margin: 0 10px;
-  color: var(--link-color);
+  color: var(--url-color);
   font-family: monospace;
   font-weight: bold;
   text-decoration: none;
@@ -106,7 +107,7 @@ header img {
   position: relative;
   z-index: 20;
   background: var(--header-bg);
-  color: var(--link-color);
+  color: var(--url-color);
 }
 
 #topBar header {
@@ -148,7 +149,7 @@ header img {
   font-family: monospace;
   font-weight: bold;
   font-size: 0.9rem;
-  color: var(--link-color);
+  color: var(--url-color);
   user-select: none;
 }
 
@@ -163,13 +164,14 @@ header img {
   object-fit: cover;
   transition: transform 0.25s ease;
 }
+#pfp img {image-rendering:smooth;}
 #pfp:hover { transform: scale(1.1); }
 
 #dashboardBtn {
   width: 36px;
   background: none;
   border: none;
-  color: var(--link-color);
+  color: var(--url-color);
   font-size: 18px;
   cursor: pointer;
   transition: transform 0.25s ease;
@@ -183,7 +185,7 @@ header img {
   position: fixed;
   top: 60px;
   right: 20px;
-  background: var(--menu-bg);
+  background: var(--aside-bg);
   border-radius: 10px;
   display: none;
   flex-direction: column;
@@ -196,7 +198,7 @@ header img {
 .dashboard-menu a,
 .dashboard-menu p {
   padding: 10px 16px;
-  color: var(--link-color);
+  color: var(--url-color);
   font-family: monospace;
   display: block;
   transition: color 0.3s, background 0.3s, text-decoration 0.3s;
@@ -222,7 +224,7 @@ header img {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background: var(--input-bg);
+  background: var(--search-bg);
   border-radius: 25px;
   padding: 4px 10px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.15);
@@ -234,12 +236,12 @@ header img {
   padding: 6px;
   border: none;
   background: transparent;
-  color: var(--input-text);
+  color: var(--search-text);
   font-family: monospace;
   font-size: 14px;
   flex: 1;
 }
-.search-box input::placeholder { color: var(--input-placeholder); }
+.search-box input::placeholder { color: var(--search-placeholder); }
 .search-box input:focus { outline: none; box-shadow: none; }
 
 .search-box button {
@@ -247,7 +249,7 @@ header img {
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  background: var(--search-btn-bg);
+  background: var(--icon-bg);
   color: #fff;
   display: flex;
   align-items: center;
@@ -292,7 +294,7 @@ header img {
   height: 30px;
   overflow: hidden;
   background: var(--quote-bg);
-  color: var(--quote-text);
+  color: var(--quote-color);
   display: flex;
   align-items: center;
 }
@@ -304,7 +306,7 @@ header img {
   font-size: 1em;
   font-weight: bold;
   background: none;
-  color: var(--quote-text);
+  color: var(--quote-color);
   transform: translateX(100%);
   user-select: none;
   cursor: default;
@@ -352,7 +354,7 @@ header img {
   width: 100%;
   max-width: 220px;
   padding: 15px 10px;
-  background: var(--card-bg);
+  background: none;
   text-align: center;
   border-radius: 20px;
   overflow: hidden;
@@ -390,7 +392,7 @@ header img {
 #container div p,
 #container-discov div h3,
 #container-discov div p {
-  color: var(--link-color);
+  color: var(--url-color);
   font-family: monospace;
   font-size: 0.9rem;
   transition: color 0.3s, text-decoration 0.3s;
@@ -575,7 +577,7 @@ header img {
   border: none;
   border-radius: 8px;
   background: var(--header-bg);
-  color: var(--link-color);
+  color: var(--url-color);
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0,0,0,0.5);
   opacity: 0.6;
@@ -602,7 +604,7 @@ footer {
   padding: 30px;
   width: 100%;
   font-family: monospace;
-  color: var(--link-color);
+  color: var(--url-color);
   box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
 }
 
@@ -982,6 +984,66 @@ margin-left:15px;
 }
 
 /* ==========================================
+   GRAIL — spinning background behind card image (synthwave halo)
+   ========================================== */
+@keyframes grailSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes grailSway {
+  0%   { transform: translate(-50%, -50%) rotate(0deg)   scaleX(2) scaleY(2); }
+  25%  { transform: translate(-50%, -50%) rotate(90deg)  scaleX(2.04) scaleY(2.4); }
+  50%  { transform: translate(-50%, -50%) rotate(180deg) scaleX(2) scaleY(2); }
+  75%  { transform: translate(-50%, -50%) rotate(270deg) scaleX(2.04) scaleY(2.4); }
+  100% { transform: translate(-50%, -50%) rotate(360deg) scaleX(2) scaleY(2); }
+}
+
+/* ── Grail overflow escape chain ──────────────────────────────────────
+   Every ancestor between .grail-bg and the viewport has overflow:hidden
+   by default (#container div, .asset-card, .asset-link).
+   We have to open ALL of them on grail cards so the spinning image
+   isn't clipped by its parents before it reaches the screen.
+   The card itself keeps position:relative so the grail is still
+   anchored to the card, just no longer masked by it.
+   ──────────────────────────────────────────────────────────────────── */
+.asset-img-wrapper.has-grail,
+.asset-img-wrapper.has-grail ~ *,            /* siblings stay visible   */
+.has-grail,
+.asset-card:has(.has-grail),
+.asset-card:has(.has-grail) .asset-link,
+.asset-card:has(.has-grail) .asset-img-wrapper {
+  overflow: visible !important;
+}
+
+/* The card still needs position:relative so .grail-bg's absolute
+   positioning is anchored to the card, not the viewport. */
+.asset-card:has(.has-grail) {
+  position: relative !important;
+}
+
+.grail-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180%;
+  height: 180%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+  animation:
+    grailSway 3.5s linear infinite,
+    grailPulse 2s linear infinite;
+}
+
+/* The asset image must sit above the grail */
+.asset-img-wrapper.has-grail .asset-img {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================
    ANIMATED SWAP
    ========================================== */
 .animated-swap {
@@ -1056,20 +1118,31 @@ margin-left:15px;
   pointer-events: none; /* Ignore mouse */
   opacity: 0; /* Start hidden */
   z-index: 100;
-  
-  /* Floating bubble animation */
-  animation: floatBubble 2s ease-in-out infinite;
-  transform-origin: bottom center;
-  transition: opacity 0.3s ease;
 }
 
-/* Show tooltip on hover of container */
-.hover-container:hover .hoverText {
-  opacity: 1;
+.sub-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px 20px;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Bubble float animation */
-@keyframes floatBubble {
-  0%, 100% { transform: translate(-50%, -150%) translateY(0); }
-  50% { transform: translate(-50%, -150%) translateY(-5px); }
+.sub-header button {
+  background: var(--header-bg);
+  color: white;
+  font-family: monospace;
+  border: none;
+  cursor: pointer;
+  padding: 4px 10px;
+}
+
+.sub-header button:hover {
+  color: var(--accent-color);
+}
+
+.sub-header button.active {
+  background: var(--accent-color);
+  color: #fff;
 }
