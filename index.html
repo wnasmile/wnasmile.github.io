@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WannaSmile | Home</title>
+
+<meta property="og:title" content="WannaSmile" />
+<meta property="og:description" content="WannaSmile is a personal web project showcasing various tools, pages, and experiments." />
+<meta property="og:image" content="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/meta/images/11.png" />
+<meta property="og:url" content="https://vvannasmile.github.io/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="WannaSmile" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="WannaSmile" />
+<meta name="twitter:description" content="A personal web project featuring tools, pages, and visual elements." />
+<meta name="twitter:image" content="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/meta/images/11.png" />
+
+<link id="favicon" rel="icon" href="https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/favicons/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" /></noscript>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.9.0/cdn/themes/dark.css" />
+<link rel="stylesheet" href="system/css/main.css" />
+<link rel="preload" as="image" href="assets/themes/classic/loading.gif" />
+
+<style>
+.shortcuts-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.65);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  font-family: sans-serif;
+}
+.shortcuts-overlay.active {
+  display: flex;
+}
+.shortcuts-panel {
+  background: #0f0f0f;
+  color: #fff;
+  padding: 20px 25px;
+  border-radius: 14px;
+  width: 520px;
+  max-width: 90%;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+}
+.shortcuts-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #222;
+  padding-bottom: 10px;
+}
+.shortcuts-header img {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #222;
+}
+.shortcuts-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+.shortcut {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #1a1a1a;
+}
+.shortcut:last-child {
+  border-bottom: none;
+}
+.key {
+  background: #1c1c1c;
+  border: 1px solid #333;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  min-width: 28px;
+  text-align: center;
+}
+.label {
+  flex: 1;
+  margin-left: 15px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+</style>
+</head>
+
+<body class="ws-loading">
+
+<div id="incognitoIndicator">blob:null mode</div>
+
+<div id="topBar">
+  <header>
+    <nav class="nav-links">
+      <a href="." target="_blank">Home</a>
+      <a href="system/pages/favorites.html" target="_blank">Favorites</a>
+      <a href="system/pages/discovery.html" target="_blank">Discovery</a>
+      <a href="system/pages/settings.html" target="_blank">Settings</a>
+      <a href="https://padlet.com/rhap5ody/wannasmile-suggestion-report-page-t8t6pg32hl71ri9m" target="_blank">Suggestions</a>
+      <a href="system/pages/info.html" target="_blank">Info</a>
+      <div class="pages-anchor">
+        <button class="arrowleft" onclick="prevPage()">
+          <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/left.png" />
+        </button>
+        <span class="page-indicator">...</span>
+        <button class="arrowright" onclick="nextPage()">
+          <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/right.png" />
+        </button>
+        <a href="https://syndicatelibrary.github.io./download/">DOWNLOAD V0.8.3!</a>
+        <a href="system/pages/news.html">NEWS</a>
+        <button class="mute-btn"><img src="" /></button>
+      </div>
+    </nav>
+    <div class="header-controls">
+      <div class="search-box">
+        <input id="searchInputHeader" type="text" placeholder="Search..." />
+        <button id="searchBtnHeader">
+          <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/search.png" />
+        </button>
+      </div>
+      <a href="system/pages/profile.html">
+        <img id="pfp" src="https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/profile/smile.png" />
+      </a>
+      <button id="dashboardBtn">
+        <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/dashboard.png" />
+      </button>
+    </div>
+  </header>
+  <div id="quoteWrapper">
+    <p id="quoteBox"></p>
+  </div>
+</div>
+
+<aside id="dashboardMenu" class="dashboard-menu">
+  <p id="dashNickname" style="opacity:0.6;font-size:0.85em;">Guest</p>
+  <a href="https://syndicatelibrary.github.io./awhtpwkuitsfs/" target="_blank">SoundScape</a>
+  <a href="#" id="openShortCuts">Shortcuts</a>
+  <a href="system/pages/credits.html">credits & contributors</a>
+  <a href="system/pages/dmca.html">DMCA</a>
+</aside>
+
+<div id="containerLoader">
+  <img src="assets/themes/classic/loading.gif" alt="" />
+</div>
+
+<main>
+  <div id="container"></div>
+</main>
+
+<button id="toTopBtn">⬆ Top</button>
+
+<footer class="footer">
+  <a href="https://github.com/wnasmile/" target="_blank" rel="noopener noreferrer">
+    <img src="assets/images/gitIcon.png" class="footer-left" title="check out other cool projects made by Mcmatty Obriore & WNASMILE Contributors here!" />
+  </a>
+  <a href="https://github.com/wnasmile/wnasmile.github.io/fork" target="_blank" rel="noopener noreferrer">
+    <img src="assets/images/gitFork.png" style="margin-left:50px" class="footer-left" title="love the current state? need any changes? if so, Fork it!" />
+  </a>
+  <div class="footer-links">
+    <a href="https://github.com/slackerish/slackerish.github.io" target="_blank" rel="noopener noreferrer">source</a>
+    <a href="system/pages/dmca.html" target="_blank" rel="noopener noreferrer">DMCA</a>
+    <a href="https://discord.gg/4AKdJxJUMH" target="_blank">Discord</a>
+    <a href="system/pages/socials.html" target="_blank" rel="noopener noreferrer">Socials</a>
+    <a href="#" id="footerVersion" target="_blank">Version loading...</a>
+  </div>
+</footer>
+
+<script src="system/js/utils.js"></script>
+<script src="system/js/themify.js"></script>
+<script src="system/js/sanitizer.js"></script>
+<script src="system/js/profile.js"></script>
+<script src="system/js/settings.js"></script>
+<script src="system/js/ui.js"></script>
+<script src="system/js/quotes.js"></script>
+<script src="system/js/main.js"></script>
+<script src="system/js/audio.js"></script>
+<script src="system/js/commands.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3" async defer></script>
+<script>
+  new Crate({ server: '1148719137238040606', channel: '1173731814196645909' });
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const trigger = document.getElementById("openShortCuts");
+  const overlay = document.createElement("div");
+  overlay.className = "shortcuts-overlay";
+  overlay.innerHTML = `
+    <div class="shortcuts-panel">
+      <div class="shortcuts-header"><h2>Shortcuts</h2></div>
+      <div class="shortcut"><span class="key">T</span><span class="label">Toggle tab</span></div>
+      <div class="shortcut"><span class="key">R</span><span class="label">Refetch assets</span></div>
+      <div class="shortcut"><span class="key">0</span><span class="label">Classic</span></div>
+      <div class="shortcut"><span class="key">1</span><span class="label">Redux</span></div>
+      <div class="shortcut"><span class="key">2</span><span class="label">Graduation</span></div>
+      <div class="shortcut"><span class="key">3</span><span class="label">Wolf</span></div>
+      <div class="shortcut"><span class="key">4</span><span class="label">Igor</span></div>
+      <div class="shortcut"><span class="key">5</span><span class="label">I Am Music</span></div>
+      <div class="shortcut"><span class="key">6</span><span class="label">Selenite</span></div>
+      <div class="shortcut"><span class="key">7</span><span class="label">GN Math</span></div>
+      <div class="shortcut"><span class="key">8</span><span class="label">Slackerish</span></div>
+      <div class="shortcut"><span class="key">9</span><span class="label">Cherrybomb</span></div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  trigger.addEventListener("click", (e) => {
+    e.preventDefault();
+    overlay.classList.add("active");
+  });
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) overlay.classList.remove("active");
+  });
+});
+</script>
+
+</body>
+</html>
