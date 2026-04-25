@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WannaSmile | Discovery</title>
+
+  <link rel="icon" href="https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/favicons/logo.png" />
+
+  <link rel="stylesheet" href="../css/main.css" />
+
+  <style>
+    html {
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+
+    #discoveryPage {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    #discoveryPage h1 {
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+      display: block;
+      transition: color 0.3s, transform 0.2s;
+    }
+
+    #discoveryPage h1:hover {
+      color: var(--accent-color);
+      transform: scale(1.1);
+    }
+
+    #discoveryPage .category-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin: 1.5rem 0 2rem;
+    }
+
+    #discoveryPage .category-buttons button {
+      background: var(--header-bg);
+      color: var(--url-color);
+      border: none;
+      border-radius: 8px;
+      padding: 0.5em 1.1em;
+      cursor: pointer;
+      font-family: monospace;
+      font-size: 0.95rem;
+      transition: background 0.25s, transform 0.2s, color 0.2s;
+    }
+
+    #discoveryPage .category-buttons button:hover {
+      color: var(--accent-color);
+      transform: scale(1.08);
+    }
+
+    #discoveryPage .category-buttons button.active {
+      background: var(--accent-color);
+      color: #fff;
+      box-shadow: 0 0 8px var(--accent-color);
+    }
+
+    #discoveryPage .assets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    #discoveryPage .asset-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 0.5rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    #discoveryPage .asset-card:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.18);
+    }
+
+    #discoveryPage .asset-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: transparent;
+    }
+
+    #discoveryPage .asset-card h4,
+    #discoveryPage .asset-card p {
+      font-family: monospace;
+      transition: color 0.25s;
+    }
+
+    #discoveryPage .asset-card h4 {
+      margin: 0.45rem 0 0.2rem;
+      font-size: 1rem;
+      color: var(--url-color);
+    }
+
+    #discoveryPage .asset-card p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: #bbb;
+    }
+
+    #discoveryPage .asset-card h4:hover,
+    #discoveryPage .asset-card p:hover {
+      color: var(--accent-color);
+    }
+
+    #discoveryPage .asset-card a {
+      text-decoration: none;
+    }
+
+    #discoveryPage .soon {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    #discoveryContainer p {
+      font-family: monospace;
+      color: var(--url-color);
+      margin-top: 2rem;
+    }
+
+    /* search-box is styled globally in main.css */
+    .discovery-search-wrap {
+      width: 550px;
+      max-width: 90%;
+      margin: 0 auto 1.6rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav class="nav-links">
+      <a href="../../index.html">Home</a>
+      <a href="favorites.html">Favorites</a>
+      <a href="discovery.html" style="color:var(--accent-color);">Discovery</a>
+      <a href="../../system/pages/settings.html">Settings</a>
+      <a href="../../system/pages/news.html">News</a>
+      <a href="../../system/pages/info.html">Info</a>
+    </nav>
+    <div class="header-controls">
+      <a href="../../system/pages/profile.html">
+        <img id="pfp" src="https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/profile/smile.png" />
+      </a>
+      <button id="dashboardBtn">
+        <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/dashboard.png" />
+      </button>
+    </div>
+  </header>
+
+  <aside id="dashboardMenu" class="dashboard-menu">
+    <p id="dashNickname" style="opacity:0.6;font-size:0.85em;">Guest</p>
+    <a href="../../system/pages/credits.html">credits & contributors</a>
+    <a href="../../system/pages/dmca.html">DMCA</a>
+  </aside>
+
+  <main id="discoveryPage">
+    <h1>Discovery</h1>
+
+    <div class="discovery-search-wrap">
+      <div class="search-box">
+        <input id="searchInput" type="text" placeholder="Search assets..." />
+        <button id="searchBtn">
+          <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/search.png" />
+        </button>
+      </div>
+    </div>
+
+    <div class="category-buttons">
+      <button data-category="rhythm">rhythm</button>
+      <button data-category="story">story</button>
+      <button data-category="endless-runner">endless-runner</button>
+      <button data-category="holiday">holiday</button>
+      <button data-category="battle-royale">battle-royale</button>
+      <button data-category="action">action</button>
+      <button data-category="sports">sports</button>
+      <button data-category="simulator">simulator</button>
+      <button data-category="tycoon">tycoon</button>
+      <button data-category="arcade">arcade</button>
+      <button data-category="horror">horror</button>
+      <button data-category="rpg">rpg</button>
+      <button data-category="turn-based-combat">turn-based-combat</button>
+      <button data-category="sandbox">sandbox</button>
+      <button data-category="boss-fight">boss-fight</button>
+      <button data-category="visual-novel">visual-novel</button>
+      <button data-category="adventure">adventure</button>
+      <button data-category="mystery">mystery</button>
+      <button data-category="survival">survival</button>
+      <button data-category="top-down">top-down</button>
+      <button data-category="shooter">shooter</button>
+      <button data-category="platformer">platformer</button>
+      <button data-category="tower-defense">tower-defense</button>
+      <button data-category="classic">classic</button>
+      <button data-category="puzzle">puzzle</button>
+      <button data-category="math">math</button>
+      <button data-category="idle">idle</button>
+      <button data-category="clicker">clicker</button>
+      <button data-category="parkour">parkour</button>
+      <button data-category="vsgr">vsgr</button>
+      <button data-category="maze">maze</button>
+      <button data-category="racing">racing</button>
+      <button data-category="strategy">strategy</button>
+      <button data-category="2-player">2-player</button>
+      <button data-category="fighting">fighting</button>
+      <button data-category="Other">Other</button>
+    </div>
+
+    <div id="discoveryContainer">Loading assets...</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="https://github.com/wnasmile/" target="_blank" rel="noopener noreferrer">Source</a>
+      <a href="https://discord.gg/4AKdJxJUMH" target="_blank">Discord</a>
+      <a href="../../system/pages/dmca.html">DMCA</a>
+      <a href="../../system/pages/socials.html">Socials</a>
+      <a href="#" id="footerVersion">Version loading...</a>
+    </div>
+  </footer>
+
+  <script src="../js/utils.js"></script>
+  <script src="../js/themify.js"></script>
+  <script src="../js/sanitizer.js"></script>
+  <script src="../js/profile.js"></script>
+  <script src="../js/ui.js"></script>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const SHEETS_URL    = "https://script.google.com/macros/s/AKfycbyRGROJ70xwLEBLiWAw_7iSX42VkJSxg671wOmjfYo_cvvaDSs9mbXpK6S1EKa9oYQByA/exec";
+    const FALLBACK_IMG  = "https://raw.githubusercontent.com/theworldpt1/theworldpt1.github.io/main/system/images/404_blank.png";
+    const FALLBACK_LINK = "https://wanna5mile.github.io./source/dino/";
+
+    const container   = document.getElementById("discoveryContainer");
+    const searchInput = document.getElementById("searchInput");
+    const searchBtn   = document.getElementById("searchBtn");
+    const buttons     = document.querySelectorAll(".category-buttons button");
+
+    let assets         = [];
+    let activeCategory = null;
+
+    /* ── Load data ── */
+    try {
+      const res = await fetch(SHEETS_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+
+      const json = await res.json();
+      const rows = Array.isArray(json) ? json : (json.data || []);
+
+      assets = rows
+        .filter(r => r && Object.values(r).some(v => safeStr(v).trim()))
+        .map(r => ({
+          title:       safeStr(r.title).trim(),
+          author:      safeStr(r.author).trim(),
+          link:        safeStr(r.link).trim(),
+          image:       safeStr(r.image).trim(),
+          category:    safeStr(r.category).toLowerCase().trim(),
+          subcategory: safeStr(r["sub-category"]).toLowerCase().trim(),
+          status:      safeStr(r.status).toLowerCase().trim(),
+        }))
+        .filter(r => r.title || r.link);
+
+    } catch (err) {
+      console.error("[discovery] fetch failed:", err);
+      container.innerHTML = "<p>⚠ Failed to load game data.</p>";
+      return;
+    }
+
+    /* ── Build cards ── */
+    function buildGrid(list) {
+      container.innerHTML = "";
+
+      if (!list.length) {
+        container.innerHTML = "<p>No games found.</p>";
+        return;
+      }
+
+      const grid = document.createElement("div");
+      grid.className = "assets-grid";
+
+      list.forEach(asset => {
+        if (asset.status === "hide" || asset.status === "hidden") return;
+
+        const card = document.createElement("div");
+        card.className = "asset-card";
+        card.dataset.category    = asset.category;
+        card.dataset.subcategory = asset.subcategory;
+        card.dataset.title       = asset.title.toLowerCase();
+        card.dataset.author      = asset.author.toLowerCase();
+
+        if (asset.status === "soon") card.classList.add("soon");
+
+        const a = document.createElement("a");
+        a.href   = asset.link || FALLBACK_LINK;
+        a.target = "_blank";
+        a.rel    = "noopener noreferrer";
+
+        const img = document.createElement("img");
+        img.src              = asset.image || FALLBACK_IMG;
+        img.alt              = asset.title;
+        img.style.background = "transparent";
+        img.onerror          = () => { img.src = FALLBACK_IMG; };
+
+        const h4 = document.createElement("h4");
+        h4.textContent = asset.title || "Untitled";
+
+        const p = document.createElement("p");
+        p.textContent = asset.author || "";
+
+        a.append(img, h4, p);
+        card.appendChild(a);
+        grid.appendChild(card);
+      });
+
+      container.appendChild(grid);
+    }
+
+    buildGrid(assets);
+
+    /* ── Filter (category + search, DOM-based) ── */
+    function applyFilters() {
+      const query = searchInput.value.trim().toLowerCase();
+      const cards = container.querySelectorAll(".asset-card");
+
+      cards.forEach(card => {
+        const cat = card.dataset.category || "";
+        const sub = card.dataset.subcategory || "";
+        const title  = card.dataset.title  || "";
+        const author = card.dataset.author || "";
+
+        const matchesCat    = !activeCategory
+          || cat === activeCategory
+          || sub === activeCategory;
+        const matchesSearch = !query
+          || title.includes(query)
+          || author.includes(query);
+
+        card.style.display = matchesCat && matchesSearch ? "" : "none";
+      });
+    }
+
+    /* ── Category toggle ── */
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const cat = btn.dataset.category.toLowerCase();
+        if (activeCategory === cat) {
+          activeCategory = null;
+          btn.classList.remove("active");
+        } else {
+          activeCategory = cat;
+          buttons.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+        }
+        applyFilters();
+      });
+    });
+
+    /* ── Search ── */
+    searchInput.addEventListener("input", debounce(applyFilters, 150));
+    searchBtn.addEventListener("click", applyFilters);
+  });
+  </script>
+
+</body>
+</html>

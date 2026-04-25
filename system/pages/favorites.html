@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WannaSmile | Favorites</title>
+
+<link id="favicon" rel="icon" href="https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/favicons/logo.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" /></noscript>
+
+<link rel="stylesheet" href="../css/themes.css" />
+<link rel="stylesheet" href="../css/main.css" />
+<style>
+/* ---- Favorites-only styles ---- */
+.favorite-star {
+  font-size: 0.85rem; color: #000; background: transparent;
+  border: none; cursor: pointer; padding: 0; transition: transform 0.2s;
+}
+.favorite-star:hover { transform: scale(1.3); }
+#noResultsGif {
+  display: none; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 128px; height: 128px; opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none; z-index: 1000;
+  image-rendering: pixelated;
+}
+#toTopBtn {
+  display: none; position: fixed; bottom: 24px; right: 24px;
+  z-index: 9998; padding: 10px 14px; font-size: 14px; font-family: monospace;
+  border: none; border-radius: 8px; background: var(--header-bg);
+  color: var(--link-color); cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5); opacity: 0.6; transition: opacity 0.3s, color 0.3s;
+}
+#toTopBtn:hover { opacity: 0.8; color: var(--accent-color); text-decoration: underline; }
+footer {
+  margin-top: auto; background: var(--footer-bg);
+  text-align: center; padding: 30px; width: 100%;
+  font-family: monospace; color: var(--link-color);
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
+}
+</style>
+
+<!-- preload spinner -->
+<link rel="preload" as="image" href="../../assets/themes/classic/loading.gif" />
+</head>
+<body>
+
+<!-- Top Bar -->
+<div id="topBar">
+<header>
+<nav class="nav-links">
+  <a href="../../index.html" target="_blank">Home</a>
+  <a href="../../favorites.html" target="_blank" style="color:var(--accent-color);">Favorites</a>
+  <a href="../../discovery.html" target="_blank">Discovery</a>
+  <a href="../../settings.html" target="_blank">Settings</a>
+  <a href="../../news.html" target="_blank">News</a>
+  <a href="../../info.html" target="_blank">Info</a>
+  <div class="pages-anchor">
+    <button onclick="prevPage()">
+      <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/left.png" alt="Prev">
+    </button>
+    <span class="page-indicator">...</span>
+    <button onclick="nextPage()">
+      <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/right.png" alt="Next">
+    </button>
+  </div>
+</nav>
+
+<div class="header-controls">
+  <div class="search-box">
+    <input id="searchInputHeader" type="text" placeholder="Search favorites..." />
+    <button id="searchBtnHeader">
+      <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/search.png" alt="Search">
+    </button>
+  </div>
+  <a href="../../profile.html">
+    <img id="pfp" src="https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/profile/smile.png" alt="Profile">
+  </a>
+  <button id="dashboardBtn">
+    <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/dashboard.png" alt="Dashboard">
+  </button>
+</div>
+</header>
+
+<div id="quoteWrapper"><p id="quoteBox"></p></div>
+</div>
+
+<aside id="dashboardMenu" class="dashboard-menu">
+  <a href="BEANS.md">Layout Pages</a>
+  <a href="../../index.html">Library</a>
+</aside>
+
+<main style="position:relative;">
+  <div id="container">
+    <div id="containerLoader">
+      <img src="../../assets/themes/classic/loading.gif" alt="Loading..." />
+    </div>
+  </div>
+  <img id="noResultsGif" src="../../assets/themes/classic/searching.gif" alt="" />
+</main>
+
+<button id="toTopBtn">⬆ Top</button>
+
+<footer>
+  <a href="https://sundaezipper.github.io./" target="_blank">Source</a>
+  <a href="https://sundaezipper.github.io./" target="_blank">Contribute</a>
+  <a href="https://discord.gg/4AKdJxJUMH" target="_blank">Discord</a>
+  <a href="#" target="_blank">Suggestions | Bugs | Fixes</a>
+  <a href="#" target="_blank">Socials</a>
+  <a href="#" id="footerVersion" target="_blank">Version loading...</a>
+</footer>
+
+<script>
+/* =====================================================
+   FAVORITES PAGE — Core Logic
+   - Loads ALL assets from sheet
+   - Filters to favorited items only
+   - Paginates at 75 per page (only if > 75 favorites)
+   - Global search across all fav pages
+   ===================================================== */
+(() => {
+  "use strict";
+
+  const FAVS_PER_PAGE = 75;
+
+  /* ---------- Utilities ---------- */
+  const safeStr = (v) => (v == null ? "" : String(v));
+  const delay   = (ms) => new Promise((r) => setTimeout(r, ms));
+  const debounce = (fn, ms = 150) => {
+    let t;
+    return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+  };
+
+  /* ---------- Config ---------- */
+  const config = {
+    sheetUrl: "https://script.google.com/macros/s/AKfycbyRGROJ70xwLEBLiWAw_7iSX42VkJSxg671wOmjfYo_cvvaDSs9mbXpK6S1EKa9oYQByA/exec",
+    fallbackImage: "https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/404_blank.png",
+    fallbackLink: "https://01110010-00110101.github.io./source/dino/",
+    gifBase: "https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/GIF/",
+    badgeMap: {
+      featured: "https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/featured-cover.png",
+      new:      "https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/new-cover.png",
+      fixed:    "https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/fixed-cover.png",
+      fix:      "https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/fixing.png",
+    }
+  };
+
+  /* ---------- DOM refs ---------- */
+  const container      = document.getElementById("container");
+  const pageIndicator  = document.querySelector(".page-indicator");
+  const searchInput    = document.getElementById("searchInputHeader");
+  const searchBtn      = document.getElementById("searchBtnHeader");
+  const noResultsGif   = document.getElementById("noResultsGif");
+  const toTopBtn       = document.getElementById("toTopBtn");
+
+  /* ---------- Favorites store ---------- */
+  function loadFavorites() {
+    try {
+      const stored = JSON.parse(localStorage.getItem("favorites") || "[]");
+      return new Set(stored.map((s) => safeStr(s).toLowerCase()));
+    } catch { return new Set(); }
+  }
+  function saveFavorites(set) {
+    localStorage.setItem("favorites", JSON.stringify([...set]));
+  }
+
+  let favorites = loadFavorites();
+  const isFav = (t) => favorites.has(safeStr(t).toLowerCase());
+
+  /* ---------- State ---------- */
+  let allFavCards    = []; // all rendered fav card elements
+  let currentFavPage = 1;
+  let totalFavPages  = 1;
+  let isSearching    = false;
+
+  /* ---------- Theme sync ---------- */
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme) document.body.setAttribute("theme", savedTheme);
+
+  /* ---------- Paging logic ---------- */
+  function updatePageIndicator() {
+    if (!pageIndicator) return;
+    if (isSearching) {
+      pageIndicator.textContent = "Searching…";
+    } else {
+      pageIndicator.textContent = totalFavPages <= 1
+        ? `${allFavCards.length} favorite${allFavCards.length !== 1 ? "s" : ""}`
+        : `Page ${currentFavPage} of ${totalFavPages}`;
+    }
+  }
+
+  function renderFavPage() {
+    if (isSearching) return; // search handles its own visibility
+    const start = (currentFavPage - 1) * FAVS_PER_PAGE;
+    const end   = start + FAVS_PER_PAGE;
+    allFavCards.forEach((card, i) => {
+      card.style.display = (i >= start && i < end) ? "" : "none";
+    });
+    sessionStorage.setItem("favPage", currentFavPage);
+    updatePageIndicator();
+    updateNoResults();
+  }
+
+  window.prevPage = () => {
+    if (currentFavPage <= 1) return;
+    currentFavPage--;
+    renderFavPage();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  window.nextPage = () => {
+    if (currentFavPage >= totalFavPages) return;
+    currentFavPage++;
+    renderFavPage();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  /* ---------- No-results gif ---------- */
+  function updateNoResults() {
+    const visible = allFavCards.filter(c => c.style.display !== "none").length;
+    if (visible === 0) {
+      noResultsGif.style.display = "block";
+      requestAnimationFrame(() => noResultsGif.style.opacity = "1");
+    } else {
+      noResultsGif.style.opacity = "0";
+      setTimeout(() => {
+        if (parseFloat(noResultsGif.style.opacity) === 0)
+          noResultsGif.style.display = "none";
+      }, 250);
+    }
+  }
+
+  /* ---------- Global search ---------- */
+  function filterFavs(q) {
+    const query = safeStr(q).toLowerCase().trim();
+    const words = query.split(/\s+/).filter(Boolean);
+    isSearching = query.length > 0;
+
+    allFavCards.forEach((card) => {
+      const haystack = `${card.dataset.title} ${card.dataset.author}`.toLowerCase();
+      let score = 0;
+      if (haystack.includes(query)) score += 3;
+      for (const w of words) if (haystack.includes(w)) score += 2;
+      const match = score > 0 || !query;
+      card.style.display = match ? "" : "none";
+    });
+
+    // show paging nav only when not searching
+    const pagesAnchor = document.querySelector(".pages-anchor");
+    if (pagesAnchor) pagesAnchor.style.visibility = isSearching ? "hidden" : "";
+    updatePageIndicator();
+    updateNoResults();
+  }
+
+  searchBtn?.addEventListener("click",  () => filterFavs(searchInput.value));
+  searchInput?.addEventListener("input", debounce(() => filterFavs(searchInput.value), 200));
+  searchInput?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") filterFavs(searchInput.value);
+    if (e.key === "Escape") { searchInput.value = ""; filterFavs(""); }
+  });
+
+  /* ---------- Card builder ---------- */
+  function buildEmptyState() {
+    container.innerHTML = "";
+    const empty = document.createElement("div");
+    empty.id = "emptyFavs";
+    empty.innerHTML = `
+      <div>
+        <p>No favorites yet!<br>Head back to the library and star something you like.</p>
+        <a href="../../index.html">Go to Library</a>
+      </div>
+    `;
+    empty.style.display = "flex";
+    container.appendChild(empty);
+    updatePageIndicator();
+  }
+
+  function buildCards(favAssets) {
+    container.innerHTML = "";
+    allFavCards = [];
+
+    if (!favAssets.length) { buildEmptyState(); return; }
+
+    // Split into pages of FAVS_PER_PAGE
+    totalFavPages  = Math.ceil(favAssets.length / FAVS_PER_PAGE);
+    currentFavPage = Math.min(+sessionStorage.getItem("favPage") || 1, totalFavPages);
+
+    const frag = document.createDocumentFragment();
+
+    favAssets.forEach((asset, i) => {
+      const title       = safeStr(asset.title).trim();
+      const author      = safeStr(asset.author).trim();
+      const imageSrc    = safeStr(asset.image) || config.fallbackImage;
+      const link        = safeStr(asset.link)  || config.fallbackLink;
+      const status      = safeStr(asset.status).toLowerCase();
+      const statusField = safeStr(asset.type || asset.status || "").toLowerCase();
+
+      // Determine which fav-page this card belongs to (for priority loading)
+      const cardFavPage = Math.ceil((i + 1) / FAVS_PER_PAGE);
+      const isCurrentPage = cardFavPage === currentFavPage;
+
+      /* card */
+      const card = document.createElement("div");
+      card.className = "asset-card";
+      Object.assign(card.dataset, {
+        title:   title.toLowerCase(),
+        author:  author.toLowerCase(),
+        favpage: String(cardFavPage),
+        filtered: "true",
+      });
+
+      /* link / click interceptor */
+      const a = document.createElement("a");
+      a.href = link;
+      a.className = "asset-link";
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        const matched = window._allAssetsData?.find(
+          (row) => safeStr(row.link).trim() === link
+        );
+        if (matched) {
+          const embedLink   = safeStr(matched.link).trim();
+          const renderTitle = safeStr(matched.title).trim() || "Embed";
+          const renderFav   = safeStr(matched.image).trim() || "";
+          const html = `<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"/><title>${renderTitle}</title>
+<link rel="icon" href="${renderFav}" crossorigin="anonymous"/>
+<style>*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#000}
+embed{position:fixed;top:0;left:0;width:100vw;height:100vh;border:none;display:block}
+#refreshBtn{position:fixed;top:8px;right:8px;z-index:9999;background:rgba(0,0,0,0.6);
+color:#fff;border:none;border-radius:6px;padding:4px 10px;font-family:monospace;
+font-size:13px;cursor:pointer;opacity:0.4;transition:opacity 0.2s}
+#refreshBtn:hover{opacity:1}</style></head>
+<body><embed id="frame" src="${embedLink}"/>
+<button id="refreshBtn" onclick="document.getElementById('frame').src=document.getElementById('frame').src">↺</button>
+</body></html>`;
+          const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+          const blobUrl = URL.createObjectURL(blob);
+          window.open(blobUrl, "_blank");
+          setTimeout(() => URL.revokeObjectURL(blobUrl), 8000);
+        } else {
+          window.open(link, "_blank");
+        }
+      });
+
+      /* image wrapper */
+      const wrapper = document.createElement("div");
+      wrapper.className = "asset-img-wrapper";
+      Object.assign(wrapper.style, {
+        position: "relative", display: "inline-block",
+        borderRadius: "14px", overflow: "hidden"
+      });
+      const img = document.createElement("img");
+      img.alt = title;
+      img.className = "asset-img";
+      img.fetchPriority = isCurrentPage ? "high" : "auto";
+
+      const staggerDelay = Math.min((i % FAVS_PER_PAGE) * 40, 600);
+      img.onload = () => setTimeout(() => card.classList.add("ready"), staggerDelay);
+      img.onerror = () => {
+        img.src = config.fallbackImage;
+        img.onload  = () => setTimeout(() => card.classList.add("ready"), staggerDelay);
+        img.onerror = () => setTimeout(() => card.classList.add("ready"), staggerDelay);
+      };
+      img.src = imageSrc;
+      wrapper.appendChild(img);
+
+      /* status overlays */
+      const addOverlay = (src, alt, cls, fullCover = false) => {
+        const o = document.createElement("img");
+        o.src = src; o.alt = alt; o.className = `status-overlay ${cls}`;
+        Object.assign(o.style, {
+          position:"absolute", top:"0", left:"0", width:"100%", height:"100%",
+          objectFit:"cover", pointerEvents:"none", zIndex: fullCover ? "10" : "5"
+        });
+        wrapper.appendChild(o);
+      };
+      if (statusField === "featured") addOverlay(config.badgeMap.featured, "featured", "overlay-featured");
+      if (statusField === "new")      addOverlay(config.badgeMap.new,      "new",      "overlay-new");
+      if (statusField === "fixed")    addOverlay(config.badgeMap.fixed,    "fixed",    "overlay-fixed");
+      if (["new","updated"].includes(status))
+        addOverlay(`${config.gifBase}${status}.gif`, `${status}`, `status-gif status-${status}`);
+      if (status === "fix") {
+        addOverlay(config.badgeMap.fix, "fixing", "overlay-fix", true);
+        card.classList.add("fix");
+      }
+      if (status === "soon") card.classList.add("soon");
+
+      a.appendChild(wrapper);
+
+      /* title / author */
+      const titleEl  = document.createElement("h3"); titleEl.textContent  = title  || "Untitled";
+      const authorEl = document.createElement("p");  authorEl.textContent = author || "";
+
+      /* un-fav star */
+      const star = document.createElement("button");
+      star.className = "favorite-star";
+      star.textContent = "★";
+      star.title = "Remove from favorites";
+      star.addEventListener("click", (e) => {
+        e.preventDefault(); e.stopPropagation();
+        const key = title.toLowerCase();
+        favorites.delete(key);
+        saveFavorites(favorites);
+        // animate out then remove
+        card.style.transition = "opacity 0.25s, transform 0.25s";
+        card.style.opacity = "0";
+        card.style.transform = "scale(0.85)";
+        setTimeout(() => {
+          allFavCards = allFavCards.filter(c => c !== card);
+          card.remove();
+          totalFavPages = Math.max(1, Math.ceil(allFavCards.length / FAVS_PER_PAGE));
+          if (currentFavPage > totalFavPages) currentFavPage = totalFavPages;
+          if (!allFavCards.length) buildEmptyState();
+          else renderFavPage();
+        }, 280);
+      });
+
+      card.append(a, titleEl, authorEl, star);
+      frag.appendChild(card);
+      allFavCards.push(card);
+    });
+
+    container.appendChild(frag);
+    renderFavPage(); // show correct page, hide others
+  }
+
+  /* ---------- Main loader ---------- */
+  async function loadFavs() {
+    let raw;
+    try {
+      const res = await fetch(config.sheetUrl, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      raw = await res.json();
+    } catch (err) {
+      console.error("[Favorites] sheet fetch failed:", err);
+      container.innerHTML =
+        '<p style="grid-column:1/-1;padding:2rem;text-align:center;opacity:.6;font-family:monospace;">Could not load assets — check connection.</p>';
+      return;
+    }
+
+    // Keep full data for embed lookup
+    const data = raw.filter((i) => Object.values(i).some((v) => safeStr(v).trim()));
+    window._allAssetsData = data;
+
+    // Filter to favorites only (order preserved from sheet)
+    const favAssets = data.filter((a) => isFav(safeStr(a.title)));
+    buildCards(favAssets);
+  }
+
+  /* ---------- Scroll to top ---------- */
+  if (toTopBtn) {
+    window.addEventListener("scroll", () => {
+      const scrollY = document.body.scrollTop || document.documentElement.scrollTop;
+      toTopBtn.style.display = scrollY > 200 ? "block" : "none";
+    });
+    toTopBtn.addEventListener("click", () => window.scrollTo({ top:0, behavior:"smooth" }));
+  }
+
+  /* ---------- Dashboard toggle ---------- */
+  document.addEventListener("DOMContentLoaded", () => {
+    const dashboardMenu = document.getElementById("dashboardMenu");
+    const dashboardBtn  = document.getElementById("dashboardBtn");
+    if (!dashboardMenu || !dashboardBtn) return;
+
+    dashboardMenu.style.display = "none";
+    dashboardMenu.style.opacity = "0";
+    dashboardMenu.style.transition = "opacity 0.3s ease";
+
+    dashboardBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = dashboardMenu.style.display === "block";
+      if (open) {
+        dashboardMenu.style.opacity = "0";
+        setTimeout(() => dashboardMenu.style.display = "none", 300);
+      } else {
+        dashboardMenu.style.display = "block";
+        setTimeout(() => dashboardMenu.style.opacity = "1", 10);
+      }
+    });
+    document.addEventListener("click", (e) => {
+      if (dashboardMenu.style.display === "block"
+          && !dashboardMenu.contains(e.target)
+          && e.target !== dashboardBtn) {
+        dashboardMenu.style.opacity = "0";
+        setTimeout(() => dashboardMenu.style.display = "none", 300);
+      }
+    });
+  });
+
+  /* ---------- Bootstrap ---------- */
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFavs();
+  });
+
+})();
+</script>
+
+<!-- Quote Ticker -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const wrapper = document.getElementById("quoteWrapper");
+  const box     = document.getElementById("quoteBox");
+
+  const LOCAL_QUOTES = [
+    "WAKE UP ITS v0.7.7 UPDATE DROP!!! :kirby/wake::kirby/wake::kirby/wake:",
+    "'rhap5ody add in the COMING SOON assets 🗣🗣🗣' rhap5ody be like: :anime/deny.gif:",
+    ":miku/joy::miku/joy::miku/joy:",
+    "v0.7.7 dropped :miku/swaying.gif:",
+    "rhap5ody::linux/typing.gif:",
+    "V0.7.7 IS HERE :stickman/spazz::stickman/spazz::stickman/spazz::stickman/spazz::stickman/spazz::stickman/spazz::stickman/spazz::stickman/spazz::stickman/spazz::stickman/spazz:",
+    "WAKE UP MR WEST :grad-run:",
+    "page 4 completed??!! :gwahh.jpeg::gwahh.jpeg::gwahh.jpeg:",
+    "wait if v0.7.7 is here then when is v0.7.8 coming out? :think.jpg: 👀",
+    "VERSION V0.7.7 OUT NOWWWWWW!!! :csm/pochita-dance.gif::csm/pochita-dance.gif::csm/pochita-dance.gif:",
+    ":kanye-gaming.jpeg:",
+    "checkout the amazing new themes! :grad-painted.jpeg:",
+    ":miku/swaying.gif: Friday Night Funkin' :miku/swaying.gif:",
+    "due to some changes themes will be tempararily disabled until further notice. :sackboy/dieying.gif:",
+    ":nintendo/dance: PAGE 5 COMPLETED! :nintendo/dance:"
+  ];
+
+  let quotes = LOCAL_QUOTES;
+  let pos = 0, lastTime = null;
+  const baseSpeed = 120, slowSpeed = 70, slowerSpeed = 30;
+  let currentSpeed = baseSpeed;
+  let isHoveringBox = false, isHoveringText = false, isMouseDown = false;
+
+  function parseQuoteWithImages(text) {
+    return text.replace(
+      /:([a-zA-Z0-9_\-\/]+(?:\.(png|gif|webp|jpg|jpeg))?):/gi,
+      (match, path, ext) => {
+        if (path.includes("..")) return match;
+        if (ext) {
+          return `<img src="https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/stickers/${path}" class="quote-sticker" alt="${path}" loading="lazy">`;
+        }
+        return `<img src="https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/stickers/${path}.png" class="quote-sticker" alt="${path}" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/system/images/stickers/${path}.gif';">`;
+      }
+    );
+  }
+
+  function setQuote() {
+    box.innerHTML = parseQuoteWithImages(quotes[Math.floor(Math.random() * quotes.length)]);
+    pos = wrapper.offsetWidth;
+    box.style.transform = `translateX(${pos}px)`;
+  }
+  function updateSpeed() {
+    if (isMouseDown) currentSpeed = 0;
+    else if (isHoveringText) currentSpeed = slowerSpeed;
+    else if (isHoveringBox)  currentSpeed = slowSpeed;
+    else currentSpeed = baseSpeed;
+  }
+  function animate(time) {
+    if (lastTime !== null) {
+      pos -= currentSpeed * ((time - lastTime) / 1000);
+      box.style.transform = `translateX(${pos}px)`;
+      if (pos + box.offsetWidth < 0) setQuote();
+    }
+    lastTime = time;
+    requestAnimationFrame(animate);
+  }
+
+  wrapper.addEventListener("mouseenter", () => { isHoveringBox  = true;  updateSpeed(); });
+  wrapper.addEventListener("mouseleave", () => { isHoveringBox  = false; isHoveringText = false; updateSpeed(); });
+  box.addEventListener("mouseenter",     () => { isHoveringText = true;  updateSpeed(); });
+  box.addEventListener("mouseleave",     () => { isHoveringText = false; updateSpeed(); });
+  wrapper.addEventListener("mousedown",  () => { isMouseDown    = true;  updateSpeed(); });
+  document.addEventListener("mouseup",  () => { if (!isMouseDown) return; isMouseDown = false; updateSpeed(); });
+
+  setQuote();
+  requestAnimationFrame(animate);
+});
+</script>
+
+<!-- Panic key -->
+<script>
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    const panicURL = localStorage.getItem("panicURL");
+    if (panicURL) window.location.href = panicURL;
+  }
+});
+// Apply cloak
+(function() {
+  const t = localStorage.getItem("cloakTitle");
+  const i = localStorage.getItem("cloakIcon");
+  if (t) document.title = t;
+  if (i) {
+    const link = document.getElementById("favicon");
+    if (link) link.href = i.startsWith("http") ? i : `system/${i}`;
+  }
+})();
+</script>
+
+</body>
+</html>

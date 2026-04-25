@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SundaeZipper | WannaSmile v${version} Download</title>
+<link id="favicon" rel="icon" href="https://raw.githubusercontent.com/sundaezipper/sundaezipper.github.io/main/favicon.png" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" rel="stylesheet">
+<link href="../system/css/release.css" rel="stylesheet">
+<link href="profilish.css" rel="stylesheet">
+</head>
+<body>
+<header>
+  <img src="title.png" alt="WannaSmile Banner">
+</header>
+
+<div class="container">
+  <div class="banner">
+    <img src="wannasmile-banner.png" alt="WannaSmile Banner">
+  </div>
+
+  <!-- Content -->
+  <div class="asset-card">
+    <h2>WannaSmile v${version}</h2>
+    <p>files included in the Zip:</p>
+    <ul class="file-tree" id="fileTree">
+      <!-- Files will be populated dynamically -->
+    </ul>
+
+    <button id="download" class="download-btn">Download ZIP</button>
+    <button id="support" class="support-btn">Support Creator</button>
+  </div>
+</div>
+
+<div class="contributors">
+  <a href=""><img src="a456pur_astrological.jpeg" alt="a456pur_astrological" title="seraphim & selenite team" /></a>
+  <a href=""><img src="awesome-xv.png" alt="awesome-xv" title="selenite library goat" /></a>
+  <a href=""><img src="bguhm.jpeg" alt="bguhm" title="cute kiti, wnasmile" /></a>
+  <a href=""><img src="bubbls.png" alt="bubbls" title="gn math library genius" /></a>
+  <a href=""><img src="genizy.png" alt="genizy" title="founder of gn math, breadbb" /></a>
+  <a href=""><img src="genizymath.png" alt="genizymath" title="alt genizy" /></a>
+  <a href=""><img src="hachiiki-wilardzysenpai.jpeg" alt="hachiki-wilardzysenpai" title="orignal loading screen, forked by rhap5ody" /></a>
+  <a href=""><img src="penguinify.jpeg" alt="penguinify" title="contributor of selenite,awesome profile" /></a>
+  <a href=""><img src="rhap5ody.png" alt="rhap5ody" title="founder of wannasmile" /></a>
+  <a href=""><img src="skysthelimitt.png" alt="skysthelimit" title="founder of selenite" /></a>
+  <a href=""><img src="sl4ckrr.jpeg" alt="sl4ckrr" title="cute dogi, wnasmile" /></a>
+  <a href=""><img src="slackrrish.png" alt="slackrrish" title="bleh, selenite fork-sucks" /></a>
+  <a href=""><img src="kaizhelam.jpeg" alt="kaizhelam" title="original music player, forked by rhap5ody and later revamped into SoundScape v1 by Mcmatty Obriore" /></a>
+  <a href=""><img src="wnasmile.png" alt="wnasmile" title="main version of wannasmile currently being developed by Mcmatty Obriore" /></a>
+  <a href=""><img src="mcmattyobriore.png" alt="mcmattyobriore" title="the absolute genius, version 0.6 to 0.8 of wannasmile" /></a>
+  <a href=""><img src="syndicatelibrary.png" alt="syndicatelibrary" title="simple library, nothing special - wannasmile" /></a>
+  <a href=""><img src="githubstuffs.png" alt="" title="pretty sure kinda like repositoryrepos,less cool." /></a>
+  <a href=""><img src="repositoryrepos.png" alt="" title="original library, and just very cool cat icon, dont even lie cmon." /></a>
+  <a href=""><img src="thesiteofsites.png" alt="" title="believe it or not, originally the wannasmile library,just urls without any images lmao, very primitive and ran on playcode.io (good old days)" /></a>
+  <a href=""><img src="pocket-sized.png" alt="" title="ex co founder of early stage wannasmile, v0.3 i believe, kinda lazy lmao." /></a>
+  <a href=""><img src="dontevenjokelad.png" alt="" title="soundscape v1 repository" /></a>
+  <a href=""><img src="personified.png" alt="" title="personified library" /></a>
+  <a href=""><img src="sundaezipper.png" alt="" title="github zipper tool, for wannasmile releases." /></a>
+  <a href=""><img src="xg4321.png" alt="" title="repo demon, my introduction to gn math" /></a>
+<!--
+  <a href=""><img src="" alt="" title="" /></a>
+  <a href=""><img src="" alt="" title="" /></a>
+  <a href=""><img src="" alt="" title="" /></a>
+-->
+</div>
+
+<!-- Footer -->
+<footer>
+  &copy; 2025 SundaeZipper | by mcmattyobriore on github
+</footer>
+
+<!-- Dynamic GitHub file list -->
+<script>
+async function fetchRepoFiles() {
+    const apiUrl = 'https://api.github.com/repos/wnasmile/wnasmile.github.io/git/trees/main?recursive=1';
+    try {
+        const res = await fetch(apiUrl);
+        const data = await res.json();
+        const files = data.tree;
+
+        const fileTree = document.getElementById('fileTree');
+
+        // Build a nested tree structure
+        const tree = {};
+
+        files.forEach(file => {
+            const parts = file.path.split('/');
+            let current = tree;
+            for (let i = 0; i < parts.length; i++) {
+                const part = parts[i];
+                if (!current[part]) {
+                    current[part] = (i === parts.length - 1) ? null : {};
+                }
+                current = current[part];
+            }
+        });
+
+        function buildList(obj) {
+            const ul = document.createElement('ul');
+            for (const key in obj) {
+                const li = document.createElement('li');
+                if (obj[key] === null) {
+                    li.textContent = key;
+                } else {
+                    const details = document.createElement('details');
+                    const summary = document.createElement('summary');
+                    summary.textContent = key;
+                    details.appendChild(summary);
+                    details.appendChild(buildList(obj[key]));
+                    li.appendChild(details);
+                }
+                ul.appendChild(li);
+            }
+            return ul;
+        }
+
+        fileTree.appendChild(buildList(tree));
+    } catch (err) {
+        console.error('Error fetching repo files:', err);
+        document.getElementById('fileTree').textContent = 'Failed to load file list.';
+    }
+}
+
+fetchRepoFiles();
+</script>
+
+<script src="../system/js/release.js"></script>
+</body>
+</html>
