@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link id="favicon" rel="icon" href="favicon.png" />
+<title>WannaSmile | Favorites</title>
+
+<meta property="og:title" content="WannaSmile — Favorites" />
+<meta property="og:description" content="Your starred assets" />
+<meta property="og:url" content="https://example.com/system/pages/favorites.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="WannaSmile" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.9.0/cdn/themes/dark.css" />
+<link rel="stylesheet" href="../../system/css/main.css" />
+<link rel="stylesheet" href="../../system/css/soundscape.css" />
+<link rel="stylesheet" href="../../system/css/shortcuts.css" />
+</head>
+
+<body class="ws-loading">
+
+<div id="incognitoIndicator">blob:null mode</div>
+
+<div id="topBar">
+  <header>
+    <nav class="nav-links">
+      <a href="../../index.html" target="_blank">Home</a>
+      <a href="favorites.html" target="_blank">Favorites</a>
+      <a href="discovery.html" target="_blank">Discovery</a>
+      <a href="settings.html" target="_blank">Settings</a>
+      <a href="https://padlet.com/rhap5ody/wannasmile-suggestion-report-page-t8t6pg32hl71ri9m" target="_blank">Suggestions</a>
+      <a href="info.html" target="_blank">Info</a>
+      <div class="pages-anchor">
+        <button class="arrowleft" onclick="prevPage()">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABSElEQVR4AeyVwRKEIAxDdf//n90LuTDD4NASWhsvHXVpyktYf1fxSwCKB+BSApSA4gR0BIoHQH+COgI6AsUJ6AgUD4C+AuWOQJ94OoCnXf0gp+7pAE5tdKRLA9CMf0aDnHpOA3BqgzPd7QCiOg8w2wFAKGrdBiC68zBkGwAIRK/uALI4D2PcAaBxluoGIJvzMMgNABpmq2YAq85jnbVagZsBWAc4vX4ZAJw7vQGr/jIAqzBr/UxHAGaEvv5+OQF3u7IDWgaQfeOY3wygBeFGw7cV66z1rd7od2YAo8ZZnrsBgJNZNo453QCgYbbqDiBbEtwBlE8AAGRJghIAx3bV6ElQAnY53/eNmoTPJaAHP7unA4iWBDqAmSPs9wLAJh5NTwmI5gh7HiWATTyanhIQzRH2PEoAm3g0PSUgmiPseZQANnFvPWu/PwAAAP//5U4SVQAAAAZJREFUAwA1U4iBdohS4QAAAABJRU5ErkJggg==" />
+        </button>
+        <span class="page-indicator">...</span>
+        <button class="arrowright" onclick="nextPage()">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABTklEQVR4AeyVSQ7DMAwD2/7/z+nFvBgwlEYLqIq5CIkX0UO6/byGPwIwPAAvJUAJGE5AV2B4APQjqCugKzCcgK7A8ADoX2DcFdgTTwPgWs8uMPudBkD2QU/70wFYQbhOgqO/0wGIPqC1Hy2AqiTQArCcixqnB5CdBHoAUU6f9mkDICsJbQCcHPR+bwcgOgntAHgd39e7AcARb92FWe/oZ82zxt0ArAbs4+0BeJPQHoCVMGtcACxC/z7ePgHv9Tw1qj2ApwfHOjeAZYC7QNDdioZ355/muQGcNu7yvR2AKOdhUDsAEB5V2wCIdh4A2wCA4OhKDyDLeYCkBwChWZUWQLbzAEoLAAKzKx2AKucBlg4AhD2tv66jAVDtPEDRAICg6ioA1cTZ+ikBbI5U61ECqomz9VMC2Byp1qMEVBNn66cEsDlSrUcJqCYe3c+73xcAAP//lNHKBgAAAAZJREFUAwD1CIiBYCx9tgAAAABJRU5ErkJggg==" />
+        </button>
+        <a href="widgets.html">Widgets</a>
+        <a href="news.html">NEWS</a>
+
+        <button class="mute-btn">
+          <img src="../../assets/audio/BOOM.gif" id="muteToggleImg" />
+        </button>
+
+        <button class="Qtype" onclick="if(window.WS_Quotes) WS_Quotes.cycleQtype()">
+          <img src="../../assets/images/Qleft.png" id="QtypeToggle" />
+        </button>
+
+        <button id="nes-btn">
+          <img src="../../assets/images/norm.png" alt="Toggle">
+        </button>
+      </div>
+    </nav>
+    <div class="header-controls">
+      <div class="search-box">
+        <input id="searchInputHeader" type="text" placeholder="Search favorites..." />
+        <button id="searchBtnHeader">
+          <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/search.png" />
+        </button>
+      </div>
+      <a href="profile.html">
+        <img id="pfp" src="https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/profile/smile.png" />
+      </a>
+      <button id="dashboardBtn">
+        <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/dashboard.png" />
+      </button>
+    </div>
+  </header>
+  <div id="quoteWrapper">
+    <p id="quoteBox"></p>
+  </div>
+</div>
+
+<aside id="dashboardMenu" class="dashboard-menu">
+  <p id="dashNickname" style="opacity:0.6;font-size:0.85em;">Guest</p>
+  <a href="#" id="openShortCuts">Shortcuts</a>
+  <a href="credits.html">credits &amp; contributors</a>
+  <a href="https://syndicatelibrary.github.io./awhtpwkuitsfs/" target="_blank">SoundScape</a>
+  <a href="https://padlet.com/rhap5ody/wannasmile-updates-suggestions-page-t8t6pg32hl71ri9m" target="_blank">Padlet</a>
+  <a href="release.html">DOWNLOAD V0.8.4!</a>
+</aside>
+
+<div id="containerLoader">
+  <img src="../../assets/themes/classic/loading.gif" alt="" />
+</div>
+
+<!-- Favorites page header -->
+<div id="favoritesHeader" style="text-align:center;padding:12px 0 4px;font-size:1.1em;opacity:0.7;">
+  ★ Your Favorited Assets
+  <span id="favCount" style="font-size:0.85em;margin-left:6px;opacity:0.6;"></span>
+</div>
+
+<main>
+  <div id="container"></div>
+</main>
+
+<button id="toTopBtn">⬆ Top</button>
+
+<!-- SoundScape Floating Widget -->
+<button id="soundscape-widget" aria-label="Open SoundScape">
+  <img id="soundscape-widget-icon" src="https://raw.githubusercontent.com/syndicatelibrary/awhtpwkuitsfs/main/defaultFav.png" alt="SoundScape"/>
+</button>
+<div id="soundscape-panel">
+  <div id="soundscape-btns">
+    <button class="ss-panel-btn" id="ss-fs-btn"    title="Fullscreen">⛶</button>
+    <button class="ss-panel-btn" id="ss-min-btn"   title="Minimize">−</button>
+    <button class="ss-panel-btn" id="ss-close-btn" title="Close">✕</button>
+  </div>
+  <div id="soundscape-frame-wrap"></div>
+  <div id="ss-resize-handle"></div>
+</div>
+
+<footer class="footer">
+  <a href="https://github.com/wnasmile/" target="_blank" rel="noopener noreferrer">
+    <img src="../../assets/images/gitIcon.png" class="footer-left" title="check out other cool projects made by Mcmatty Obriore & WNASMILE Contributors here!" />
+  </a>
+  <a href="https://github.com/wnasmile/wnasmile.github.io/fork" target="_blank" rel="noopener noreferrer">
+    <img src="../../assets/images/gitFork.png" style="margin-left:50px" class="footer-left" title="love the current state? need any changes? if so, Fork it!" />
+  </a>
+  <div class="footer-links">
+    <a href="https://github.com/slackerish/slackerish.github.io" target="_blank" rel="noopener noreferrer">source</a>
+    <a href="dmca.html" target="_blank" rel="noopener noreferrer">DMCA</a>
+    <a href="https://discord.gg/4AKdJxJUMH" target="_blank">Discord</a>
+    <a href="socials.html" target="_blank" rel="noopener noreferrer">Socials</a>
+    <a href="#" id="footerVersion" target="_blank">Version loading...</a>
+  </div>
+</footer>
+
+<script src="../../system/js/utils.js"></script>
+<script src="../../system/js/themify.js"></script>
+<script src="../../system/js/sanitizer.js"></script>
+<script src="../../system/js/profile.js"></script>
+<script src="../../system/js/settings.js"></script>
+<script src="../../system/js/ui.js"></script>
+<script src="../../system/js/quotes.js"></script>
+<script src="../../system/js/main.js"></script>
+<script src="../../system/js/boom.js"></script>
+<script src="../../system/js/panic.js"></script>
+<script src="../../system/js/shortcuts.js"></script>
+<script src="../../system/js/soundscape.js"></script>
+<script src="../../system/js/commands.js"></script>
+
+<script>
+/* ── favorites.html — inline init ──────────────────────────────────────────
+   main.js already handles the isFavPage detection and pre-filters the sheet
+   data to only favorited titles before building cards (see loadAssets).
+
+   This script adds:
+     1. A live count badge in #favCount
+     2. An empty-state message when there are no favorites yet
+     3. Re-exposes window._refreshFavoritesPage so star-clicks on this page
+        can instantly remove cards whose titles were just un-favorited.
+   ─────────────────────────────────────────────────────────────────────── */
+(function initFavoritesPage() {
+  // Update the count badge.
+  function updateFavCount() {
+    const countEl = document.getElementById("favCount");
+    if (!countEl) return;
+    const n = window.favorites ? window.favorites.size : 0;
+    countEl.textContent = n === 0 ? "" : `(${n})`;
+  }
+
+  // Show or hide the empty-state prompt.
+  function checkEmpty() {
+    const container = document.getElementById("container");
+    if (!container) return;
+    let emptyMsg = document.getElementById("favEmptyMsg");
+    const hasCards = container.querySelectorAll(".ws-favorited").length > 0
+      || container.querySelectorAll(".asset-card[style*='flex']").length > 0;
+
+    if (!hasCards) {
+      if (!emptyMsg) {
+        emptyMsg = document.createElement("p");
+        emptyMsg.id = "favEmptyMsg";
+        emptyMsg.textContent = "No favorites yet — star assets on the Home page to see them here!";
+        emptyMsg.style.cssText = "text-align:center;opacity:0.6;padding:40px 20px;font-size:1em;grid-column:1/-1;";
+        container.appendChild(emptyMsg);
+      }
+      emptyMsg.style.display = "block";
+    } else if (emptyMsg) {
+      emptyMsg.style.display = "none";
+    }
+  }
+
+  // Called by the patched saveFavorites (below) so removing a star on this
+  // page immediately hides that card.
+  window._refreshFavoritesPage = function () {
+    updateFavCount();
+    const allCards = document.querySelectorAll(".asset-card");
+    allCards.forEach(card => {
+      const title = (card.dataset.title || "").toLowerCase();
+      const isFav = window.favorites && window.favorites.has(title);
+      if (!isFav) {
+        // Animate out then hide.
+        card.style.transition = "opacity 0.25s";
+        card.style.opacity = "0";
+        setTimeout(() => { card.style.display = "none"; checkEmpty(); }, 260);
+      }
+    });
+    checkEmpty();
+  };
+
+  // Patch saveFavorites so removing a star also triggers the live refresh.
+  document.addEventListener("DOMContentLoaded", () => {
+    const _orig = window.saveFavorites;
+    window.saveFavorites = function () {
+      _orig && _orig();
+      window._refreshFavoritesPage && window._refreshFavoritesPage();
+    };
+  });
+
+  // Poll briefly after load to set the count once main.js finishes.
+  let _attempts = 0;
+  const _tick = setInterval(() => {
+    updateFavCount();
+    checkEmpty();
+    if (++_attempts > 20) clearInterval(_tick);
+  }, 300);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+Home ✅ | Favorites ❌ | Discovery ❌ | Settings ❌ | Suggestions ✅ | Info ❌ | (pages 1/10) 🟨 | Widgets ❌ | NEWS ❌ | (audio toggle) ✅ (Qoute type) ✅ (panic key toggle) ✅ | search section ✅ | (profile) ❌ | Dashboard ✅
+Shortcuts ✅
+credits & contributors ❌
+Soundscape ✅
+Padlet ✅
+Download (version) ✅
+------------------
+TODO:
+1. 30 Themes
+2. Favorites paging system
+3. cleaner script loading proccess.
+4. Fill out page 9 then work on page 10
+5. Fix some old asset urls.
+6. 3 widget types.
+- discord widget
+- padlet widget
+- soundscape widget
+7.ESCAPE/PANIC key doesnt redirect.
+--------------------------------
+(Github source) ✅ | (fork Source) ✅ | Source (again?) ✅ | DMCA ❌ | Discord ❌ | socials ❌ | (version)
