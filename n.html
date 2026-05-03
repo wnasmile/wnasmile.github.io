@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Base64 Debug Tool</title>
+<style>
+body { font-family: Arial; padding: 20px; }
+textarea { width: 100%; height: 300px; }
+</style>
+</head>
+<body>
+
+<h2>Image to Base64 (First 34 Lines)</h2>
+<input type="file" id="imageInput" accept="image/*">
+<br><br>
+<textarea id="output" placeholder="Base64 output..."></textarea>
+
+<script>
+document.getElementById('imageInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        const base64 = e.target.result;
+
+        // Split into lines of 76 chars (standard chunking)
+        const lines = base64.match(/.{1,76}/g) || [];
+
+        // Take only first 34 lines
+        const first34 = lines.slice(0, 34).join('\n');
+
+        document.getElementById('output').value = first34;
+    };
+
+    reader.readAsDataURL(file);
+});
+</script>
+
+</body>
+</html>
