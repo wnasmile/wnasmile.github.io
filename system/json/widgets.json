@@ -1,0 +1,20 @@
+[
+  {
+    "id": "soundscape",
+    "widget-name": "SoundScape",
+    "widget-icon": "https://raw.githubusercontent.com/syndicatelibrary/awhtpwkuitsfs/main/defaultFav.png",
+    "widget-url": "https://syndicatelibrary.github.io./awhtpwkuitsfs/",
+    "background-color": "#ff5a00",
+    "shadow-color": "rgba(255,90,0,0.65)",
+    "description": "SoundScape created & maintained by Mcmatty Obriore."
+  },
+{
+  "id": "padlet",
+  "widget-name": "Padlet",
+  "widget-icon": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Padlet_Logo_No_stroke.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+  "widget-url": "https://padlet.com/rhap5ody/wannasmile-updates-suggestions-page-t8t6pg32hl71ri9m",
+  "background-color": "#ff3366",
+  "shadow-color": "#ff80b3",
+  "description": "padlet is a platform used for short notes and basic communication for a wide range for any community, use this widget for fast and easy access to WannaSmile's padlet page for reporting issues!"
+}
+]

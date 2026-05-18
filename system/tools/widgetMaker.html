@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" href="../../assets/favicons/favicon.png"/>
+<title>WannaSmile | Widget Maker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Unbounded:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════
+   PAGE SHELL
+══════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0a0a0c;
+  --rail:      #111114;
+  --panel:     #16161a;
+  --panel2:    #1d1d22;
+  --border:    rgba(255,255,255,0.06);
+  --border2:   rgba(255,255,255,0.11);
+  --text:      #ececec;
+  --muted:     #55556a;
+  --accent:    #ff5a00;
+  --accent2:   #ffae00;
+  --green:     #3ddc84;
+  --mono:      'JetBrains Mono', monospace;
+  --display:   'Unbounded', sans-serif;
+  --radius:    10px;
+
+  /* widget preview vars — updated live by JS */
+  --ws-widget-bg:      #ff5a00;
+  --ws-widget-shadow1: rgba(255,90,0,0.65);
+  --ws-widget-shadow2: rgba(255,90,0,0.3);
+  --widget-size:       55px;
+  --panel-radius:      12px;
+}
+
+html, body {
+  height: 100%; background: var(--bg); color: var(--text);
+  font-family: var(--mono); overflow: hidden;
+}
+
+/* noise grain */
+body::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9000;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  background-size: 200px; opacity: 1;
+}
+
+/* ══════════════════════════════════════════════
+   LAYOUT  — left rail (editor) + right (preview)
+══════════════════════════════════════════════ */
+.app {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  grid-template-rows: 48px 1fr;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Top bar ── */
+.topbar {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; gap: 14px;
+  padding: 0 20px;
+  background: var(--rail);
+  border-bottom: 1px solid var(--border);
+}
+.topbar .logo {
+  font-family: var(--display); font-size: 11px; font-weight: 900;
+  letter-spacing: 0.05em; color: var(--text);
+  display: flex; align-items: center; gap: 8px;
+}
+.topbar .logo span {
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.topbar .sep { width: 1px; height: 20px; background: var(--border2); margin: 0 4px; }
+.topbar .page-label { font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+.topbar .back-link {
+  margin-left: auto; display: flex; align-items: center; gap: 6px;
+  color: var(--muted); text-decoration: none; font-size: 10px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  transition: color 0.2s;
+}
+.topbar .back-link:hover { color: var(--text); }
+.topbar .back-link svg { width: 12px; height: 12px; }
+
+/* ── Editor rail ── */
+.editor {
+  background: var(--rail);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  display: flex; flex-direction: column;
+}
+.editor::-webkit-scrollbar { width: 4px; }
+.editor::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+.editor-section {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+  animation: fadeUp 0.35s ease both;
+}
+.editor-section:last-child { border-bottom: none; flex: 1; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section-label {
+  font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-label::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+/* ── Field rows ── */
+.field { margin-bottom: 12px; }
+.field:last-child { margin-bottom: 0; }
+
+.field label {
+  display: block; font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 5px;
+}
+
+.field input[type="text"],
+.field input[type="url"],
+.field textarea {
+  width: 100%; background: var(--panel); border: 1px solid var(--border2);
+  border-radius: var(--radius); color: var(--text); font-family: var(--mono);
+  font-size: 12px; padding: 9px 12px; outline: none;
+  transition: border-color 0.18s, background 0.18s;
+  appearance: none; -webkit-appearance: none;
+}
+.field input:focus,
+.field textarea:focus {
+  border-color: rgba(255,90,0,0.5);
+  background: var(--panel2);
+}
+.field textarea { resize: vertical; min-height: 60px; line-height: 1.5; }
+
+/* ── Color row ── */
+.color-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.color-field { display: flex; flex-direction: column; gap: 5px; }
+.color-field label { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.color-input-wrap {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--panel); border: 1px solid var(--border2);
+  border-radius: var(--radius); padding: 6px 10px;
+  transition: border-color 0.18s;
+}
+.color-input-wrap:focus-within { border-color: rgba(255,90,0,0.5); }
+.color-input-wrap input[type="color"] {
+  width: 22px; height: 22px; border: none; padding: 0;
+  background: transparent; cursor: pointer; border-radius: 4px; flex-shrink: 0;
+}
+.color-input-wrap input[type="text"] {
+  background: transparent; border: none; padding: 0;
+  color: var(--text); font-family: var(--mono); font-size: 11px;
+  outline: none; width: 100%;
+}
+
+/* ── Icon preview strip ── */
+.icon-preview-row {
+  display: flex; align-items: center; gap: 12px; margin-top: 8px;
+}
+.icon-preview-box {
+  width: 44px; height: 44px; border-radius: 11px;
+  background: var(--ws-widget-bg);
+  box-shadow: 0 0 10px var(--ws-widget-shadow1);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; overflow: hidden;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.icon-preview-box img {
+  width: 26px; height: 26px; object-fit: contain;
+}
+.icon-hint { font-size: 10px; color: var(--muted); line-height: 1.4; }
+
+/* ── Output / copy ── */
+.output-wrap {
+  position: relative;
+}
+.output-wrap pre {
+  background: var(--panel); border: 1px solid var(--border2);
+  border-radius: var(--radius); padding: 12px; font-size: 10.5px;
+  color: #b5c4ff; line-height: 1.6; overflow-x: auto;
+  white-space: pre-wrap; word-break: break-all;
+  max-height: 200px; overflow-y: auto;
+}
+.copy-btn {
+  position: absolute; top: 8px; right: 8px;
+  background: var(--panel2); border: 1px solid var(--border2);
+  border-radius: 6px; color: var(--muted); font-family: var(--mono);
+  font-size: 10px; padding: 4px 10px; cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.copy-btn:hover { color: var(--text); border-color: rgba(255,90,0,0.4); }
+.copy-btn.copied { color: var(--green); border-color: var(--green); }
+
+/* ── Action row ── */
+.action-row { display: flex; gap: 8px; margin-top: 14px; }
+.btn {
+  flex: 1; padding: 10px 0; border: none; border-radius: var(--radius);
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  cursor: pointer; letter-spacing: 0.04em; text-transform: uppercase;
+  transition: opacity 0.15s, transform 0.12s;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+}
+.btn-ghost {
+  background: var(--panel2); border: 1px solid var(--border2);
+  color: var(--muted);
+}
+.btn-ghost:hover { color: var(--text); }
+
+/* ══════════════════════════════════════════════
+   PREVIEW AREA
+══════════════════════════════════════════════ */
+.preview-area {
+  position: relative;
+  background: var(--bg);
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* mock page background so you can see contrast */
+.preview-bg {
+  position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(0deg,   transparent, transparent 39px, var(--border) 40px),
+    repeating-linear-gradient(90deg,  transparent, transparent 39px, var(--border) 40px);
+  opacity: 0.5;
+}
+
+.preview-label {
+  position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+  font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); white-space: nowrap;
+  display: flex; align-items: center; gap: 8px;
+}
+.preview-label .pulse {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: pulseAnim 2s ease-in-out infinite;
+}
+@keyframes pulseAnim {
+  0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+}
+
+/* hint text in centre of preview */
+.preview-hint {
+  font-size: 11px; color: var(--muted); text-align: center; line-height: 1.7;
+  pointer-events: none; user-select: none; z-index: 1;
+  transition: opacity 0.3s;
+}
+.preview-hint.hidden { opacity: 0; }
+
+/* ══════════════════════════════════════════════
+   WIDGET — exact widgets.css, scoped here
+══════════════════════════════════════════════ */
+#soundscape-widget {
+  position: fixed; right: 24px; bottom: 24px;
+  width: var(--widget-size); height: var(--widget-size);
+  border-radius: 50%; cursor: grab; z-index: 99997; user-select: none;
+  box-shadow: 0 0 8px var(--ws-widget-shadow1), 0 0 18px var(--ws-widget-shadow2);
+  border: none; background: var(--ws-widget-bg); padding: 0;
+  display: none;            /* hidden until url is set */
+  align-items: center; justify-content: center;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+#soundscape-widget.ws-visible { display: flex; }
+#soundscape-widget:active { cursor: grabbing; }
+#soundscape-widget-icon {
+  width: 33px; height: 33px; display: block;
+  object-fit: contain; pointer-events: none; flex-shrink: 0;
+}
+
+#soundscape-panel {
+  position: fixed; right: 24px; bottom: 92px;
+  width: 380px; height: 520px; border-radius: var(--panel-radius);
+  overflow: visible; display: none; flex-direction: column;
+  box-shadow: 0 14px 40px rgba(0,0,0,.35); z-index: 99999;
+  min-width: 260px; min-height: 320px; max-width: 90vw; max-height: 85vh;
+}
+#soundscape-panel.ss-fullscreen {
+  position: fixed !important; top: 0 !important; left: 0 !important;
+  right: 0 !important; bottom: 0 !important;
+  width: 100vw !important; height: 100vh !important;
+  max-width: 100vw !important; max-height: 100vh !important; border-radius: 0 !important;
+}
+#soundscape-frame-wrap {
+  width: 100%; height: 100%; position: relative;
+  border-radius: var(--panel-radius); overflow: hidden; overscroll-behavior: contain;
+}
+#soundscape-panel.ss-fullscreen #soundscape-frame-wrap { border-radius: 0; }
+#soundscape-iframe { width: 100%; height: 100%; border: none; display: block; }
+
+#soundscape-btns {
+  position: absolute; top: 8px; right: 8px;
+  display: flex; gap: 5px; z-index: 10; pointer-events: all;
+  transition: opacity 0.25s, transform 0.25s;
+}
+.ss-panel-btn {
+  width: 26px; height: 26px; border: none; border-radius: 7px;
+  cursor: pointer; font-size: 13px; font-weight: bold; line-height: 1;
+  background: rgba(30,30,30,.75); color: #fff;
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 0; transition: background 0.15s;
+}
+.ss-panel-btn:hover { background: rgba(60,60,60,.92); }
+
+#ss-resize-handle {
+  position: absolute;
+  bottom: -1px;
+  width: 20px; height: 20px;
+  z-index: 10;
+  /* default: bottom-right — dots run NW → SE */
+  right: -1px; left: auto;
+  cursor: se-resize;
+  border-radius: 0 0 var(--panel-radius) 0;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.65) 1.5px, transparent 1.5px)  3px  3px / 5px 5px,
+    radial-gradient(circle, rgba(255,255,255,.65) 1.5px, transparent 1.5px)  9px  9px / 5px 5px,
+    radial-gradient(circle, rgba(255,255,255,.65) 1.5px, transparent 1.5px) 15px 15px / 5px 5px;
+  background-repeat: no-repeat;
+  transition: border-radius 0.15s;
+}
+/* Left-side handle — dots run NE → SW toward bottom-left corner */
+#ss-resize-handle[data-side="left"] {
+  right: auto; left: -1px;
+  cursor: sw-resize;
+  border-radius: 0 0 0 var(--panel-radius);
+  background:
+    radial-gradient(circle, rgba(255,255,255,.65) 1.5px, transparent 1.5px) 15px  3px / 5px 5px,
+    radial-gradient(circle, rgba(255,255,255,.65) 1.5px, transparent 1.5px)  9px  9px / 5px 5px,
+    radial-gradient(circle, rgba(255,255,255,.65) 1.5px, transparent 1.5px)  3px 15px / 5px 5px;
+  background-repeat: no-repeat;
+}
+#soundscape-panel.ss-fullscreen #ss-resize-handle { display: none; }
+
+@media (max-width: 480px) {
+  #soundscape-panel {
+    width: calc(100vw - 24px) !important; height: 70vh !important;
+    right: 12px; bottom: 80px;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <!-- ── TOP BAR ── -->
+  <header class="topbar">
+    <div class="logo">WS <span>Widget Maker</span></div>
+    <div class="sep"></div>
+    <span class="page-label">Live Preview Tool</span>
+    <a class="back-link" href="../../index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Home
+    </a>
+  </header>
+
+  <!-- ── EDITOR RAIL ── -->
+  <aside class="editor">
+
+    <!-- Identity -->
+    <div class="editor-section" style="animation-delay:0.05s">
+      <div class="section-label">Identity</div>
+
+      <div class="field">
+        <label>Widget Name</label>
+        <input type="text" id="f-name" placeholder="e.g. SoundScape" />
+      </div>
+      <div class="field">
+        <label>ID <span style="color:var(--muted);font-size:9px">(used in widgets.json)</span></label>
+        <input type="text" id="f-id" placeholder="e.g. soundscape" />
+      </div>
+      <div class="field">
+        <label>Description <span style="color:var(--muted);font-size:9px">(shown in widgets.html)</span></label>
+        <textarea id="f-desc" placeholder="Short description shown on the widget selection page…"></textarea>
+      </div>
+    </div>
+
+    <!-- URLs -->
+    <div class="editor-section" style="animation-delay:0.1s">
+      <div class="section-label">Content</div>
+
+      <div class="field">
+        <label>Widget URL <span style="color:var(--muted);font-size:9px">(iframe src)</span></label>
+        <input type="url" id="f-url" placeholder="https://…" />
+      </div>
+
+      <div class="field">
+        <label>Icon URL</label>
+        <input type="url" id="f-icon" placeholder="https://… (png / svg)" />
+        <div class="icon-preview-row" style="margin-top:10px">
+          <div class="icon-preview-box" id="iconBox">
+            <img id="iconPreview" src="" alt="" onerror="this.style.opacity=0.2" />
+          </div>
+          <span class="icon-hint">Live icon preview<br>at button scale</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colours -->
+    <div class="editor-section" style="animation-delay:0.15s">
+      <div class="section-label">Colours</div>
+      <div class="color-row">
+        <div class="color-field">
+          <label>Background</label>
+          <div class="color-input-wrap">
+            <input type="color" id="cp-bg" value="#ff5a00" />
+            <input type="text"  id="ct-bg" value="#ff5a00" placeholder="#rrggbb" />
+          </div>
+        </div>
+        <div class="color-field">
+          <label>Shadow</label>
+          <div class="color-input-wrap">
+            <input type="color" id="cp-sh" value="#ff5a00" />
+            <input type="text"  id="ct-sh" value="rgba(255,90,0,0.65)" placeholder="rgba(…)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JSON output -->
+    <div class="editor-section" style="animation-delay:0.2s">
+      <div class="section-label">JSON Output</div>
+      <div class="output-wrap">
+        <pre id="jsonOut">{}</pre>
+        <button class="copy-btn" id="copyBtn" onclick="copyJSON()">Copy</button>
+      </div>
+      <div class="action-row">
+        <button class="btn btn-primary" onclick="applyPreview()">▶ Apply to Preview</button>
+        <button class="btn btn-ghost"   onclick="resetForm()">Reset</button>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ── PREVIEW ── -->
+  <main class="preview-area" id="previewArea">
+    <div class="preview-bg"></div>
+    <div class="preview-label">
+      <span class="pulse"></span>
+      Live Preview — interact with the widget
+    </div>
+    <div class="preview-hint" id="previewHint">
+      Fill in a <strong style="color:var(--text)">Widget URL</strong> and click<br>
+      <strong style="color:var(--accent)">▶ Apply to Preview</strong> to see the widget live
+    </div>
+  </main>
+
+</div>
+
+<!-- ── WIDGET HTML (identical to index.html block) ── -->
+<button id="soundscape-widget" aria-label="Open Widget">
+  <img id="soundscape-widget-icon" src="" alt="Widget"/>
+</button>
+<div id="soundscape-panel">
+  <div id="soundscape-btns">
+    <button class="ss-panel-btn" id="ss-fs-btn"    title="Fullscreen">⛶</button>
+    <button class="ss-panel-btn" id="ss-min-btn"   title="Minimize">−</button>
+    <button class="ss-panel-btn" id="ss-close-btn" title="Close">✕</button>
+  </div>
+  <div id="soundscape-frame-wrap"></div>
+  <div id="ss-resize-handle"></div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   WIDGET ENGINE — adapted from widgets.js
+   Instead of reading localStorage/JSON it reads form state.
+═══════════════════════════════════════════════════════ */
+(() => {
+  const ICON_CLOSE = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><line x1='18' y1='6' x2='6' y2='18' stroke='white' stroke-width='2.5' stroke-linecap='round'/><line x1='6' y1='6' x2='18' y2='18' stroke='white' stroke-width='2.5' stroke-linecap='round'/></svg>";
+
+  const widget       = document.getElementById("soundscape-widget");
+  const panel        = document.getElementById("soundscape-panel");
+  const frameWrap    = document.getElementById("soundscape-frame-wrap");
+  const closeBtn     = document.getElementById("ss-close-btn");
+  const minBtn       = document.getElementById("ss-min-btn");
+  const fsBtn        = document.getElementById("ss-fs-btn");
+  const resizeHandle = document.getElementById("ss-resize-handle");
+  const icon         = document.getElementById("soundscape-widget-icon");
+
+  // runtime vars set by applyPreview()
+  window._wm = { iconDefault: "", iframeSrc: "" };
+
+  let state        = "closed";
+  let isFullscreen = false;
+  let iframe       = null;
+  let savedStyle   = {};
+  let dragging     = false, moved = false, dOffX = 0, dOffY = 0;
+  let resizing     = false, resizeOnLeft = false;
+  let rStartX = 0, rStartY = 0, rStartW = 0, rStartH = 0, rStartPanelLeft = 0;
+
+  const GAP = 12;
+
+  function iframePointers(on) {
+    if (iframe) iframe.style.pointerEvents = on ? "auto" : "none";
+  }
+
+  function positionPanel() {
+    if (state !== "open" || isFullscreen) return;
+    const wRect    = widget.getBoundingClientRect();
+    const wCentreX = wRect.left + wRect.width / 2;
+    const wCentreY = wRect.top  + wRect.height / 2;
+    const onLeft   = wCentreX < window.innerWidth / 2;
+    const pw = panel.offsetWidth;
+    const ph = panel.offsetHeight;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    // Vertical: align panel centre to widget centre, clamped inside viewport
+    let top = wCentreY - ph / 2;
+    top = Math.max(8, Math.min(top, vh - ph - 8));
+    // Horizontal: open on the correct side
+    let left;
+    if (onLeft) {
+      left = wRect.right + GAP;
+      left = Math.min(left, vw - pw - 8);
+    } else {
+      left = wRect.left - pw - GAP;
+      left = Math.max(8, left);
+    }
+    panel.style.left   = left + "px";
+    panel.style.top    = top  + "px";
+    panel.style.right  = "auto";
+    panel.style.bottom = "auto";
+    // data-side drives the CSS dot pattern
+    if (resizeHandle) resizeHandle.dataset.side = onLeft ? "right" : "left";
+  }
+
+  function applyState() {
+    if (state === "closed") {
+      panel.style.display = "none";
+      icon.src = window._wm.iconDefault;
+    } else if (state === "open") {
+      panel.style.display = "flex";
+      icon.src = ICON_CLOSE;
+      requestAnimationFrame(() => requestAnimationFrame(positionPanel));
+    } else {
+      panel.style.display = "none";
+      icon.src = ICON_CLOSE;
+    }
+  }
+
+  function createIframe() {
+    destroyIframe();
+    iframe = document.createElement("iframe");
+    iframe.id      = "soundscape-iframe";
+    iframe.src     = window._wm.iframeSrc;
+    iframe.loading = "eager";
+    iframe.allow   = "fullscreen; autoplay";
+    frameWrap.appendChild(iframe);
+  }
+
+  function destroyIframe() {
+    const el = document.getElementById("soundscape-iframe");
+    if (el) { el.src = "about:blank"; el.remove(); }
+    if (iframe && iframe !== el) { iframe.src = "about:blank"; try { iframe.remove(); } catch (_) {} }
+    iframe = null;
+  }
+
+  function openPanel()     { createIframe(); state = "open";      applyState(); }
+  function minimizePanel() { if (isFullscreen) exitFullscreen(false); state = "minimized"; applyState(); }
+  function closePanel()    { if (isFullscreen) exitFullscreen(false); state = "closed";    applyState(); destroyIframe(); }
+
+  /* fullscreen overlay */
+  const btnsOverlay = document.createElement("div");
+  btnsOverlay.id = "ss-btns-overlay";
+  Object.assign(btnsOverlay.style, {
+    position:"fixed", top:"10px", right:"10px",
+    display:"none", gap:"5px", zIndex:"2147483647",
+    pointerEvents:"all", transition:"opacity .25s,transform .25s",
+    opacity:"0", transform:"translateY(-6px)",
+  });
+  ["ss-fs-btn","ss-min-btn","ss-close-btn"].forEach(id => {
+    const orig  = document.getElementById(id);
+    const clone = orig.cloneNode(true);
+    clone.dataset.mirrorOf = id;
+    clone.addEventListener("click", e => { e.stopPropagation(); orig.click(); });
+    btnsOverlay.appendChild(clone);
+  });
+  btnsOverlay.style.flexDirection = "row";
+  document.body.appendChild(btnsOverlay);
+
+  function syncOverlay() {
+    btnsOverlay.querySelectorAll("[data-mirror-of]").forEach(clone => {
+      const orig = document.getElementById(clone.dataset.mirrorOf);
+      clone.textContent = orig.textContent; clone.title = orig.title;
+    });
+  }
+  function showOverlay() {
+    btnsOverlay.style.display="flex"; btnsOverlay.style.opacity="1";
+    btnsOverlay.style.transform="translateY(0)"; btnsOverlay.style.pointerEvents="all";
+  }
+  function hideOverlay() {
+    btnsOverlay.style.opacity="0"; btnsOverlay.style.transform="translateY(-6px)";
+    btnsOverlay.style.pointerEvents="none";
+    setTimeout(() => { if (btnsOverlay.style.opacity==="0") btnsOverlay.style.display="none"; }, 260);
+  }
+
+  function enterFullscreen() {
+    savedStyle = {
+      width:panel.style.width||"", height:panel.style.height||"",
+      top:panel.style.top||"", left:panel.style.left||"",
+      right:panel.style.right||"", bottom:panel.style.bottom||"",
+    };
+    panel.classList.add("ss-fullscreen");
+    isFullscreen = true;
+    fsBtn.textContent="⊠"; fsBtn.title="Exit Fullscreen";
+    syncOverlay(); showOverlay();
+    document.body.style.overflow="hidden";
+  }
+
+  function exitFullscreen(reapply) {
+    panel.classList.remove("ss-fullscreen");
+    Object.assign(panel.style, savedStyle);
+    isFullscreen = false;
+    fsBtn.textContent="⛶"; fsBtn.title="Fullscreen";
+    syncOverlay(); hideOverlay();
+    document.body.style.overflow="";
+    if (reapply !== false) applyState();
+  }
+
+  document.addEventListener("mousemove", e => {
+    if (!isFullscreen) return;
+    if (e.clientY < 60) showOverlay(); else hideOverlay();
+  });
+
+  fsBtn.addEventListener("click",    e => { e.stopPropagation(); if (state==="open") { isFullscreen ? exitFullscreen() : enterFullscreen(); } });
+  closeBtn.addEventListener("click", e => { e.stopPropagation(); closePanel(); });
+  minBtn.addEventListener("click",   e => { e.stopPropagation(); minimizePanel(); });
+
+  widget.addEventListener("click", () => {
+    if (moved) { moved=false; return; }
+    if      (state==="closed") openPanel();
+    else if (state==="open")   minimizePanel();
+    else                       { state="open"; applyState(); }
+  });
+
+  widget.addEventListener("mousedown", e => {
+    dragging=true; moved=false;
+    const rect=widget.getBoundingClientRect();
+    dOffX=e.clientX-rect.left; dOffY=e.clientY-rect.top;
+    widget.style.right="auto"; widget.style.bottom="auto";
+    widget.style.left=rect.left+"px"; widget.style.top=rect.top+"px";
+    iframePointers(false); e.preventDefault();
+  });
+
+  widget.addEventListener("touchstart", e => {
+    dragging=true; moved=false;
+    const t=e.touches[0]; const rect=widget.getBoundingClientRect();
+    dOffX=t.clientX-rect.left; dOffY=t.clientY-rect.top;
+    widget.style.right="auto"; widget.style.bottom="auto";
+    widget.style.left=rect.left+"px"; widget.style.top=rect.top+"px";
+    iframePointers(false);
+  }, { passive:true });
+
+  resizeHandle?.addEventListener("mousedown", e => {
+    if (isFullscreen) return;
+    e.preventDefault(); e.stopPropagation();
+    resizing     = true;
+    resizeOnLeft = (resizeHandle.dataset.side === "left");
+    rStartX      = e.clientX;
+    rStartY      = e.clientY;
+    rStartW      = panel.offsetWidth;
+    rStartH      = panel.offsetHeight;
+    rStartPanelLeft = panel.getBoundingClientRect().left;
+    iframePointers(false);
+  });
+
+  document.addEventListener("mousemove", e => {
+    if (dragging) {
+      moved=true;
+      const x=Math.max(0,Math.min(e.clientX-dOffX,window.innerWidth-widget.offsetWidth));
+      const y=Math.max(0,Math.min(e.clientY-dOffY,window.innerHeight-widget.offsetHeight));
+      widget.style.left=x+"px"; widget.style.top=y+"px";
+      positionPanel();
+    }
+    if (resizing) {
+      const dx = e.clientX - rStartX;
+      const dy = e.clientY - rStartY;
+      const nH = Math.max(320, Math.min(rStartH + dy, window.innerHeight * 0.85));
+      panel.style.height = nH + "px";
+      if (resizeOnLeft) {
+        // Left handle: grow leftward, anchor the right edge
+        const nW    = Math.max(260, Math.min(rStartW - dx, window.innerWidth * 0.9));
+        const nLeft = rStartPanelLeft + rStartW - nW;
+        panel.style.width = nW + "px";
+        panel.style.left  = Math.max(8, nLeft) + "px";
+      } else {
+        // Right handle: grow rightward (normal)
+        const nW = Math.max(260, Math.min(rStartW + dx, window.innerWidth * 0.9));
+        panel.style.width = nW + "px";
+      }
+    }
+  });
+
+  document.addEventListener("touchmove", e => {
+    if (!dragging) return; moved=true;
+    const t=e.touches[0];
+    const x=Math.max(0,Math.min(t.clientX-dOffX,window.innerWidth-widget.offsetWidth));
+    const y=Math.max(0,Math.min(t.clientY-dOffY,window.innerHeight-widget.offsetHeight));
+    widget.style.left=x+"px"; widget.style.top=y+"px";
+    positionPanel();
+  }, { passive:true });
+
+  document.addEventListener("mouseup", () => {
+    if (dragging||resizing) iframePointers(true);
+    if (dragging) { dragging=false; setTimeout(()=>{ moved=false; },0); }
+    if (resizing) resizing=false;
+  });
+
+  document.addEventListener("touchend", () => {
+    if (dragging) iframePointers(true);
+    dragging=false; setTimeout(()=>{ moved=false; },0);
+  });
+
+  panel.addEventListener("wheel", e => { e.stopPropagation(); }, { passive:true });
+
+  /* expose close so applyPreview can reset state */
+  window._wmClose = () => { closePanel(); };
+  window._wmApply = (cfg) => {
+    const root = document.documentElement;
+    const bg   = cfg["background-color"] || "#ff5a00";
+    const sh   = cfg["shadow-color"]     || "rgba(255,90,0,0.65)";
+    let sh2 = sh;
+    const m = sh.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)$/i);
+    if (m) sh2 = `rgba(${m[1]},${m[2]},${m[3]},0.3)`;
+
+    root.style.setProperty("--ws-widget-bg",      bg);
+    root.style.setProperty("--ws-widget-shadow1",  sh);
+    root.style.setProperty("--ws-widget-shadow2",  sh2);
+
+    window._wm.iconDefault = cfg["widget-icon"] || "";
+    window._wm.iframeSrc   = cfg["widget-url"]  || "";
+
+    // update icon preview box colour too
+    const box = document.getElementById("iconBox");
+    if (box) { box.style.background = bg; box.style.boxShadow = `0 0 10px ${sh}`; }
+
+    // show/hide widget button
+    if (cfg["widget-url"]) {
+      widget.classList.add("ws-visible");
+      document.getElementById("previewHint").classList.add("hidden");
+    } else {
+      widget.classList.remove("ws-visible");
+      document.getElementById("previewHint").classList.remove("hidden");
+    }
+
+    applyState();
+  };
+})();
+
+/* ═══════════════════════════════════════════════════════
+   FORM LOGIC
+═══════════════════════════════════════════════════════ */
+
+// Auto-generate id from name
+document.getElementById("f-name").addEventListener("input", function() {
+  const id = document.getElementById("f-id");
+  // only auto-fill if id hasn't been manually changed
+  if (!id.dataset.manual) {
+    id.value = this.value.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"");
+  }
+  updateJSON();
+});
+document.getElementById("f-id").addEventListener("input", function() {
+  this.dataset.manual = "1";
+  updateJSON();
+});
+document.getElementById("f-desc").addEventListener("input", updateJSON);
+document.getElementById("f-url").addEventListener("input", function() {
+  updateJSON();
+  liveIconUpdate(); // re-apply when url changes so hint hides
+});
+document.getElementById("f-icon").addEventListener("input", function() {
+  const src = this.value.trim();
+  const img = document.getElementById("iconPreview");
+  img.src = src;
+  img.style.opacity = src ? "1" : "0.2";
+  updateJSON();
+});
+
+// Colour pickers — keep hex text + picker in sync
+function setupColorPair(pickerId, textId) {
+  const picker = document.getElementById(pickerId);
+  const text   = document.getElementById(textId);
+
+  picker.addEventListener("input", () => {
+    text.value = picker.value;
+    updateJSON(); liveTheme();
+  });
+  text.addEventListener("input", () => {
+    // try to update picker if it's a valid hex
+    if (/^#[0-9a-f]{6}$/i.test(text.value.trim())) {
+      picker.value = text.value.trim();
+    }
+    updateJSON(); liveTheme();
+  });
+}
+setupColorPair("cp-bg","ct-bg");
+setupColorPair("cp-sh","ct-sh");
+
+// Live-update CSS vars as user types colours (even before Apply)
+function liveTheme() {
+  const bg = document.getElementById("ct-bg").value.trim() || "#ff5a00";
+  const sh = document.getElementById("ct-sh").value.trim() || "rgba(255,90,0,0.65)";
+  const root = document.documentElement;
+  let sh2 = sh;
+  const m = sh.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)$/i);
+  if (m) sh2 = `rgba(${m[1]},${m[2]},${m[3]},0.3)`;
+  root.style.setProperty("--ws-widget-bg",      bg);
+  root.style.setProperty("--ws-widget-shadow1",  sh);
+  root.style.setProperty("--ws-widget-shadow2",  sh2);
+  const box = document.getElementById("iconBox");
+  if (box) { box.style.background = bg; box.style.boxShadow = `0 0 10px ${sh}`; }
+}
+
+function liveIconUpdate() {
+  const src = document.getElementById("f-icon").value.trim();
+  document.getElementById("iconPreview").src = src;
+}
+
+function buildConfig() {
+  return {
+    "id":               document.getElementById("f-id").value.trim(),
+    "widget-name":      document.getElementById("f-name").value.trim(),
+    "widget-icon":      document.getElementById("f-icon").value.trim(),
+    "widget-url":       document.getElementById("f-url").value.trim(),
+    "background-color": document.getElementById("ct-bg").value.trim() || "#ff5a00",
+    "shadow-color":     document.getElementById("ct-sh").value.trim() || "rgba(255,90,0,0.65)",
+    "description":      document.getElementById("f-desc").value.trim(),
+  };
+}
+
+function updateJSON() {
+  const cfg = buildConfig();
+  document.getElementById("jsonOut").textContent = JSON.stringify(cfg, null, 2);
+}
+
+function applyPreview() {
+  const cfg = buildConfig();
+  if (window._wmClose) window._wmClose();  // reset panel state first
+  setTimeout(() => {
+    if (window._wmApply) window._wmApply(cfg);
+  }, 80);
+}
+
+function copyJSON() {
+  const text = document.getElementById("jsonOut").textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById("copyBtn");
+    btn.textContent = "Copied!";
+    btn.classList.add("copied");
+    setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("copied"); }, 1800);
+  });
+}
+
+function resetForm() {
+  ["f-name","f-id","f-desc","f-url","f-icon"].forEach(id => {
+    const el = document.getElementById(id);
+    el.value = "";
+    delete el.dataset.manual;
+  });
+  document.getElementById("cp-bg").value = "#ff5a00";
+  document.getElementById("ct-bg").value = "#ff5a00";
+  document.getElementById("cp-sh").value = "#ff5a00";
+  document.getElementById("ct-sh").value = "rgba(255,90,0,0.65)";
+  document.getElementById("iconPreview").src = "";
+  if (window._wmClose) window._wmClose();
+  if (window._wmApply) window._wmApply({
+    "background-color": "#ff5a00",
+    "shadow-color": "rgba(255,90,0,0.65)",
+    "widget-icon": "", "widget-url": ""
+  });
+  updateJSON();
+}
+
+// Init
+updateJSON();
+liveTheme();
+</script>
+</body>
+</html>

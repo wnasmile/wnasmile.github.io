@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link id="favicon" rel="icon" href="assets/favicons/favicon.png"/>
+<title>WannaSmile | Dev Build</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.9.0/cdn/themes/dark.css" />
+<link rel="stylesheet" href="system/css/main.css" />
+<link rel="stylesheet" href="system/css/soundscape.css" />
+<link rel="stylesheet" href="system/css/shortcuts.css" />
+
+<link rel="preload" as="image" href="https://raw.githubusercontent.com/01110010-00110101/themeify/main/redux/Redux-headerbg.png" />
+<link rel="preload" as="image" href="https://raw.githubusercontent.com/01110010-00110101/themeify/main/redux/Redux-quotebg.png" />
+<link rel="preload" as="image" href="https://raw.githubusercontent.com/01110010-00110101/themeify/main/redux/Redux-mainbg.png" />
+<link rel="preload" as="image" href="https://raw.githubusercontent.com/wnasmile/wnasmile.github.io/main/assets/themes/redux/footerbg.png" />
+<link rel="preload" as="image" href="https://i.redd.it/kjektcn4myv91.png" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" rel="stylesheet">
+</head>
+
+<body class="ws-loading">
+
+<div id="incognitoIndicator">blob:null mode</div>
+<div id="topBar">
+  <header>
+    <nav class="nav-links">
+      <a href="." target="_blank">Home</a>
+      <a href="system/pages/favorites.html" target="_blank">Favorites</a>
+      <a href="system/pages/discovery.html" target="_blank">Discovery</a>
+      <a href="system/pages/settings.html" target="_blank">Settings</a>
+      <a href="https://padlet.com/rhap5ody/wannasmile-suggestion-report-page-t8t6pg32hl71ri9m" target="_blank">Suggestions</a>
+      <a href="system/pages/about.html" target="_blank">About</a>
+      <div class="pages-anchor">
+        <button class="arrowleft" id="devPrevBtn">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABSElEQVR4AeyVwRKEIAxDdf//n90LuTDD4NASWhsvHXVpyktYf1fxSwCKB+BSApSA4gR0BIoHQH+COgI6AsUJ6AgUD4C+AuWOQJ94OoCnXf0gp+7pAE5tdKRLA9CMf0aDnHpOA3BqgzPd7QCiOg8w2wFAKGrdBiC68zBkGwAIRK/uALI4D2PcAaBxluoGIJvzMMgNABpmq2YAq85jnbVagZsBWAc4vX4ZAJw7vQGr/jIAqzBr/UxHAGaEvv5+OQF3u7IDWgaQfeOY3wygBeFGw7cV66z1rd7od2YAo8ZZnrsBgJNZNo453QCgYbbqDiBbEtwBlE8AAGRJghIAx3bV6ElQAnY53/eNmoTPJaAHP7unA4iWBDqAmSPs9wLAJh5NTwmI5gh7HiWATTyanhIQzRH2PEoAm3g0PSUgmiPseZQANnFvPWu/PwAAAP//5U4SVQAAAAZJREFUAwA1U4iBdohS4QAAAABJRU5ErkJggg==" />
+        </button>
+        <span class="page-indicator">...</span>
+        <button class="arrowright" id="devNextBtn">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABTklEQVR4AeyVSQ7DMAwD2/7/z+nFvBgwlEYLqIq5CIkX0UO6/byGPwIwPAAvJUAJGE5AV2B4APQjqCugKzCcgK7A8ADoX2DcFdgTTwPgWs8uMPudBkD2QU/70wFYQbhOgqO/0wGIPqC1Hy2AqiTQArCcixqnB5CdBHoAUU6f9mkDICsJbQCcHPR+bwcgOgntAHgd39e7AcARb92FWe/oZ82zxt0ArAbs4+0BeJPQHoCVMGtcACxC/z7ePgHv9Tw1qj2ApwfHOjeAZYC7QNDdioZ355/muQGcNu7yvR2AKOdhUDsAEB5V2wCIdh4A2wCA4OhKDyDLeYCkBwChWZUWQLbzAEoLAAKzKx2AKucBlg4AhD2tv66jAVDtPEDRAICg6ioA1cTZ+ikBbI5U61ECqomz9VMC2Byp1qMEVBNn66cEsDlSrUcJqCYe3c+73xcAAP//lNHKBgAAAAZJREFUAwD1CIiBYCx9tgAAAABJRU5ErkJggg==" />
+        </button>
+        <a href="system/pages/widgets.html">Widgets</a>
+        <a href="system/pages/news.html">NEWS</a>
+
+        <button class="mute-btn">
+          <img src="assets/audio/BOOM.gif" id="muteToggleImg" />
+        </button>
+
+        <button class="Qtype" onclick="if(window.WS_Quotes) WS_Quotes.cycleQtype()">
+          <img src="assets/images/Qleft.png" id="QtypeToggle" />
+        </button>
+
+        <button id="nes-btn">
+          <img src="assets/images/norm.png" alt="Toggle">
+        </button>
+
+        <button id="cloak-btn">
+          <img src="assets/images/vis.png" alt="CloakToggle">
+        </button>
+      </div>
+    </nav>
+    <div class="header-controls">
+      <div class="search-box">
+        <input id="searchInputHeader" type="text" placeholder="Search dev build..." />
+        <button id="searchBtnHeader">
+          <img src="https://raw.githubusercontent.com/5lackerish/5lackerish.github.io/main/system/images/icons/search.png" />
+        </button>
+      </div>
+      <img id="pfp" src="https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/system/images/profile/smile.png" />
+      <button id="dashboardBtn">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+  <div id="quoteWrapper">
+    <p id="quoteBox"></p>
+  </div>
+</div>
+
+<aside id="dashboardMenu" class="dashboard-menu">
+  <p id="dashNickname" style="opacity:0.6;font-size:0.85em;">Guest</p>
+  <a href="#" id="openShortCuts">Shortcuts</a>
+  <a href="system/pages/credits.html">credits &amp; contributors</a>
+  <a href="#" id="clearData">Clear My Data</a>
+  <a href="../system/pages/release.html">DOWNLOAD V0.8.4!</a>
+</aside>
+
+<div id="containerLoader">
+  <img src="assets/themes/classic/loading.gif" alt="" />
+</div>
+
+<main>
+  <!--
+    dev-build-container: main.js detects this ID and switches to "dev" mode.
+    - All assets are fetched from config.devBuildUrl (the dev sheet API) instead
+      of the production URL.
+    - Normal page-based layout and paging apply exactly as on index.html.
+  -->
+  <div id="dev-build-container"></div>
+</main>
+
+<button id="toTopBtn">⬆ Top</button>
+
+<!-- SoundScape Floating Widget -->
+<button id="soundscape-widget" aria-label="Open SoundScape">
+  <img id="soundscape-widget-icon" src="https://raw.githubusercontent.com/syndicatelibrary/awhtpwkuitsfs/main/defaultFav.png" alt="SoundScape"/>
+</button>
+<div id="soundscape-panel">
+  <div id="soundscape-btns">
+    <button class="ss-panel-btn" id="ss-fs-btn"    title="Fullscreen">⛶</button>
+    <button class="ss-panel-btn" id="ss-min-btn"   title="Minimize">−</button>
+    <button class="ss-panel-btn" id="ss-close-btn" title="Close">✕</button>
+  </div>
+  <div id="soundscape-frame-wrap"></div>
+  <div id="ss-resize-handle"></div>
+</div>
+
+<footer class="footer">
+  <div class="footer-links">
+    <a href="https://github.com/slackerish/slackerish.github.io" target="_blank" rel="noopener noreferrer">source</a>
+    <a href="system/pages/dmca.html" target="_blank" rel="noopener noreferrer">DMCA</a>
+    <a href="https://discord.gg/4AKdJxJUMH" target="_blank">Discord</a>
+    <a href="#" id="importData">Import Data</a>
+    <a href="#" id="exportData">Export Data</a>
+    <a href="#" id="transData">Transfer Data</a>
+    <a href="#" id="footerVersion" target="_blank">Version loading...</a>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PROFILE OVERLAY
+═══════════════════════════════════════════════════════════════ -->
+<div id="profileOverlay">
+  <div id="profileOverlayPanel">
+    <button id="profileOverlayClose" title="Close">✕</button>
+    <h2>Edit Profile</h2>
+
+    <img id="profilePreview" class="profile-preview" src="" alt="Profile Preview">
+    <div class="profile-overlay-username" id="profileOverlayUsername">Nickname</div>
+
+    <label for="profilePicInput">Change Picture:</label><br>
+    <input type="file" id="profilePicInput" accept="image/*"><br>
+
+    <button type="button" id="removePicBtn" class="overlay-btn remove-btn">Remove Picture</button>
+    <button type="button" id="pixelToggleBtn" class="overlay-btn pixel-btn">Pixelate</button>
+
+    <div id="cropContainer" style="display:none; margin-top:10px;">
+      <img id="cropPreview" style="max-width:100%; border-radius:8px;">
+      <div style="margin-top:8px;">
+        <button type="button" id="cropConfirm" class="overlay-btn">✅ Crop</button>
+        <button type="button" id="cropCancel"  class="overlay-btn">❌ Cancel</button>
+      </div>
+    </div>
+
+    <br>
+    <label for="usernameInput">Username:</label><br>
+    <input type="text" id="usernameInput" placeholder="Enter nickname"><br>
+
+    <button type="button" id="profileSaveBtn" class="overlay-btn save-btn">Save Changes</button>
+  </div>
+</div>
+
+<style>
+/* ── Profile Overlay ─────────────────────────── */
+#profileOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.65);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+#profileOverlay.visible {
+  display: flex;
+}
+#profileOverlayPanel {
+background:
+  linear-gradient(rgba(34,34,34,0.1), rgba(34,34,34,0.1)),
+  url('https://raw.githubusercontent.com/01110010-00110101/themeify/main/redux/Redux-headerbg.png'),
+  #222;
+
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;  border-radius: 16px;
+  padding: 28px 24px 24px;
+  width: 380px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  text-align: center;
+  box-shadow: 0 6px 32px rgba(0,0,0,.7);
+  font-family: monospace;
+  color: #fff;
+  position: relative;
+}
+#profileOverlayClose {
+  position: absolute;
+  top: 12px; right: 14px;
+  background: none; border: none;
+  color: #aaa; font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+}
+#profileOverlayClose:hover { color: #fff; }
+#profileOverlayPanel h2 {
+  margin: 0 0 14px;
+  font-size: 18px;
+}
+.profile-preview {
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #444;
+  margin-bottom: 10px;
+  display: block;
+  margin-left: auto; margin-right: auto;
+}
+.profile-overlay-username {
+  font-size: 15px;
+  margin-bottom: 16px;
+  opacity: .8;
+}
+#profileOverlayPanel label {
+  display: block;
+  text-align: left;
+  font-size: 13px;
+  margin-bottom: 4px;
+  opacity: .75;
+}
+#profileOverlayPanel input[type="file"] {
+  margin: 6px 0 10px;
+  color: #ccc;
+  font-size: 13px;
+}
+#profileOverlayPanel input[type="text"] {
+  width: 85%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: none;
+  margin-bottom: 14px;
+  font-size: 15px;
+  background: #333;
+  color: #fff;
+}
+.overlay-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 4px;
+  transition: transform .15s, background .15s;
+  background: #444;
+}
+.overlay-btn:hover { transform: scale(1.04); background: #555; }
+.remove-btn  { background: #555; }
+.pixel-btn   { background: #4a3d7a; }
+.pixel-btn:hover { background: #6a5daa; }
+.save-btn    { background: #c0392b; }
+.save-btn:hover { background: #e74c3c; }
+</style>
+
+<script src="system/js/utils.js"></script>
+<script src="system/js/themify.js"></script>
+<script src="system/js/sanitizer.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+<script src="system/js/profile.js"></script>
+<script src="system/js/settings.js"></script>
+<script src="system/js/ui.js"></script>
+<script src="system/js/quotes.js"></script>
+<script src="system/js/main.js"></script>
+<script src="system/js/version.js"></script>
+<script src="system/js/boom.js"></script>
+<script src="system/js/panic.js"></script>
+<script src="system/js/shortcuts.js"></script>
+<script src="system/js/soundscape.js"></script>
+<script src="system/js/commands.js"></script>
+<script src="system/js/data.js"></script>
+
+</body>
+</html>

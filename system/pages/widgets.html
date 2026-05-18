@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="../../assets/favicons/favicon.png"/>
+<title>WannaSmile | Widgets</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0e0e10;
+    --surface:  #161618;
+    --surface2: #1e1e21;
+    --border:   rgba(255,255,255,0.07);
+    --text:     #f0f0f0;
+    --muted:    #6b6b7a;
+    --radius:   14px;
+    --mono:     'Space Mono', monospace;
+    --display:  'Syne', sans-serif;
+  }
+
+  html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--mono); overflow-x: hidden; }
+
+  /* subtle noise overlay */
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 256px; opacity: 0.5;
+  }
+
+  .page { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+
+  /* ── Header ── */
+  .page-header { width: 100%; max-width: 900px; padding: 40px 32px 0; }
+
+  .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--muted); text-decoration: none;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--text); }
+  .back-link svg { width: 13px; height: 13px; }
+
+  h1 {
+    font-family: var(--display); font-size: clamp(26px, 5vw, 46px);
+    font-weight: 800; letter-spacing: -0.02em; line-height: 1; margin-top: 18px;
+  }
+  h1 span {
+    background: linear-gradient(90deg, #ff5a00, #ffae00);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  .sub { color: var(--muted); font-size: 12px; margin-top: 6px; }
+
+  /* active badge */
+  .badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    margin-top: 16px; background: var(--surface2);
+    border: 1px solid var(--border); border-radius: 999px;
+    padding: 6px 14px; font-size: 11px; color: var(--muted); width: fit-content;
+  }
+  .badge .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #3ddc84; box-shadow: 0 0 6px #3ddc84; flex-shrink: 0;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  .badge.none .dot { background: var(--muted); box-shadow: none; }
+  .badge .bname { color: var(--text); font-weight: 700; }
+
+  .divider { width: 100%; max-width: 900px; height: 1px; background: var(--border); margin: 26px 0 0; }
+
+  /* ── Grid ── */
+  .grid {
+    width: 100%; max-width: 900px; padding: 24px 32px 60px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 18px 16px;
+    cursor: pointer; position: relative; overflow: hidden;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: transform 0.18s, border-color 0.2s, box-shadow 0.2s;
+    user-select: none;
+  }
+  /* per-card accent glow on hover */
+  .card::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(circle at 50% -10%, var(--ca-glow, transparent) 0%, transparent 65%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.12); box-shadow: 0 8px 28px rgba(0,0,0,.28); }
+  .card:hover::before { opacity: 1; }
+  .card.active { border-color: var(--ca, #ff5a00); box-shadow: 0 0 0 1px var(--ca, #ff5a00), 0 8px 28px rgba(0,0,0,.32); }
+  .card.active::before { opacity: 1; }
+
+  /* checkmark ring */
+  .check {
+    position: absolute; top: 13px; right: 13px;
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: transparent;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+  }
+  .card.active .check { border-color: var(--ca, #ff5a00); background: var(--ca, #ff5a00); color: #fff; }
+
+  /* icon box */
+  .icon-wrap {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--ca, #ff5a00);
+    box-shadow: 0 4px 14px var(--ca-shadow, rgba(255,90,0,0.4));
+    transition: box-shadow 0.2s; flex-shrink: 0;
+  }
+  .card:hover .icon-wrap { box-shadow: 0 6px 20px var(--ca-shadow, rgba(255,90,0,0.55)); }
+  .icon-wrap img { width: 28px; height: 28px; object-fit: contain; }
+
+  .card-name { font-family: var(--display); font-size: 16px; font-weight: 700; padding-right: 26px; }
+  .card-desc { font-size: 11px; color: var(--muted); line-height: 1.5; flex: 1; }
+
+  .card-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--border); padding-top: 10px;
+    font-size: 10px; color: var(--muted);
+  }
+  .card-status { display: flex; align-items: center; gap: 5px; }
+  .card.active .card-status::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: #3ddc84; box-shadow: 0 0 5px #3ddc84;
+  }
+  .card-url { font-size: 9px; opacity: 0.45; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 110px; }
+
+  /* ── States ── */
+  .state { width: 100%; max-width: 900px; padding: 60px 32px; text-align: center; color: var(--muted); font-size: 13px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .loader { width: 26px; height: 26px; border: 2px solid var(--border); border-top-color: #ff5a00; border-radius: 50%; animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Toast ── */
+  #toast {
+    position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%) translateY(10px);
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 999px; padding: 9px 18px;
+    font-size: 12px; color: var(--text);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.22s, transform 0.22s;
+    z-index: 9999; white-space: nowrap;
+    display: flex; align-items: center; gap: 8px;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  #toast .tdot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  @media (max-width: 520px) {
+    .page-header { padding: 24px 18px 0; }
+    .grid { padding: 18px 18px 48px; }
+    .divider { margin-left: 0; margin-right: 0; }
+  }
+</style>
+</head>
+
+<body>
+<div class="page">
+
+  <div class="page-header">
+    <a class="back-link" href="../../index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+      back to home
+    </a>
+    <h1>Floating <span>Widgets</span></h1>
+    <p class="sub">Choose one widget to show on the home page. Tap again to deselect.</p>
+    <div class="badge none" id="badge">
+      <span class="dot"></span>
+      <span>Active:&nbsp;</span>
+      <span class="bname" id="bname">None</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid" id="grid">
+    <div class="state"><div class="loader"></div><span>Loading widgets…</span></div>
+  </div>
+
+</div>
+
+<div id="toast">
+  <span class="tdot" id="tdot"></span>
+  <span id="tmsg"></span>
+</div>
+
+<script>
+  const STORAGE_KEY  = "ws_active_widget";
+  // system/pages/widgets.html → up two dirs → system/json/widgets.json
+  const WIDGETS_JSON = "../../system/json/widgets.json";
+
+  let widgets  = [];
+  let activeId = localStorage.getItem(STORAGE_KEY) || null;
+
+  /* ── Toast ── */
+  let toastTimer;
+  function toast(msg, color = "#ff5a00") {
+    document.getElementById("tmsg").textContent = msg;
+    document.getElementById("tdot").style.background = color;
+    const el = document.getElementById("toast");
+    el.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove("show"), 2200);
+  }
+
+  /* ── Badge ── */
+  function updateBadge() {
+    const el = document.getElementById("badge");
+    const nm = document.getElementById("bname");
+    if (activeId) {
+      const w = widgets.find(w => w.id === activeId);
+      nm.textContent = w ? w["widget-name"] : activeId;
+      el.classList.remove("none");
+    } else {
+      nm.textContent = "None";
+      el.classList.add("none");
+    }
+  }
+
+  /* ── Render ── */
+  function render() {
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
+
+    if (!widgets.length) {
+      grid.innerHTML = `<div class="state"><span>No widgets found in widgets.json.</span></div>`;
+      return;
+    }
+
+    widgets.forEach(w => {
+      const active = w.id === activeId;
+      const card   = document.createElement("div");
+      card.className = "card" + (active ? " active" : "");
+
+      // per-card CSS accent vars
+      const bg  = w["background-color"] || "#ff5a00";
+      const sh  = w["shadow-color"]     || "rgba(255,90,0,0.65)";
+      let sh2 = sh;
+      const m = sh.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)$/i);
+      if (m) sh2 = `rgba(${m[1]},${m[2]},${m[3]},0.25)`;
+
+      card.style.setProperty("--ca",       bg);
+      card.style.setProperty("--ca-glow",  sh2);
+      card.style.setProperty("--ca-shadow", sh);
+
+      let host = "—";
+      try { host = new URL(w["widget-url"]).hostname; } catch (_) {}
+
+      card.innerHTML = `
+        <div class="check">✓</div>
+        <div class="icon-wrap">
+          <img src="${w["widget-icon"] || ""}" alt="${w["widget-name"]}" onerror="this.style.opacity=0.25">
+        </div>
+        <div class="card-name">${w["widget-name"]}</div>
+        <div class="card-desc">${w["description"] || ""}</div>
+        <div class="card-foot">
+          <span class="card-status">${active ? "Active" : "Inactive"}</span>
+          <span class="card-url">${host}</span>
+        </div>`;
+
+      card.addEventListener("click", () => toggle(w.id));
+      grid.appendChild(card);
+    });
+
+    updateBadge();
+  }
+
+  /* ── Toggle (deselect if same, else select) ── */
+  function toggle(id) {
+    if (activeId === id) {
+      activeId = null;
+      localStorage.removeItem(STORAGE_KEY);
+      toast("Widget deselected", "#6b6b7a");
+    } else {
+      activeId = id;
+      localStorage.setItem(STORAGE_KEY, id);
+      const w = widgets.find(w => w.id === id);
+      toast(`${w["widget-name"]} activated`, w["background-color"] || "#ff5a00");
+    }
+    render();
+  }
+
+  /* ── Load ── */
+  async function load() {
+    try {
+      const res = await fetch(WIDGETS_JSON);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      widgets = await res.json();
+
+      // First visit: auto-select soundscape (or first entry)
+      if (!localStorage.getItem(STORAGE_KEY)) {
+        const def = widgets.find(w => w.id === "soundscape") || widgets[0];
+        if (def) { activeId = def.id; localStorage.setItem(STORAGE_KEY, activeId); }
+      }
+      render();
+    } catch (err) {
+      document.getElementById("grid").innerHTML =
+        `<div class="state"><span>⚠ Could not load widgets.json<br><small style="opacity:.5">${err.message}</small></span></div>`;
+    }
+  }
+
+  load();
+</script>
+</body>
+</html>
